@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane layoutX="6.0" layoutY="47.0" prefHeight="377.0" prefWidth="867.0">
+      <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <left>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView prefHeight="299.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn prefWidth="199.00003051757812" text="Tables" />
               </columns>
             </TableView>
          </left>
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView editable="true" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="112.0" text="C1" />
-                <TableColumn prefWidth="96.0" text="C2" />
-                  <TableColumn prefWidth="75.0" text="Column X" />
-                  <TableColumn prefWidth="55.0" text="Column X" />
-                  <TableColumn prefWidth="96.0" text="Column X" />
-                  <TableColumn prefWidth="92.0" text="Column X" />
+                <TableColumn prefWidth="112.0" text="Id" />
+                <TableColumn prefWidth="96.0" text="Student" />
+                  <TableColumn prefWidth="75.0" text="Course" />
+                  <TableColumn prefWidth="55.0" text="Grade" />
+                  <TableColumn prefWidth="96.0" text="Class" />
+                  <TableColumn prefWidth="92.0" text="Room" />
               </columns>
             </TableView>
          </center>
+         <top>
+            <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" text="New" />
+                  <Button mnemonicParsing="false" text="Edit" />
+                  <Button mnemonicParsing="false" text="Delete" />
+              </items>
+            </ToolBar>
+         </top>
+         <bottom>
+            <ToolBar prefHeight="43.0" prefWidth="867.0">
+              <items>
+                <Button mnemonicParsing="false" text="Generate" />
+              </items>
+               <padding>
+                  <Insets left="750.0" />
+               </padding>
+            </ToolBar>
+         </bottom>
       </BorderPane>
-      <Button layoutX="703.0" layoutY="440.0" mnemonicParsing="false" text="Generate Report" />
-      <ToolBar layoutX="6.0" layoutY="7.0" prefHeight="40.0" prefWidth="867.0">
-        <items>
-          <Button mnemonicParsing="false" text="New" />
-            <Button mnemonicParsing="false" text="Edit" />
-            <Button mnemonicParsing="false" text="Delete" />
-        </items>
-      </ToolBar>
    </children>
 </AnchorPane>
