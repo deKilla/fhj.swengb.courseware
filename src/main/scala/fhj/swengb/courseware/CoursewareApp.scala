@@ -17,6 +17,9 @@ import scala.collection.JavaConversions
 import scala.util.Random
 import scala.util.control.NonFatal
 
+import java.sql.{Connection, DriverManager, ResultSet, Statement}
+
+
 /**
  * Shows a way to use a JavaFX TableView with Scala
  */
@@ -48,44 +51,39 @@ class CoursewareApp extends javafx.application.Application {
 /**
  * domain object
  */
-case class Article(id: Int, name: String, price: Double)
+case class Student(id: Int, name: String)
 
 /**
  * domain object, but usable with javafx
  */
-class MutableArticle {
+class MutableStudent {
 
   val idProperty: SimpleIntegerProperty = new SimpleIntegerProperty()
   val nameProperty: SimpleStringProperty = new SimpleStringProperty()
-  val priceProperty: SimpleDoubleProperty = new SimpleDoubleProperty()
 
   def setId(id: Int) = idProperty.set(id)
 
   def setName(name: String) = nameProperty.set(name)
-
-  def setPrice(price: Double) = priceProperty.set(price)
 }
 
 /**
  * companion object to get a better initialisation story
  */
-object MutableArticle {
+object MutableStudent {
 
-  def apply(a: Article): MutableArticle = {
-    val ma = new MutableArticle
-    ma.setId(a.id)
-    ma.setName(a.name)
-    ma.setPrice(a.price)
-    ma
+  def apply(s: Student): MutableStudent = {
+    val ms = new MutableStudent
+    ms.setId(s.id)
+    ms.setName(s.name)
+    ms
   }
-
 }
 
 object DataSource {
 
   val data =
-    (1 to 1000) map {
-      case i => Article(i, s"name $i", Random.nextDouble() * i)
+    (1 to 29) map {
+      case i => Student(i, "Name")
     }
 
 }
@@ -116,17 +114,13 @@ class CoursewareAppController extends Initializable{
 
   import JfxUtils._
 
-  type ArticleTC[T] = TableColumn[MutableArticle, T]
+  type StudentTC[T] = TableColumn[MutableStudent, T]
 
-  @FXML var tableView: TableView[MutableArticle] = _
-  @FXML var C1: ArticleTC[Int] = _
-  @FXML var C2: ArticleTC[String] = _
-  @FXML var C3: ArticleTC[Double] = _
-  @FXML var C4: ArticleTC[String] = _
-  @FXML var C5: ArticleTC[String] = _
-  @FXML var C6: ArticleTC[String] = _
+  @FXML var tableView: TableView[MutableStudent] = _
+  @FXML var C1: StudentTC[Int] = _
+  @FXML var C2: StudentTC[String] = _
 
-  val mutableArticles = mkObservableList(DataSource.data.map(MutableArticle(_)))
+  val mutableStudents = mkObservableList(DataSource.data.map(MutableStudent(_)))
 
   /**
    * provide a table column and a generator function for the value to put into
@@ -135,16 +129,15 @@ class CoursewareAppController extends Initializable{
    * @tparam T the type which is contained in the property
    * @return
    */
-  def initTableViewColumn[T]: (ArticleTC[T], (MutableArticle) => Any) => Unit =
-    initTableViewColumnCellValueFactory[MutableArticle, T]
+  def initTableViewColumn[T]: (StudentTC[T], (MutableStudent) => Any) => Unit =
+    initTableViewColumnCellValueFactory[MutableStudent, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    tableView.setItems(mutableArticles)
+    tableView.setItems(mutableStudents)
 
     initTableViewColumn[Int](C1, _.idProperty)
     initTableViewColumn[String](C2, _.nameProperty)
-    initTableViewColumn[Double](C3, _.priceProperty)
 
   }
 

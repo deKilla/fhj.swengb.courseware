@@ -19,11 +19,11 @@
             <TableView fx:id="tableView" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="C1" prefWidth="112.0" text="Id" />
-                <TableColumn fx:id="C2" prefWidth="96.0" text="Student" />
-                  <TableColumn fx:id="C3" prefWidth="75.0" text="Course" />
-                  <TableColumn fx:id="C4" prefWidth="55.0" text="Grade" />
-                  <TableColumn fx:id="C5" prefWidth="96.0" text="Class" />
-                  <TableColumn fx:id="C6" prefWidth="92.0" text="Room" />
+                <TableColumn fx:id="C2" prefWidth="96.0" text="Name" />
+                <!--<TableColumn fx:id="C3" prefWidth="75.0" text="Course" />
+                <TableColumn fx:id="C4" prefWidth="55.0" text="Grade" />
+                <TableColumn fx:id="C5" prefWidth="96.0" text="Class" />
+                <TableColumn fx:id="C6" prefWidth="92.0" text="Room" />-->
               </columns>
             </TableView>
          </center>
