@@ -8,7 +8,7 @@ object DB {
     def fromDB(rs: ResultSet): List[T]
     def query(c: Connection)(q: String): ResultSet = c.createStatement().executeQuery(q)
   }
-  lazy val maybeConnection: Try[Connection] = Try(DriverManager.getConnection("jdbc:sqlite:E:/SWENGB/fhj.swengb.courseware/src/main/scala/fhj/swengb/courseware/exampledb.sqlite"))
+  lazy val maybeConnection: Try[Connection] = Try(DriverManager.getConnection("jdbc:sqlite:E:/SWENGB/fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/exampledb.sqlite"))
 }
 
 
