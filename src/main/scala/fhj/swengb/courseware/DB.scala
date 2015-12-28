@@ -16,15 +16,15 @@ object DBAccess {
   def main(args: Array[String]) {
     val connection = DB.maybeConnection
     if (connection.isSuccess) println("connection established")
+    println("printing results:")
+    println("-------------------------------------------------")
     for {c <- connection
          row <- Album.fromDB(Album.showeverything(c))
     } {
-      println("printing results:")
-      println("-------------------------------------------------")
       println(row)
-      println("-------------------------------------------------")
-      println("results printed")
     }
+    println("-------------------------------------------------")
+    println("results printed")
   }
 }
 
