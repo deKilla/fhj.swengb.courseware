@@ -20,14 +20,18 @@ object Album extends DB.DBEntity[Album] {
     lb.toList
   }
 
-  def query_selectall(c: Connection): ResultSet = query(c)("select * from Album")
+}
 
+//Queries - add additional if necessary
+object q {
+  val selectall = "select * from Album"
 }
 
 object AlbumData {
   def main(args: Array[String]) {
     this.asString()
   }
+
   def asString() {
     val connection = DB.maybeConnection
     var i = 0
@@ -38,7 +42,7 @@ object AlbumData {
       println("| AlbumId \t| Title \t| ArtistId \t|")
       println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
       for {c <- connection
-           album <- Album.tabletolist(Album.query_selectall(c))
+           album <- Album.tabletolist(Album.query(c,q.selectall))
       } {
 
         println("| " + album.getAlbumId() + "\t| " + album.getTitle() + "\t| " + album.getArtistId() + "\t|"  )
@@ -52,7 +56,7 @@ object AlbumData {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
-      Album.tabletolist(Album.query_selectall(c)).map(a => (a.getAlbumId(),a)).toMap
+      Album.tabletolist(Album.query(c,q.selectall)).map(a => (a.getAlbumId(),a)).toMap
     } else { Map.empty }
     data
   }

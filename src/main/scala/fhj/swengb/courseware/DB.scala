@@ -7,7 +7,7 @@ import scala.util.Try
 object DB {
   trait DBEntity[T] {
     def tabletolist(rs: ResultSet): List[T]
-    def query(c: Connection)(q: String): ResultSet = c.createStatement().executeQuery(q)
+    def query(c: Connection, q: String): ResultSet = c.createStatement().executeQuery(q)
   }
 
   val repopath:String = new java.io.File(".").getCanonicalPath
