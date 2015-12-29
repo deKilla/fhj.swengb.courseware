@@ -21,8 +21,8 @@ import java.sql.{Connection, DriverManager, ResultSet, Statement}
 
 
 /**
- * Shows a way to use a JavaFX TableView with Scala
- */
+  * Shows a way to use a JavaFX TableView with Scala
+  */
 object CoursewareApp {
   def main(args: Array[String]) {
     Application.launch(classOf[CoursewareApp], args: _*)
@@ -30,8 +30,8 @@ object CoursewareApp {
 }
 
 /**
- * Setup for the javafx app
- */
+  * Setup for the javafx app
+  */
 class CoursewareApp extends javafx.application.Application {
 
   val loader = new FXMLLoader(getClass.getResource("/fhj/swengb/courseware/Courseware.fxml"))
@@ -49,43 +49,28 @@ class CoursewareApp extends javafx.application.Application {
 }
 
 /**
- * domain object
- */
-case class Student(id: Int, name: String)
+  * domain object, but usable with javafx
+  */
+class MutableAlbum {
 
-/**
- * domain object, but usable with javafx
- */
-class MutableStudent {
+  val pAlbumId: SimpleIntegerProperty = new SimpleIntegerProperty()
+  val pTitle: SimpleStringProperty = new SimpleStringProperty()
 
-  val idProperty: SimpleIntegerProperty = new SimpleIntegerProperty()
-  val nameProperty: SimpleStringProperty = new SimpleStringProperty()
-
-  def setId(id: Int) = idProperty.set(id)
-
-  def setName(name: String) = nameProperty.set(name)
+  def setAlbumId(AlbumId: Int) = pAlbumId.set(AlbumId)
+  def setTitle(Title: String) = pTitle.set(Title)
 }
 
 /**
- * companion object to get a better initialisation story
- */
-object MutableStudent {
+  * companion object to get a better initialisation story
+  */
+object MutableAlbum {
 
-  def apply(s: Student): MutableStudent = {
-    val ms = new MutableStudent
-    ms.setId(s.id)
-    ms.setName(s.name)
-    ms
+  def apply(a: Album): MutableAlbum = {
+    val ma = new MutableAlbum
+    ma.setAlbumId(a.AlbumId)
+    ma.setTitle(a.Title)
+    ma
   }
-}
-
-object DataSource {
-
-  val data =
-    (1 to 29) map {
-      case i => Student(i, "Name")
-    }
-
 }
 
 object JfxUtils {
@@ -114,30 +99,29 @@ class CoursewareAppController extends Initializable{
 
   import JfxUtils._
 
-  type StudentTC[T] = TableColumn[MutableStudent, T]
+  type AlbumTC[T] = TableColumn[MutableAlbum, T]
 
-  @FXML var tableView: TableView[MutableStudent] = _
-  @FXML var C1: StudentTC[Int] = _
-  @FXML var C2: StudentTC[String] = _
-
-  val mutableStudents = mkObservableList(DataSource.data.map(MutableStudent(_)))
+  @FXML var tableView: TableView[MutableAlbum] = _
+  @FXML var C1: AlbumTC[Int] = _
+  @FXML var C2: AlbumTC[String] = _
 
   /**
-   * provide a table column and a generator function for the value to put into
-   * the column.
-   *
-   * @tparam T the type which is contained in the property
-   * @return
-   */
-  def initTableViewColumn[T]: (StudentTC[T], (MutableStudent) => Any) => Unit =
-    initTableViewColumnCellValueFactory[MutableStudent, T]
+    * provide a table column and a generator function for the value to put into
+    * the column.
+    *
+    * @tparam T the type which is contained in the property
+    * @return
+    */
+  def initTableViewColumn[T]: (AlbumTC[T], (MutableAlbum) => Any) => Unit =
+    initTableViewColumnCellValueFactory[MutableAlbum, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    tableView.setItems(mutableStudents)
+    val mutableAlbums = for(album <- AlbumData.asMap) yield MutableAlbum(album._2)
+    tableView.setItems(mkObservableList(mutableAlbums))
 
-    initTableViewColumn[Int](C1, _.idProperty)
-    initTableViewColumn[String](C2, _.nameProperty)
+    initTableViewColumn[Int](C1, _.pAlbumId)
+    initTableViewColumn[String](C2, _.pTitle)
 
   }
 
