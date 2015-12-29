@@ -48,31 +48,6 @@ class CoursewareApp extends javafx.application.Application {
 
 }
 
-/**
-  * domain object, but usable with javafx
-  */
-class MutableAlbum {
-
-  val pAlbumId: SimpleIntegerProperty = new SimpleIntegerProperty()
-  val pTitle: SimpleStringProperty = new SimpleStringProperty()
-
-  def setAlbumId(AlbumId: Int) = pAlbumId.set(AlbumId)
-  def setTitle(Title: String) = pTitle.set(Title)
-}
-
-/**
-  * companion object to get a better initialisation story
-  */
-object MutableAlbum {
-
-  def apply(a: Album): MutableAlbum = {
-    val ma = new MutableAlbum
-    ma.setAlbumId(a.AlbumId)
-    ma.setTitle(a.Title)
-    ma
-  }
-}
-
 object JfxUtils {
 
   type TCDF[S, T] = TableColumn.CellDataFeatures[S, T]
@@ -105,20 +80,13 @@ class CoursewareAppController extends Initializable{
   @FXML var C1: AlbumTC[Int] = _
   @FXML var C2: AlbumTC[String] = _
 
-  /**
-    * provide a table column and a generator function for the value to put into
-    * the column.
-    *
-    * @tparam T the type which is contained in the property
-    * @return
-    */
   def initTableViewColumn[T]: (AlbumTC[T], (MutableAlbum) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableAlbum, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableAlbums = for(album <- AlbumData.asMap) yield MutableAlbum(album._2)
-    tableView.setItems(mkObservableList(mutableAlbums))
+    val mutableAlbums = mkObservableList(for(album <- AlbumData.asMap) yield MutableAlbum(album._2))
+    tableView.setItems(mutableAlbums)
 
     initTableViewColumn[Int](C1, _.pAlbumId)
     initTableViewColumn[String](C2, _.pTitle)

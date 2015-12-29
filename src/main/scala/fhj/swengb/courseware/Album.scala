@@ -1,6 +1,7 @@
 package fhj.swengb.courseware
 
 import java.sql.{ResultSet,Connection}
+import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
 
 import scala.collection.mutable.ListBuffer
 
@@ -54,3 +55,21 @@ object AlbumData {
   }
 }
 
+class MutableAlbum {
+
+  val pAlbumId: SimpleIntegerProperty = new SimpleIntegerProperty()
+  val pTitle: SimpleStringProperty = new SimpleStringProperty()
+
+  def setAlbumId(AlbumId: Int) = pAlbumId.set(AlbumId)
+  def setTitle(Title: String) = pTitle.set(Title)
+}
+
+object MutableAlbum {
+
+  def apply(a: Album): MutableAlbum = {
+    val ma = new MutableAlbum
+    ma.setAlbumId(a.AlbumId)
+    ma.setTitle(a.Title)
+    ma
+  }
+}
