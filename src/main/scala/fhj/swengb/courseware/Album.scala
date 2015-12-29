@@ -26,22 +26,26 @@ case class Album(AlbumId: Int, Title:String, ArtistId: Int) extends DB.DBEntity[
 
 object AlbumData {
   def main(args: Array[String]) {
-    //this.asString()
-    println(this.asMap())
+    this.asString()
   }
   def asString() {
     val connection = DB.maybeConnection
+    var i = 0
     if (connection.isSuccess) {
       //println("connection established")
       println("printing results:")
-      println("-------------------------------------------------")
+      println("___________________________________________________________________________")
+      println("| AlbumId \t| Title \t| ArtistId \t|")
+      println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
       for {c <- connection
            album <- Album.fromDB(Album.showeverything(c))
       } {
-        println(album)
+
+        println("| " + album.getAlbumId() + "\t| " + album.getTitle() + "\t| " + album.getArtistId() + "\t|"  )
+        i += 1
       }
-      println("-------------------------------------------------")
-      println("results printed")
+      println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
+      println(i + " lines printed")
     }
   }
   def asMap(): Map[_ <: Int, Album] = {
