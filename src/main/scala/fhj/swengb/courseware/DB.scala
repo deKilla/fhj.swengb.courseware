@@ -6,7 +6,7 @@ import scala.util.Try
 
 object DB {
   trait DBEntity[T] {
-    def fromDB(rs: ResultSet): List[T]
+    def tabletolist(rs: ResultSet): List[T]
     def query(c: Connection)(q: String): ResultSet = c.createStatement().executeQuery(q)
   }
 

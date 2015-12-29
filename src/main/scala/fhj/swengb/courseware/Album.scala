@@ -5,23 +5,23 @@ import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
 
 import scala.collection.mutable.ListBuffer
 
+case class Album(AlbumId: Int, Title:String, ArtistId: Int) extends DB.DBEntity[Album] {
+  def tabletolist(rs: ResultSet): List[Album] = List()
+  def getAlbumId() = this.AlbumId
+  def getTitle() = this.Title
+  def getArtistId() = this.ArtistId
+}
+
 object Album extends DB.DBEntity[Album] {
 
-  def fromDB(rs: ResultSet): List[Album] = {
+  def tabletolist(rs: ResultSet): List[Album] = {
     val lb: ListBuffer[Album] = new ListBuffer[Album]()
     while (rs.next()) lb.append(Album(rs.getInt("AlbumId"), rs.getString("Title"), rs.getInt("ArtistId")))
     lb.toList
   }
 
-  def showeverything(c: Connection): ResultSet = query(c)("select * from Album")
+  def query_selectall(c: Connection): ResultSet = query(c)("select * from Album")
 
-}
-
-case class Album(AlbumId: Int, Title:String, ArtistId: Int) extends DB.DBEntity[Album] {
-  def fromDB(rs: ResultSet): List[Album] = List()
-  def getAlbumId() = this.AlbumId
-  def getTitle() = this.Title
-  def getArtistId() = this.ArtistId
 }
 
 object AlbumData {
@@ -38,7 +38,7 @@ object AlbumData {
       println("| AlbumId \t| Title \t| ArtistId \t|")
       println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
       for {c <- connection
-           album <- Album.fromDB(Album.showeverything(c))
+           album <- Album.tabletolist(Album.query_selectall(c))
       } {
 
         println("| " + album.getAlbumId() + "\t| " + album.getTitle() + "\t| " + album.getArtistId() + "\t|"  )
@@ -52,8 +52,7 @@ object AlbumData {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
-      val albums = for (album <- Album.fromDB(Album.showeverything(c))) yield album
-      albums.map(a => (a.getAlbumId(),a)).toMap
+      Album.tabletolist(Album.query_selectall(c)).map(a => (a.getAlbumId(),a)).toMap
     } else { Map.empty }
     data
   }
