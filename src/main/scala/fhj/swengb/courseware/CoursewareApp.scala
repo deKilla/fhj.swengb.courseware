@@ -74,22 +74,24 @@ class CoursewareAppController extends Initializable{
 
   import JfxUtils._
 
-  type AlbumTC[T] = TableColumn[MutableAlbum, T]
+  type StudentTC[T] = TableColumn[MutableStudent, T]
 
-  @FXML var tableView: TableView[MutableAlbum] = _
-  @FXML var C1: AlbumTC[Int] = _
-  @FXML var C2: AlbumTC[String] = _
+  @FXML var tableView: TableView[MutableStudent] = _
+  @FXML var C1: StudentTC[Int] = _
+  @FXML var C2: StudentTC[String] = _
+  @FXML var C3: StudentTC[String] = _
 
-  def initTableViewColumn[T]: (AlbumTC[T], (MutableAlbum) => Any) => Unit =
-    initTableViewColumnCellValueFactory[MutableAlbum, T]
+  def initTableViewColumn[T]: (StudentTC[T], (MutableStudent) => Any) => Unit =
+    initTableViewColumnCellValueFactory[MutableStudent, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableAlbums = mkObservableList(for(album <- AlbumData.asMap) yield MutableAlbum(album._2))
-    tableView.setItems(mutableAlbums)
+    val mutableStudents = mkObservableList(for(student <- StudentData.asMap) yield MutableStudent(student._2))
+    tableView.setItems(mutableStudents)
 
-    initTableViewColumn[Int](C1, _.pAlbumId)
-    initTableViewColumn[String](C2, _.pTitle)
+    initTableViewColumn[Int](C1, _.pID)
+    initTableViewColumn[String](C2, _.pFirstname)
+    initTableViewColumn[String](C3, _.pLastname)
 
   }
 
