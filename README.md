@@ -1,14 +1,14 @@
-# fhj.swengb.courseware
------------------------
-## Teammember:
+fhj.swengb.courseware
+=======================
+Teammember:
 -----------------------
 * Michael Fuchs
 * Carina Herzog
 * Hector Vidal
 
-## Branches:
+Branches:
 -----------------------
-### master
+###master
 Contains the latest state that is considered working.
 ### dev
 Contains a status that is approaching a new working feature
