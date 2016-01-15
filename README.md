@@ -1,2 +1,8 @@
 # fhj.swengb.courseware
-Courseware Project for SWENGB
+=======================
+Teammember:
+-----------
+* Michael Fuchs
+* Carina Herzog
+* Hector Vidal
+
