@@ -10,12 +10,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Student extends DB.DBEntity[Student] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
 
-
-  val dropTableSql = "drop table if exists Student"
-  val createTableSql = "create table Student (ID int, firstname string, lastname String, email String, telnr String, githubUsername String, group integer)"
-  val insertSql = "insert into Student (ID, firstname, lastname, email, telnr, githubUsername, group) VALUES (?, ?, ?, ?, ?, ?, ?)"
+  val dropTableSql = "drop table if exists Students"
+  val createTableSql = "create table Students (ID int, firstname string, lastname String, email String, birthday String, telnr String, githubUsername String, group integer)"
+  val insertSql = "insert into Students (ID, firstname, lastname, email, birthday, telnr, githubUsername, group) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -29,9 +27,10 @@ object Student extends DB.DBEntity[Student] {
     pstmt.setString(2, s.firstname)
     pstmt.setString(3, s.lastname)
     pstmt.setString(4, s.email)
-    pstmt.setString(5, s.telnr)
-    pstmt.setString(6, s.githubUsername)
-    pstmt.setInt(7, s.group)
+    pstmt.setString(5, s.birthday)
+    pstmt.setString(6, s.telnr)
+    pstmt.setString(7, s.githubUsername)
+    pstmt.setInt(8, s.group)
     pstmt.executeUpdate()
   }
 
@@ -43,6 +42,7 @@ object Student extends DB.DBEntity[Student] {
         rs.getString("firstname"),
         rs.getString("lastname"),
         rs.getString("email"),
+        rs.getString("birthday"),
         rs.getString("telnr"),
         rs.getString("githubUsername"),
         rs.getInt("group")
@@ -61,6 +61,8 @@ sealed trait Students {
   def lastname: String
 
   def email: String
+
+  def birthday: String
 
   def telnr: String
 
@@ -101,12 +103,13 @@ case class Student(ID: Int,
                    firstname: String,
                    lastname: String,
                    email: String,
+                   birthday: String,
                    telnr: String,
                    githubUsername: String,
                    group: Int) extends Students
 
 object studentquery {
-  val selectall = "select * from Student"
+  val selectall = "select * from Students"
   def query():String = {
     selectall
   }
@@ -131,6 +134,7 @@ class MutableStudent {
   val p_firstname: SimpleStringProperty = new SimpleStringProperty()
   val p_lastname: SimpleStringProperty = new SimpleStringProperty()
   val p_email: SimpleStringProperty = new SimpleStringProperty()
+  val p_birthday: SimpleStringProperty = new SimpleStringProperty()
   val p_telnr: SimpleStringProperty = new SimpleStringProperty()
   val p_githubUsername: SimpleStringProperty = new SimpleStringProperty()
   val p_group: SimpleIntegerProperty = new SimpleIntegerProperty()
@@ -139,6 +143,7 @@ class MutableStudent {
   def setFirstname(firstname: String) = p_firstname.set(firstname)
   def setLastname(lastname: String) = p_lastname.set(lastname)
   def setEmail(email:String) = p_email.set(email)
+  def setBirthday(birthday:String) = p_birthday.set(birthday)
   def setTelnr(telnr: String) = p_telnr.set(telnr)
   def setGithubUsername(githubUsername: String) = p_githubUsername.set(githubUsername)
   def setGroup(group: Int) = p_group.set(group)
@@ -153,6 +158,7 @@ object MutableStudent {
     ms.setFirstname(s.firstname)
     ms.setLastname(s.lastname)
     ms.setEmail(s.email)
+    ms.setBirthday(s.birthday)
     ms.setTelnr(s.telnr)
     ms.setGithubUsername(s.githubUsername)
     ms.setGroup(s.group)

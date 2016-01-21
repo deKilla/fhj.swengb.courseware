@@ -51,11 +51,11 @@ object JfxUtils {
 
 class CoursewareApp extends javafx.application.Application {
 
-  val loader = new FXMLLoader(getClass.getResource("Courseware.fxml"))
+  val loader = new FXMLLoader(getClass.getResource("Menu.fxml"))
 
   override def start(stage: Stage): Unit =
     try {
-      stage.setTitle("CoursewareApp - Window 1")
+      stage.setTitle("Courseware | Übersicht")
       loader.load[Parent]()
       stage.setScene(new Scene(loader.getRoot[Parent]))
       stage.show()
@@ -67,19 +67,30 @@ class CoursewareApp extends javafx.application.Application {
 
 class CoursewareAppController extends Initializable {
 
-  @FXML var btnTest: Button = _
+  @FXML var btnShowStudents: Button = _
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {}
 
   def showStudents(): Unit = {
-    val loaderHelp = new FXMLLoader(getClass.getResource("CW_student.fxml"))
-    val helpStage = new Stage()
+    val studentLoader = new FXMLLoader(getClass.getResource("Student.fxml"))
+    val studentStage = new Stage()
 
-    helpStage.setTitle("Courseware | Students")
-    loaderHelp.load[Parent]()
-    helpStage.setScene(new Scene(loaderHelp.getRoot[Parent]))
+    studentStage.setTitle("Courseware | Students")
+    studentLoader.load[Parent]()
+    studentStage.setScene(new Scene(studentLoader.getRoot[Parent]))
 
-    helpStage.show()
+    studentStage.show()
+  }
+
+  def showLecturers(): Unit = {
+    val lecturerLoader = new FXMLLoader(getClass.getResource("Lecturer.fxml"))
+    val lecturerStage = new Stage()
+
+    lecturerStage.setTitle("Courseware | Lecturers")
+    lecturerLoader.load[Parent]()
+    lecturerStage.setScene(new Scene(lecturerLoader.getRoot[Parent]))
+
+    lecturerStage.show()
   }
 
 }
@@ -95,7 +106,12 @@ class CWStudentController extends Initializable {
   @FXML var C1: StudentTC[Int] = _
   @FXML var C2: StudentTC[String] = _
   @FXML var C3: StudentTC[String] = _
-  //@FXML var C4: StudentTC[String] = _
+  @FXML var C4: StudentTC[String] = _
+  @FXML var C5: StudentTC[String] = _
+  @FXML var C6: StudentTC[String] = _
+  @FXML var C7: StudentTC[String] = _
+  @FXML var C8: StudentTC[Int] = _
+
 
   def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableStudent, T]
@@ -108,8 +124,39 @@ class CWStudentController extends Initializable {
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_firstname)
     initTableViewColumn[String](C3, _.p_lastname)
-    //initTableViewColumn[String](C4, _.p_email)
+    initTableViewColumn[String](C4, _.p_email)
+    initTableViewColumn[String](C5, _.p_birthday)
+    initTableViewColumn[String](C6, _.p_telnr)
+    initTableViewColumn[String](C7, _.p_githubUsername)
+    initTableViewColumn[Int](C8, _.p_group)
+  }
 
+}
+
+class CWLecturerController extends Initializable {
+
+  import JfxUtils._
+
+  type LecturerTC[T] = TableColumn[MutableLecturer, T]
+
+  @FXML var tableView: TableView[MutableLecturer] = _
+  @FXML var C1: LecturerTC[Int] = _
+  @FXML var C2: LecturerTC[String] = _
+  @FXML var C3: LecturerTC[String] = _
+  @FXML var C4: LecturerTC[String] = _
+
+  def initTableViewColumn[T]: (TableColumn[MutableLecturer, T], (MutableLecturer) => Any) => Unit =
+    initTableViewColumnCellValueFactory[MutableLecturer, T]
+
+  override def initialize(location: URL, resources: ResourceBundle): Unit = {
+
+    val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap) yield MutableLecturer(lecturer._2))
+    tableView.setItems(mutableLecturers)
+
+    initTableViewColumn[Int](C1, _.p_ID)
+    initTableViewColumn[String](C2, _.p_firstname)
+    initTableViewColumn[String](C3, _.p_lastname)
+    initTableViewColumn[String](C4, _.p_title)
   }
 
 }
