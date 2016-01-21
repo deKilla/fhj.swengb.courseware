@@ -137,6 +137,29 @@ class CoursewareAppController extends Initializable {
     projectStage.show()
   }
 
+  def showAssignments(): Unit = {
+    val assignmentLoader = new FXMLLoader(getClass.getResource("GroupAssignment.fxml"))
+    val assignmentStage = new Stage()
+
+    assignmentStage.setTitle("Courseware | Assignments")
+    assignmentLoader.load[Parent]()
+    assignmentStage.setScene(new Scene(assignmentLoader.getRoot[Parent]))
+
+    assignmentStage.show()
+  }
+
+  def showHomeworks(): Unit = {
+    val homeworkLoader = new FXMLLoader(getClass.getResource("Homework.fxml"))
+    val homeworkStage = new Stage()
+
+    homeworkStage.setTitle("Courseware | Homework")
+    homeworkLoader.load[Parent]()
+    homeworkStage.setScene(new Scene(homeworkLoader.getRoot[Parent]))
+
+    homeworkStage.show()
+  }
+
+
 }
 
 
@@ -311,4 +334,32 @@ class CWProjectController extends Initializable {
   }
 
 }
+
+class CWAssignmentController extends Initializable {
+
+  import JfxUtils._
+
+  type AssignmentTC[T] = TableColumn[MutableAssignment, T]
+
+  @FXML var tableView: TableView[MutableAssignment] = _
+  @FXML var C1: AssignmentTC[Int] = _
+  @FXML var C2: AssignmentTC[String] = _
+  @FXML var C3: AssignmentTC[String] = _
+
+  def initTableViewColumn[T]: (TableColumn[MutableAssignment, T], (MutableAssignment) => Any) => Unit =
+    initTableViewColumnCellValueFactory[MutableAssignment, T]
+
+  override def initialize(location: URL, resources: ResourceBundle): Unit = {
+
+    val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap) yield MutableAssignment(assignment._2))
+    tableView.setItems(mutableAssignments)
+
+    initTableViewColumn[Int](C1, _.p_ID)
+    initTableViewColumn[String](C2, _.p_name)
+    initTableViewColumn[String](C3, _.p_description)
+
+  }
+
+}
+
 
