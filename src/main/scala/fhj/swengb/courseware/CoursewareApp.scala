@@ -299,7 +299,8 @@ class CWExamController extends Initializable {
   @FXML var tableView: TableView[MutableExam] = _
   @FXML var C1: ExamTC[Int] = _
   @FXML var C2: ExamTC[String] = _
-  @FXML var C3: ExamTC[String] = _
+  @FXML var C3: ExamTC[Int] = _
+  @FXML var C4: ExamTC[String] = _
 
   def initTableViewColumn[T]: (TableColumn[MutableExam, T], (MutableExam) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableExam, T]
@@ -310,8 +311,9 @@ class CWExamController extends Initializable {
     tableView.setItems(mutableExams)
 
     initTableViewColumn[Int](C1, _.p_ID)
-    initTableViewColumn[String](C2, _.p_name)
-    initTableViewColumn[String](C3, _.p_date)
+    initTableViewColumn[String](C2, _.p_course)
+    initTableViewColumn[Int](C3, _.p_attempt)
+    initTableViewColumn[String](C4, _.p_date)
   }
 
 }
