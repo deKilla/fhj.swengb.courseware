@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CoursewareAppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWAssignmentController">
    <children>
       <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <center>
@@ -13,10 +13,7 @@
               <columns>
                 <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
                 <TableColumn fx:id="C2" prefWidth="164.0" text="name" />
-                  <TableColumn fx:id="C21" prefWidth="164.0" text="description" />
-                <!--<TableColumn fx:id="C4" prefWidth="55.0" text="Grade" />
-                <TableColumn fx:id="C5" prefWidth="96.0" text="Class" />
-                <TableColumn fx:id="C6" prefWidth="92.0" text="Room" />-->
+                <TableColumn fx:id="C3" prefWidth="164.0" text="description" />
               </columns>
             </TableView>
          </center>
