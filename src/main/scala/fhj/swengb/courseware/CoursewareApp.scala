@@ -131,6 +131,15 @@ class CWStudentController extends Initializable {
     initTableViewColumn[Int](C8, _.p_group)
   }
 
+  val students: Set[Student] = Set(
+    Student(1,"Michael","Fuchs","michael.fuchs@edu.fh-joanneum.at","25.10.1987","06642282330","deKilla",1)
+   ,Student(2,"Carina","Herzog","carina.herzog@edu.fh-joanneum.at","14.10.1993","asdf","carinaher",1)
+  )
+
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
+  def add(): Unit = {for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}}
+  def menu(): Unit = {}
+
 }
 
 class CWLecturerController extends Initializable {

@@ -12,8 +12,8 @@ import scala.collection.mutable.ListBuffer
 object Student extends DB.DBEntity[Student] {
 
   val dropTableSql = "drop table if exists Students"
-  val createTableSql = "create table Students (ID int, firstname string, lastname String, email String, birthday String, telnr String, githubUsername String, group integer)"
-  val insertSql = "insert into Students (ID, firstname, lastname, email, birthday, telnr, githubUsername, group) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"Students\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`firstname`\tTEXT NOT NULL,\n\t`lastname`\tTEXT NOT NULL,\n\t`email`\tTEXT UNIQUE,\n\t`birthday`\tTEXT,\n\t`telnr`\tTEXT,\n\t`githubUsername`\tTEXT UNIQUE,\n\t`group`\tINTEGER\n)"
+  val insertSql = "insert into \"Students\" VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {

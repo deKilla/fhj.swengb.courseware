@@ -25,14 +25,9 @@
          <top>
             <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
               <items>
-                <Button fx:id="newButton" mnemonicParsing="false" text="New" />
-                  <Button fx:id="editButton" mnemonicParsing="false" text="Edit" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Main Menu" wrapText="true">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Button>
+                  <Button onAction="#recreate" fx:id="btnRecreate" mnemonicParsing="false" text="Recreate" />
+                  <Button onAction="#add" fx:id="btnAdd" mnemonicParsing="false" text="Add" />
+                  <Button onAction="#menu" fx:id="btnMenu" mnemonicParsing="false" text="Main Menu" />
               </items>
             </ToolBar>
          </top>
