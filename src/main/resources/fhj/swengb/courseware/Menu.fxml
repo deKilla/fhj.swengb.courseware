@@ -28,7 +28,7 @@
                   <Pane prefHeight="32.0" prefWidth="303.0" />
                   <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Group Assignment" textAlignment="CENTER" />
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Project" textAlignment="CENTER" onAction="#showProjects"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Projects" textAlignment="CENTER" onAction="#showProjects"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
                   <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Exams" textAlignment="CENTER" onAction="#showExams"/>
                </children>

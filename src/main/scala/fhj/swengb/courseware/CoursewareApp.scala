@@ -126,6 +126,17 @@ class CoursewareAppController extends Initializable {
     examStage.show()
   }
 
+  def showProjects(): Unit = {
+    val projectLoader = new FXMLLoader(getClass.getResource("Project.fxml"))
+    val projectStage = new Stage()
+
+    projectStage.setTitle("Courseware | Projects")
+    projectLoader.load[Parent]()
+    projectStage.setScene(new Scene(projectLoader.getRoot[Parent]))
+
+    projectStage.show()
+  }
+
 }
 
 
@@ -269,6 +280,34 @@ class CWExamController extends Initializable {
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_date)
+  }
+
+}
+
+class CWProjectController extends Initializable {
+
+  import JfxUtils._
+
+  type ProjectTC[T] = TableColumn[MutableProject, T]
+
+  @FXML var tableView: TableView[MutableProject] = _
+  @FXML var C1: ProjectTC[Int] = _
+  @FXML var C2: ProjectTC[String] = _
+  @FXML var C3: ProjectTC[String] = _
+  @FXML var C4: ProjectTC[String] = _
+
+  def initTableViewColumn[T]: (TableColumn[MutableProject, T], (MutableProject) => Any) => Unit =
+    initTableViewColumnCellValueFactory[MutableProject, T]
+
+  override def initialize(location: URL, resources: ResourceBundle): Unit = {
+
+    val mutableProjects = mkObservableList(for (project <- ProjectData.asMap) yield MutableProject(project._2))
+    tableView.setItems(mutableProjects)
+
+    initTableViewColumn[Int](C1, _.p_ID)
+    initTableViewColumn[String](C2, _.p_name)
+    initTableViewColumn[String](C3, _.p_begindate)
+    initTableViewColumn[String](C4, _.p_deadline)
   }
 
 }
