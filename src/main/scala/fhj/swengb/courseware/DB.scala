@@ -8,8 +8,8 @@ import scala.util.Try
 object DB {
   trait DBEntity[T] {
     def reTable(stmt: Statement): Int
-    def toDb(c: Connection)(t: T): Int
-    def fromDb(rs: ResultSet): List[T]
+    def toDB(c: Connection)(t: T): Int
+    def fromDB(rs: ResultSet): List[T]
     def query(con: Connection)(query: String): ResultSet = {con.createStatement().executeQuery(query)}
     def dropTableSql: String
     def createTableSql: String

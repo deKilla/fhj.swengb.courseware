@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CoursewareAppController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
    <children>
       <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <left>
@@ -18,12 +18,9 @@
          <center>
             <TableView fx:id="tableView" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="C2" prefWidth="200.0" text="firstname" />
-                <TableColumn fx:id="C3" prefWidth="200.0" text="lastname" />
-                <!--<TableColumn fx:id="C4" prefWidth="55.0" text="Grade" />
-                <TableColumn fx:id="C5" prefWidth="96.0" text="Class" />
-                <TableColumn fx:id="C6" prefWidth="92.0" text="Room" />-->
+                  <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="C2" prefWidth="200.0" text="firstname" />
+                  <TableColumn fx:id="C3" prefWidth="200.0" text="lastname" />
               </columns>
             </TableView>
          </center>
@@ -33,7 +30,6 @@
                 <Button fx:id="New" mnemonicParsing="false" text="New" />
                   <Button fx:id="Edit" mnemonicParsing="false" text="Edit" />
                   <Button fx:id="Delete" mnemonicParsing="false" text="Delete" />
-                  <Button fx:id="test" mnemonicParsing="false" onAction="#test" text="test" />
               </items>
             </ToolBar>
          </top>

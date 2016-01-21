@@ -1,59 +1,74 @@
-package fhj.swengb
+package fhj.swengb.courseware
 
 import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
+import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
 
-import fhj.swengb.courseware.DB.DBEntity
+import fhj.swengb.GitHub
 
 import scala.collection.mutable.ListBuffer
 
 
-object Person extends DBEntity[Person] {
+object Student extends DB.DBEntity[Student] {
+  def fromDB(stringToSet: (String) => ResultSet) = ???
 
-  val dropTableSql = "drop table if exists person"
-  val createTableSql = "create table person (ID string, firstName string, secondName String, groupId integer/*, githubUsername string*/)"
-  val insertSql = "insert into person (ID, firstName, secondName, groupId/*, githubUsername*/) VALUES (?, ?, ?, ?)"
+
+  val dropTableSql = "drop table if exists Student"
+  val createTableSql = "create table Student (ID int, firstname string, lastname String, email String, telnr String, githubUsername String, group integer)"
+  val insertSql = "insert into Student (ID, firstname, lastname, email, telnr, githubUsername, group) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
-    stmt.executeUpdate(Person.dropTableSql)
-    stmt.executeUpdate(Person.createTableSql)
+    stmt.executeUpdate(Student.dropTableSql)
+    stmt.executeUpdate(Student.createTableSql)
   }
 
-  def toDb(c: Connection)(p: Person): Int = {
+  def toDB(c: Connection)(s: Student): Int = {
     val pstmt = c.prepareStatement(insertSql)
-    //pstmt.setString(1, p.githubUsername)
-    pstmt.setString(1, p.ID)
-    pstmt.setString(2, p.firstName)
-    pstmt.setString(3, p.secondName)
-    pstmt.setInt(4, p.groupId)
+    pstmt.setInt(1, s.ID)
+    pstmt.setString(2, s.firstname)
+    pstmt.setString(3, s.lastname)
+    pstmt.setString(4, s.email)
+    pstmt.setString(5, s.telnr)
+    pstmt.setString(6, s.githubUsername)
+    pstmt.setInt(7, s.group)
     pstmt.executeUpdate()
   }
 
-  def fromDb(rs: ResultSet): List[Person] = {
-    val lb: ListBuffer[Person] = new ListBuffer[Person]()
-    while (rs.next()) lb.append(Student(rs.getString("firstName"), rs.getString("secondName"), rs.getString("githubUsername"), rs.getInt("groupId")))
+  def fromDB(rs: ResultSet): List[Student] = {
+    val lb: ListBuffer[Student] = new ListBuffer[Student]()
+    while (rs.next()) lb.append(
+      Student(
+        rs.getInt("ID"),
+        rs.getString("firstname"),
+        rs.getString("lastname"),
+        rs.getString("email"),
+        rs.getString("telnr"),
+        rs.getString("githubUsername"),
+        rs.getInt("group")
+      )
+    )
     lb.toList
   }
-
-  def queryAll(con: Connection): ResultSet =
-    query(con)("select * from person")
-
 }
 
-sealed trait Person {
+sealed trait Students {
 
-  //def githubUsername: String
+  def ID: Int
 
-  def ID: String
+  def firstname: String
 
-  def firstName: String
+  def lastname: String
 
-  def secondName: String
+  def email: String
 
-  def groupId: Int
+  def telnr: String
 
-  def longName = s"$firstName $secondName"
+  def githubUsername: String
+
+  def group: Int
+
+  def longName = s"$firstname $lastname"
 
   def normalize(in: String): String = {
     val mapping =
@@ -65,18 +80,11 @@ sealed trait Person {
   }
 
   def userId: String = {
-    val fst = firstName(0).toLower.toString
-    normalize(fst + secondName.toLowerCase)
+    val fst = firstname(0).toLower.toString
+    normalize(fst + lastname.toLowerCase)
   }
 
-  /*
   val gitHubHome: String = s"https://github.com/$githubUsername/"
-
-  @deprecated("remove", "now")
-  val tutorialName: String = "fhj.swengb.assignments.tutorial"
-  val tutorialURL: URL = new URL(gitHubHome + tutorialName)
-
-  def mkHome: String = s" - $longName : [$githubUsername]($gitHubHome)"
 
   def gitHubUser: GitHub.User = {
     import GitHub.GithubUserProtocol._
@@ -86,14 +94,70 @@ sealed trait Person {
     val webserviceString: String = scala.io.Source.fromURL(new URL(s"https://api.github.com/users/$githubUsername")).mkString
     webserviceString.parseJson.convertTo[User]
   }
-*/
+
 }
 
-case class Student(ID: String,
-                   firstName: String,
-                   secondName: String,
+case class Student(ID: Int,
+                   firstname: String,
+                   lastname: String,
                    email: String,
-                   birthday: String,
                    telnr: String,
                    githubUsername: String,
-                   groupId: Int) extends Person
+                   group: Int) extends Students
+
+object studentquery {
+  val selectall = "select * from Student"
+  def query():String = {
+    selectall
+  }
+}
+
+object StudentData {
+  def asMap(): Map[_, Student] = {
+    val connection = DB.maybeConnection
+    val data = if (connection.isSuccess) {
+      val c = connection.get
+      Student.fromDB(Student.query(c)(studentquery.query())
+      ).map(s => (s.ID,s)).toMap
+    } else { Map.empty }
+    data
+  }
+}
+
+
+class MutableStudent {
+
+  val p_ID: SimpleIntegerProperty = new SimpleIntegerProperty()
+  val p_firstname: SimpleStringProperty = new SimpleStringProperty()
+  val p_lastname: SimpleStringProperty = new SimpleStringProperty()
+  val p_email: SimpleStringProperty = new SimpleStringProperty()
+  val p_telnr: SimpleStringProperty = new SimpleStringProperty()
+  val p_githubUsername: SimpleStringProperty = new SimpleStringProperty()
+  val p_group: SimpleIntegerProperty = new SimpleIntegerProperty()
+
+  def setID(ID: Int) = p_ID.set(ID)
+  def setFirstname(firstname: String) = p_firstname.set(firstname)
+  def setLastname(lastname: String) = p_lastname.set(lastname)
+  def setEmail(email:String) = p_email.set(email)
+  def setTelnr(telnr: String) = p_telnr.set(telnr)
+  def setGithubUsername(githubUsername: String) = p_githubUsername.set(githubUsername)
+  def setGroup(group: Int) = p_group.set(group)
+
+}
+
+object MutableStudent {
+
+  def apply(s: Student): MutableStudent = {
+    val ms = new MutableStudent
+    ms.setID(s.ID)
+    ms.setFirstname(s.firstname)
+    ms.setLastname(s.lastname)
+    ms.setEmail(s.email)
+    ms.setTelnr(s.telnr)
+    ms.setGithubUsername(s.githubUsername)
+    ms.setGroup(s.group)
+    ms
+  }
+
+}
+

@@ -21,33 +21,10 @@ import scala.util.control.NonFatal
 
 import java.sql.{Connection, DriverManager, ResultSet, Statement}
 
-
-/**
-  * Shows a way to use a JavaFX TableView with Scala
-  */
 object CoursewareApp {
   def main(args: Array[String]) {
     Application.launch(classOf[CoursewareApp], args: _*)
   }
-}
-
-/**
-  * Setup for the javafx app
-  */
-class CoursewareApp extends javafx.application.Application {
-
-  val loader = new FXMLLoader(getClass.getResource("/fhj/swengb/courseware/CW_main.fxml"))
-
-  override def start(stage: Stage): Unit =
-    try {
-      stage.setTitle("CoursewareApp - Window 1")
-      loader.load[Parent]()
-      stage.setScene(new Scene(loader.getRoot[Parent]))
-      stage.show()
-    } catch {
-      case NonFatal(e) => e.printStackTrace()
-    }
-
 }
 
 object JfxUtils {
@@ -72,28 +49,43 @@ object JfxUtils {
 
 }
 
+class CoursewareApp extends javafx.application.Application {
+
+  val loader = new FXMLLoader(getClass.getResource("Courseware.fxml"))
+
+  override def start(stage: Stage): Unit =
+    try {
+      stage.setTitle("CoursewareApp - Window 1")
+      loader.load[Parent]()
+      stage.setScene(new Scene(loader.getRoot[Parent]))
+      stage.show()
+    } catch {
+      case NonFatal(e) => e.printStackTrace()
+    }
+
+}
+
 class CoursewareAppController extends Initializable {
 
   @FXML var btnTest: Button = _
 
-  override def initialize(location: URL, resources: ResourceBundle): Unit = {
+  override def initialize(location: URL, resources: ResourceBundle): Unit = {}
 
+  def showStudents(): Unit = {
+    val loaderHelp = new FXMLLoader(getClass.getResource("CW_student.fxml"))
+    val helpStage = new Stage()
+
+    helpStage.setTitle("Courseware | Students")
+    loaderHelp.load[Parent]()
+    helpStage.setScene(new Scene(loaderHelp.getRoot[Parent]))
+
+    helpStage.show()
   }
 
-  def test(): Unit = {
-    val loader_test = new FXMLLoader(getClass.getResource("Courseware.fxml"))
-    val stage_test = new Stage()
-
-    stage_test.setTitle("CoursewareApp - Windows 2")
-    loader_test.load[Parent]()
-    stage_test.setScene(new Scene(loader_test.getRoot[Parent]))
-
-    stage_test.show()
-  }
 }
 
 
-/*class CoursewareAppController extends Initializable{
+class CWStudentController extends Initializable {
 
   import JfxUtils._
 
@@ -103,20 +95,21 @@ class CoursewareAppController extends Initializable {
   @FXML var C1: StudentTC[Int] = _
   @FXML var C2: StudentTC[String] = _
   @FXML var C3: StudentTC[String] = _
+  //@FXML var C4: StudentTC[String] = _
 
-  def initTableViewColumn[T]: (StudentTC[T], (MutableStudent) => Any) => Unit =
+  def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableStudent, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableStudents = mkObservableList(for(student <- StudentData.asMap) yield MutableStudent(student._2))
+    val mutableStudents = mkObservableList(for (student <- StudentData.asMap) yield MutableStudent(student._2))
     tableView.setItems(mutableStudents)
 
-    initTableViewColumn[Int](C1, _.pID)
-    initTableViewColumn[String](C2, _.pFirstname)
-    initTableViewColumn[String](C3, _.pLastname)
+    initTableViewColumn[Int](C1, _.p_ID)
+    initTableViewColumn[String](C2, _.p_firstname)
+    initTableViewColumn[String](C3, _.p_lastname)
+    //initTableViewColumn[String](C4, _.p_email)
 
   }
 
-
-}*/
+}
