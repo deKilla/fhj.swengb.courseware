@@ -1,6 +1,7 @@
 package fhj.swengb.courseware
 
 
+import java.awt.Button
 import java.net.URL
 import java.util.ResourceBundle
 import javafx.application.Application
@@ -9,6 +10,7 @@ import javafx.beans.value.ObservableValue
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml._
 import javafx.scene.control.{TableColumn, TableView}
+import javafx.scene.layout.AnchorPane
 import javafx.scene.{Parent, Scene}
 import javafx.stage.Stage
 import javafx.util.Callback
@@ -34,11 +36,11 @@ object CoursewareApp {
   */
 class CoursewareApp extends javafx.application.Application {
 
-  val loader = new FXMLLoader(getClass.getResource("/fhj/swengb/courseware/Courseware.fxml"))
+  val loader = new FXMLLoader(getClass.getResource("/fhj/swengb/courseware/CW_main.fxml"))
 
   override def start(stage: Stage): Unit =
     try {
-      stage.setTitle("CoursewareApp")
+      stage.setTitle("CoursewareApp - Window 1")
       loader.load[Parent]()
       stage.setScene(new Scene(loader.getRoot[Parent]))
       stage.show()
@@ -70,7 +72,28 @@ object JfxUtils {
 
 }
 
-class CoursewareAppController extends Initializable{
+class CoursewareAppController extends Initializable {
+
+  @FXML var btnTest: Button = _
+
+  override def initialize(location: URL, resources: ResourceBundle): Unit = {
+
+  }
+
+  def test(): Unit = {
+    val loader_test = new FXMLLoader(getClass.getResource("Courseware.fxml"))
+    val stage_test = new Stage()
+
+    stage_test.setTitle("CoursewareApp - Windows 2")
+    loader_test.load[Parent]()
+    stage_test.setScene(new Scene(loader_test.getRoot[Parent]))
+
+    stage_test.show()
+  }
+}
+
+
+/*class CoursewareAppController extends Initializable{
 
   import JfxUtils._
 
@@ -96,4 +119,4 @@ class CoursewareAppController extends Initializable{
   }
 
 
-}
+}*/

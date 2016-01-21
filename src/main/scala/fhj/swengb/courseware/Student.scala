@@ -1,85 +1,99 @@
-package fhj.swengb.courseware
+package fhj.swengb
 
-import java.sql.{ResultSet,Connection}
-import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
+import java.net.URL
+import java.sql.{Connection, ResultSet, Statement}
+
+import fhj.swengb.courseware.DB.DBEntity
 
 import scala.collection.mutable.ListBuffer
 
-case class Student(ID: Int, firstname:String, lastname: String) extends DB.DBEntity[Student] {
-  def tabletolist(rs: ResultSet): List[Student] = List()
-  def getID() = this.ID
-  def getFirstname() = this.firstname
-  def getLastname() = this.lastname
-}
 
-object Student extends DB.DBEntity[Student] {
+object Person extends DBEntity[Person] {
 
-  def tabletolist(rs: ResultSet): List[Student] = {
-    val lb: ListBuffer[Student] = new ListBuffer[Student]()
-    while (rs.next()) lb.append(Student(rs.getInt("ID"), rs.getString("firstname"), rs.getString("lastname")))
+  val dropTableSql = "drop table if exists person"
+  val createTableSql = "create table person (ID string, firstName string, secondName String, groupId integer/*, githubUsername string*/)"
+  val insertSql = "insert into person (ID, firstName, secondName, groupId/*, githubUsername*/) VALUES (?, ?, ?, ?)"
+
+
+  def reTable(stmt: Statement): Int = {
+    stmt.executeUpdate(Person.dropTableSql)
+    stmt.executeUpdate(Person.createTableSql)
+  }
+
+  def toDb(c: Connection)(p: Person): Int = {
+    val pstmt = c.prepareStatement(insertSql)
+    //pstmt.setString(1, p.githubUsername)
+    pstmt.setString(1, p.ID)
+    pstmt.setString(2, p.firstName)
+    pstmt.setString(3, p.secondName)
+    pstmt.setInt(4, p.groupId)
+    pstmt.executeUpdate()
+  }
+
+  def fromDb(rs: ResultSet): List[Person] = {
+    val lb: ListBuffer[Person] = new ListBuffer[Person]()
+    while (rs.next()) lb.append(Student(rs.getString("firstName"), rs.getString("secondName"), rs.getString("githubUsername"), rs.getInt("groupId")))
     lb.toList
   }
 
+  def queryAll(con: Connection): ResultSet =
+    query(con)("select * from person")
+
 }
 
-//Queries - add additional if necessary
-object studentquery {
-  val selectall = "select * from Student"
-}
+sealed trait Person {
 
-object StudentData {
-  def main(args: Array[String]) {
-    this.asString()
+  //def githubUsername: String
+
+  def ID: String
+
+  def firstName: String
+
+  def secondName: String
+
+  def groupId: Int
+
+  def longName = s"$firstName $secondName"
+
+  def normalize(in: String): String = {
+    val mapping =
+      Map("ä" -> "ae",
+        "ö" -> "oe",
+        "ü" -> "ue",
+        "ß" -> "ss")
+    mapping.foldLeft(in) { case ((s, (a, b))) => s.replace(a, b) }
   }
 
-  def asString() {
-    val connection = DB.maybeConnection
-    var i = 0
-    if (connection.isSuccess) {
-      //println("connection established")
-      println("printing results:")
-      println("___________________________________________________________________________")
-      println("| StudentId \t| Title \t| ArtistId \t|")
-      println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-      for {c <- connection
-           s <- Student.tabletolist(Student.query(c,studentquery.selectall))
-      } {
+  def userId: String = {
+    val fst = firstName(0).toLower.toString
+    normalize(fst + secondName.toLowerCase)
+  }
 
-        println("| " + s.getID() + "\t| " + s.getFirstname() + "\t| " + s.getLastname() + "\t|"  )
-        i += 1
-      }
-      println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
-      println(i + " lines printed")
-    }
+  /*
+  val gitHubHome: String = s"https://github.com/$githubUsername/"
+
+  @deprecated("remove", "now")
+  val tutorialName: String = "fhj.swengb.assignments.tutorial"
+  val tutorialURL: URL = new URL(gitHubHome + tutorialName)
+
+  def mkHome: String = s" - $longName : [$githubUsername]($gitHubHome)"
+
+  def gitHubUser: GitHub.User = {
+    import GitHub.GithubUserProtocol._
+    import GitHub._
+    import spray.json._
+
+    val webserviceString: String = scala.io.Source.fromURL(new URL(s"https://api.github.com/users/$githubUsername")).mkString
+    webserviceString.parseJson.convertTo[User]
   }
-  def asMap(): Map[_ <: Int, Student] = {
-    val connection = DB.maybeConnection
-    val data = if (connection.isSuccess) {
-      val c = connection.get
-      Student.tabletolist(Student.query(c,studentquery.selectall)).map(s => (s.getID(),s)).toMap
-    } else { Map.empty }
-    data
-  }
+*/
 }
 
-class MutableStudent {
-
-  val pID: SimpleIntegerProperty = new SimpleIntegerProperty()
-  val pFirstname: SimpleStringProperty = new SimpleStringProperty()
-  val pLastname: SimpleStringProperty = new SimpleStringProperty()
-
-  def setID(ID: Int) = pID.set(ID)
-  def setFirstname(firstname: String) = pFirstname.set(firstname)
-  def setLastname(lastname: String) = pLastname.set(lastname)
-}
-
-object MutableStudent {
-
-  def apply(s: Student): MutableStudent = {
-    val ms = new MutableStudent
-    ms.setID(s.ID)
-    ms.setFirstname(s.firstname)
-    ms.setLastname(s.lastname)
-    ms
-  }
-}
+case class Student(ID: String,
+                   firstName: String,
+                   secondName: String,
+                   email: String,
+                   birthday: String,
+                   telnr: String,
+                   githubUsername: String,
+                   groupId: Int) extends Person
