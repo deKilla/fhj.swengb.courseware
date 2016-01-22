@@ -108,7 +108,7 @@ class CoursewareAppController extends Initializable {
     val groupLoader = new FXMLLoader(getClass.getResource("Group.fxml"))
     val groupStage = new Stage()
 
-    groupStage.setTitle("Courseware | Courses")
+    groupStage.setTitle("Courseware | Groups")
     groupLoader.load[Parent]()
     groupStage.setScene(new Scene(groupLoader.getRoot[Parent]))
 
@@ -152,7 +152,7 @@ class CoursewareAppController extends Initializable {
     val homeworkLoader = new FXMLLoader(getClass.getResource("Homework.fxml"))
     val homeworkStage = new Stage()
 
-    homeworkStage.setTitle("Courseware | Homework")
+    homeworkStage.setTitle("Courseware | Homeworks")
     homeworkLoader.load[Parent]()
     homeworkStage.setScene(new Scene(homeworkLoader.getRoot[Parent]))
 
