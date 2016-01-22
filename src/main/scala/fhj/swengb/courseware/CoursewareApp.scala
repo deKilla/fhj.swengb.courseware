@@ -4,7 +4,7 @@ package fhj.swengb.courseware
 import java.awt.Button
 import java.net.URL
 import java.util.ResourceBundle
-import javafx.application.Application
+import javafx.application.{Platform, Application}
 import javafx.beans.property.{SimpleDoubleProperty, SimpleIntegerProperty, SimpleStringProperty}
 import javafx.beans.value.ObservableValue
 import javafx.collections.{FXCollections, ObservableList}
@@ -123,7 +123,7 @@ class CoursewareAppController extends Initializable {
     examLoader.load[Parent]()
     examStage.setScene(new Scene(examLoader.getRoot[Parent]))
 
-    examStage.show()
+    val showStage = examStage.show()
   }
 
   def showProjects(): Unit = {
@@ -180,6 +180,7 @@ class CWStudentController extends Initializable {
   @FXML var C8: StudentTC[Int] = _
 
   @FXML var inputarea: Pane = _
+  @FXML var root : AnchorPane = _
 
 
   def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
@@ -207,7 +208,7 @@ class CWStudentController extends Initializable {
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
   def add(): Unit = {for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}}
-  def menu(): Unit = {}
+  def menu() : Unit = root.getScene.getWindow.hide()
 
   def open(): Unit = inputarea.setDisable(false)
   def close(): Unit = inputarea.setDisable(true)
@@ -306,6 +307,7 @@ class CWExamController extends Initializable {
   @FXML var C2: ExamTC[String] = _
   @FXML var C3: ExamTC[Int] = _
   @FXML var C4: ExamTC[String] = _
+  @FXML var root : AnchorPane = _
 
   def initTableViewColumn[T]: (TableColumn[MutableExam, T], (MutableExam) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableExam, T]
@@ -320,6 +322,8 @@ class CWExamController extends Initializable {
     initTableViewColumn[Int](C3, _.p_attempt)
     initTableViewColumn[String](C4, _.p_date)
   }
+
+  def menu() : Unit = root.getScene.getWindow.hide()
 
 }
 
@@ -375,7 +379,4 @@ class CWAssignmentController extends Initializable {
     initTableViewColumn[String](C3, _.p_description)
 
   }
-
 }
-
-
