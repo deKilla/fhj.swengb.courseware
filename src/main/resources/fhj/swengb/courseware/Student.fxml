@@ -5,42 +5,52 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
    <children>
-      <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
-         <center>
-            <TableView fx:id="tableView" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="C2" prefWidth="164.0" text="firstname" />
-                <TableColumn fx:id="C3" prefWidth="213.0" text="lastname" />
-                <TableColumn fx:id="C4" prefWidth="164.0" text="email" />
-                <TableColumn fx:id="C5" minWidth="0.0" prefWidth="129.0" text="birthday" />
-                <TableColumn fx:id="C6" minWidth="0.0" prefWidth="143.0" text="telnr" />
-                <TableColumn fx:id="C7" minWidth="0.0" prefWidth="143.0" text="githubUsername" />
-                <TableColumn fx:id="C8" minWidth="0.0" prefWidth="143.0" text="group" />
-              </columns>
-            </TableView>
-         </center>
-         <top>
-            <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
-              <items>
-                  <Button onAction="#recreate" fx:id="btnRecreate" mnemonicParsing="false" text="Recreate" />
-                  <Button onAction="#add" fx:id="btnAdd" mnemonicParsing="false" text="Add" />
-                  <Button onAction="#menu" fx:id="btnMenu" mnemonicParsing="false" text="Main Menu" />
-              </items>
-            </ToolBar>
-         </top>
-         <bottom>
-            <ToolBar prefHeight="43.0" prefWidth="867.0">
-              <items>
-                  <Button fx:id="generateReport1" mnemonicParsing="false" text="Generate Report" />
-              </items>
-               <padding>
-                  <Insets left="700.0" />
-               </padding>
-            </ToolBar>
-         </bottom>
-      </BorderPane>
+      <AnchorPane layoutX="116.0" layoutY="-946.0" prefHeight="391.0" prefWidth="880.0" style="-fx-background-color: White;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <BorderPane prefHeight="391.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <TableView fx:id="tableView" prefHeight="480.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
+                      <TableColumn fx:id="C2" prefWidth="164.0" text="firstname" />
+                      <TableColumn fx:id="C3" prefWidth="213.0" text="lastname" />
+                      <TableColumn fx:id="C4" prefWidth="164.0" text="email" />
+                      <TableColumn fx:id="C5" minWidth="0.0" prefWidth="129.0" text="birthday" />
+                      <TableColumn fx:id="C6" minWidth="0.0" prefWidth="143.0" text="telnr" />
+                      <TableColumn fx:id="C7" minWidth="0.0" prefWidth="143.0" text="githubUsername" />
+                      <TableColumn fx:id="C8" minWidth="0.0" prefWidth="143.0" text="group" />
+                    </columns>
+                  </TableView>
+               </center>
+               <top>
+                  <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
+                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
+                        <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" />
+                    </items>
+                  </ToolBar>
+               </top>
+               <bottom>
+                  <ToolBar prefHeight="43.0" prefWidth="867.0">
+                    <items>
+                        <Button fx:id="generateReport1" mnemonicParsing="false" text="Generate Report" />
+                    </items>
+                     <padding>
+                        <Insets left="700.0" />
+                     </padding>
+                  </ToolBar>
+               </bottom>
+               <left>
+                  <Pane prefHeight="294.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Pane prefHeight="294.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
