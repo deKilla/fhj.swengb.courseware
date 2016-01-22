@@ -10,7 +10,7 @@ import javafx.beans.value.ObservableValue
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml._
 import javafx.scene.control.{TableColumn, TableView}
-import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.{Pane, AnchorPane}
 import javafx.scene.{Parent, Scene}
 import javafx.stage.Stage
 import javafx.util.Callback
@@ -179,6 +179,8 @@ class CWStudentController extends Initializable {
   @FXML var C7: StudentTC[String] = _
   @FXML var C8: StudentTC[Int] = _
 
+  @FXML var inputarea: Pane = _
+
 
   def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableStudent, T]
@@ -206,6 +208,9 @@ class CWStudentController extends Initializable {
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
   def add(): Unit = {for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}}
   def menu(): Unit = {}
+
+  def open(): Unit = inputarea.setDisable(false)
+  def close(): Unit = inputarea.setDisable(true)
 
 }
 
