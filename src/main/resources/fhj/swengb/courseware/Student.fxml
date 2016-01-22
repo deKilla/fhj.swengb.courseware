@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
    <children>
       <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <center>
@@ -25,9 +25,10 @@
          <top>
             <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
               <items>
-                  <Button onAction="#recreate" fx:id="btnRecreate" mnemonicParsing="false" text="Recreate" />
-                  <Button onAction="#add" fx:id="btnAdd" mnemonicParsing="false" text="Add" />
-                  <Button onAction="#menu" fx:id="btnMenu" mnemonicParsing="false" text="Main Menu" />
+                  <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
+                  <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
+                  <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" />
+                  <Button mnemonicParsing="false" onAction="#open" text="open" />
               </items>
             </ToolBar>
          </top>
@@ -42,5 +43,10 @@
             </ToolBar>
          </bottom>
       </BorderPane>
+      <Pane fx:id="inputarea" disable="true" prefHeight="265.0" prefWidth="347.0" styleClass="inputarea" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Button fx:id="close" layoutX="121.0" layoutY="46.0" mnemonicParsing="false" onAction="#close" text="close" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
