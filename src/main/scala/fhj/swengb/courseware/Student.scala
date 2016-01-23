@@ -137,7 +137,12 @@ object StudentData {
     val report = new File(file)
     val pw = new PrintWriter(report)
 
-    val htmltop:String = ("<html><head><title>Studentreport " + timestamp + "</title><head>" +
+    val htmltop:String = ("" +
+      "<html>" +
+      "<head>" +
+      "<title>Studentreport " + timestamp + "</title>" +
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"reportres/stylesheet.css\" />" +
+      "<head>" +
       "<body>" +
       "<h1>Studentreport</h1>" +
       "<table>" +
