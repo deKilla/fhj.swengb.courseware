@@ -142,7 +142,7 @@ object StudentData {
       "<h1>Studentreport</h1>" +
       "<table>" +
       "<tr>" +
-      "<th>ID</th><th>firstname</th><th>lastname</th><th>email</th><th>telnr</th><th>githubUsername</th><th>group</th>" +
+      "<th>ID</th><th>firstname</th><th>lastname</th><th>email</th><th>birthday</th><th>telnr</th><th>githubUsername</th><th>group</th>" +
       "</tr>")
 
     val htmlbottom:String = ("</table></body></html>")
