@@ -1,5 +1,6 @@
 package fhj.swengb.courseware
 
+import java.awt.Desktop
 import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
 import java.util.Calendar
@@ -132,7 +133,9 @@ object StudentData {
     import java.io._
     val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
     val timestamp: String = (System.currentTimeMillis / 1000).toString
-    val pw = new PrintWriter(new File(path + "studentreport_" + timestamp + ".html"))
+    val file:String = path + "studentreport_" + timestamp + ".html"
+    val report = new File(file)
+    val pw = new PrintWriter(report)
 
     val htmltop:String = ("<html><head><title>Studentreport " + timestamp + "</title><head>" +
       "<body>" +
@@ -161,6 +164,8 @@ object StudentData {
 
     pw.append(htmlbottom)
     pw.close
+
+    Desktop.getDesktop.open(report)
   }
 
 }
