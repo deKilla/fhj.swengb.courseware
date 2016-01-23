@@ -2,6 +2,7 @@ package fhj.swengb.courseware
 
 import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
+import java.util.Calendar
 import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
 
 import fhj.swengb.GitHub
@@ -50,6 +51,7 @@ object Student extends DB.DBEntity[Student] {
     )
     lb.toList
   }
+
 }
 
 sealed trait Students {
@@ -125,8 +127,45 @@ object StudentData {
     } else { Map.empty }
     data
   }
-}
 
+  def createReport(students:Set[Student]): Unit = {
+    import java.io._
+    val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
+    val timestamp: String = (System.currentTimeMillis / 1000).toString
+    val pw = new PrintWriter(new  File(path + "studentreport_" + timestamp + ".html"))
+
+    val htmltop:String = ("<html><head><title>Studentreport " + timestamp + "</title><head>" +
+      "<body>" +
+      "<h1>Studentreport</h1>" +
+      "<table>" +
+      "<tr>" +
+      "<th>ID</th><th>firstname</th><th>lastname</th><th>email</th><th>telnr</th><th>githubUsername</th><th>group</th>" +
+      "</tr>")
+
+    val htmlbottom:String = ("</table></body></html>")
+
+
+
+    pw.write(htmltop)
+
+    for (student <- students){
+      pw.append("<tr>")
+      pw.append("<td>" + student.ID + "</td>")
+      pw.append("<td>" + student.firstname + "</td>")
+      pw.append("<td>" + student.lastname + "</td>")
+      pw.append("<td>" + student.email + "</td>")
+      pw.append("<td>" + student.birthday + "</td>")
+      pw.append("<td>" + student.telnr + "</td>")
+      pw.append("<td>" + student.githubUsername + "</td>")
+      pw.append("<td>" + student.group + "</td>")
+      pw.append("</tr>")
+    }
+
+    pw.append(htmlbottom)
+    pw.close
+  }
+
+}
 
 class MutableStudent {
 
