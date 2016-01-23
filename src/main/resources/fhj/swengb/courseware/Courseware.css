@@ -67,3 +67,12 @@
     -fx-background-insets: 20px;
 }
 
+.inputarea {
+    -fx-background-color:#5a4;
+    visibility: visible;
+}
+
+.inputarea:disabled {
+    -fx-opacity:1;
+    visibility: hidden;
+    }
