@@ -180,7 +180,16 @@ class CWStudentController extends Initializable {
   @FXML var C8: StudentTC[Int] = _
 
   @FXML var inputarea: Pane = _
+/*
+  @FXML  private TextField firstname;
+  @FXML  private TextField lastname;
+  @FXML  private TextField email;
+  @FXML  private TextField birthday;
+  @FXML  private TextField telnr;
+  @FXML  private TextField gitnubUsername;
+  @FXML  private TextField group;
 
+*/
 
   def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableStudent, T]
@@ -201,16 +210,19 @@ class CWStudentController extends Initializable {
   }
 
   val students: Set[Student] = Set(
-    Student(1,"Michael","Fuchs","michael.fuchs@edu.fh-joanneum.at","25.10.1987","06642282330","deKilla",1)
-   ,Student(2,"Carina","Herzog","carina.herzog@edu.fh-joanneum.at","14.10.1993","asdf","carinaher",1)
+    Student(1,"Michael","Fuchs","michael.fuchs@edu.fh-joanneum.at","25.10.1987","06642282330","deKilla",1),
+    Student(2,"Carina","Herzog","carina.herzog@edu.fh-joanneum.at","14.10.1993","asdf","carinaher",1)
   )
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
-  def add(): Unit = {for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}}
+  def add(): Unit = {
+
+    for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}
+  }
+  def close(): Unit = inputarea.setVisible(false)
+  def accept(): Unit = inputarea.setVisible(false)
   def menu(): Unit = {}
 
-  def open(): Unit = inputarea.setDisable(false)
-  def close(): Unit = inputarea.setDisable(true)
 
 }
 
