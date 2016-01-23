@@ -132,7 +132,7 @@ object StudentData {
     import java.io._
     val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
     val timestamp: String = (System.currentTimeMillis / 1000).toString
-    val pw = new PrintWriter(new  File(path + "studentreport_" + timestamp + ".html"))
+    val pw = new PrintWriter(new File(path + "studentreport_" + timestamp + ".html"))
 
     val htmltop:String = ("<html><head><title>Studentreport " + timestamp + "</title><head>" +
       "<body>" +
@@ -143,8 +143,6 @@ object StudentData {
       "</tr>")
 
     val htmlbottom:String = ("</table></body></html>")
-
-
 
     pw.write(htmltop)
 
