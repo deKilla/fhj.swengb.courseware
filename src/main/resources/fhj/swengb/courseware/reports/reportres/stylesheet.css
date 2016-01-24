@@ -1,0 +1,10 @@
+
+body { padding:30px; font-family:Arial; background:#eee; }
+
+h1 { font-size:50px; font-variant:small-caps; background:url(fhlogo.png) top right no-repeat; height:50px; }
+
+th { background:#888; }
+
+td,th { border:1px solid #000; padding:10px; }
+
+td { background:#fff; }

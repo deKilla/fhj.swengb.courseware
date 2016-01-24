@@ -213,6 +213,10 @@ class CWStudentController extends Initializable {
   def open(): Unit = inputarea.setDisable(false)
   def close(): Unit = inputarea.setDisable(true)
 
+  def report(): Unit = StudentData.createReport(students)
+
+
+
 }
 
 class CWLecturerController extends Initializable {

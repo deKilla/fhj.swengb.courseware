@@ -1,13 +1,8 @@
 package fhj.swengb.courseware
 
-import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
 import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
-
-import fhj.swengb.GitHub
-
 import scala.collection.mutable.ListBuffer
-
 
 object Exam extends DB.DBEntity[Exam] {
   def fromDB(stringToSet: (String) => ResultSet) = ???
@@ -76,21 +71,61 @@ case class Exam(ID: Int,
 
 object examquery {
   val selectall = "select * from Exams"
-  def query():String = {
-    selectall
-  }
 }
 
 object ExamData {
-  def asMap(): Map[_, Exam] = {
+  def asMap(query:String = examquery.selectall): Map[_, Exam] = {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
-      Exam.fromDB(Exam.query(c)(examquery.query())
-      ).map(l => (l.ID,l)).toMap
+      Exam.fromDB(Exam.query(c)(query)
+      ).map(e => (e.ID,e)).toMap
     } else { Map.empty }
     data
   }
+
+  def createReport(exams:Set[Exam]): Unit = {
+    import java.io._
+    import java.awt.Desktop
+
+    val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
+    val timestamp: String = (System.currentTimeMillis / 1000).toString
+    val filename:String = path + "examreport_" + timestamp + ".html"
+    val file = new File(filename)
+    val report = new PrintWriter(file)
+
+    val htmltop:String = ("" +
+      "<html>" +
+      "<head>" +
+      "<title>Examreport " + timestamp + "</title>" +
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"reportres/stylesheet.css\" />" +
+      "<head>" +
+      "<body>" +
+      "<h1>Examreport</h1>" +
+      "<table>" +
+      "<tr>" +
+      "<th>ID</th><th>course</th><th>attemp</th><th>date</th>" +
+      "</tr>")
+
+    val htmlbottom:String = ("</table></body></html>")
+
+    report.write(htmltop)
+
+    for (exam <- exams){
+      report.append("<tr>")
+      report.append("<td>" + exam.ID + "</td>")
+      report.append("<td>" + exam.course + "</td>")
+      report.append("<td>" + exam.attempt + "</td>")
+      report.append("<td>" + exam.date + "</td>")
+      report.append("</tr>")
+    }
+
+    report.append(htmlbottom)
+    report.close
+
+    Desktop.getDesktop.open(file)
+  }
+
 }
 
 
