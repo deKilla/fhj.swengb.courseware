@@ -24,7 +24,7 @@
                 <Button fx:id="newButton" mnemonicParsing="false" text="New" />
                   <Button fx:id="editButton" mnemonicParsing="false" text="Edit" />
                   <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
-                  <Button fx:id="mainMenu" cancelButton="true" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Main Menu" wrapText="true" onAction="#menu">
+                  <Button fx:id="mainMenu" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Main Menu" wrapText="true">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
