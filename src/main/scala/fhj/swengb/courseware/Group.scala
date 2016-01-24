@@ -1,11 +1,7 @@
 package fhj.swengb.courseware
 
-import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
 import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
-
-import fhj.swengb.GitHub
-
 import scala.collection.mutable.ListBuffer
 
 
@@ -48,7 +44,6 @@ sealed trait Groups {
 
   def name: String
 
-
   def normalize(in: String): String = {
     val mapping =
       Map("ä" -> "ae",
@@ -66,21 +61,59 @@ case class Group(ID: Int,
 
 object groupquery {
   val selectall = "select * from Groups"
-  def query():String = {
-    selectall
-  }
 }
 
 object GroupData {
-  def asMap(): Map[_, Group] = {
+  def asMap(query:String = groupquery.selectall): Map[_, Group] = {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
-      Group.fromDB(Group.query(c)(groupquery.query())
-      ).map(l => (l.ID,l)).toMap
+      Group.fromDB(Group.query(c)(query)
+      ).map(g => (g.ID,g)).toMap
     } else { Map.empty }
     data
   }
+
+  def createReport(groups:Set[Group]): Unit = {
+    import java.io._
+    import java.awt.Desktop
+
+    val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
+    val timestamp: String = (System.currentTimeMillis / 1000).toString
+    val filename:String = path + "groupreport_" + timestamp + ".html"
+    val file = new File(filename)
+    val report = new PrintWriter(file)
+
+    val htmltop:String = ("" +
+      "<html>" +
+      "<head>" +
+      "<title>Groupreport " + timestamp + "</title>" +
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"reportres/stylesheet.css\" />" +
+      "<head>" +
+      "<body>" +
+      "<h1>Groupreport</h1>" +
+      "<table>" +
+      "<tr>" +
+      "<th>ID</th><th>name</th>" +
+      "</tr>")
+
+    val htmlbottom:String = ("</table></body></html>")
+
+    report.write(htmltop)
+
+    for (group <- groups){
+      report.append("<tr>")
+      report.append("<td>" + group.ID + "</td>")
+      report.append("<td>" + group.name + "</td>")
+      report.append("</tr>")
+    }
+
+    report.append(htmlbottom)
+    report.close
+
+    Desktop.getDesktop.open(file)
+  }
+
 }
 
 
