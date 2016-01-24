@@ -14,8 +14,8 @@ object Exam extends DB.DBEntity[Exam] {
 
 
   val dropTableSql = "drop table if exists Exams"
-  val createTableSql = "create table Exams (ID int, name string, date String)"
-  val insertSql = "insert into Exams (ID, name, date) VALUES (?, ?, ?)"
+  val createTableSql = "create table Exams (ID int, course string, attempt int, date String)"
+  val insertSql = "insert into Exams (ID, course, attempt, date) VALUES (?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -26,7 +26,8 @@ object Exam extends DB.DBEntity[Exam] {
   def toDB(c: Connection)(s: Exam): Int = {
     val pstmt = c.prepareStatement(insertSql)
     pstmt.setInt(1, s.ID)
-    pstmt.setString(2, s.name)
+    pstmt.setString(2, s.course)
+    pstmt.setInt(3, s.attempt)
     pstmt.setString(3, s.date)
     pstmt.executeUpdate()
   }
@@ -36,7 +37,8 @@ object Exam extends DB.DBEntity[Exam] {
     while (rs.next()) lb.append(
       Exam(
         rs.getInt("ID"),
-        rs.getString("name"),
+        rs.getString("course"),
+        rs.getInt("attempt"),
         rs.getString("date")
         )
     )
@@ -48,7 +50,9 @@ sealed trait Exams {
 
   def ID: Int
 
-  def name: String
+  def course: String
+
+  def attempt: Int
 
   def date: String
 
@@ -65,8 +69,9 @@ sealed trait Exams {
 }
 
 case class Exam(ID: Int,
-                    name: String,
-                    date: String
+                course: String,
+                attempt: Int,
+                date: String
                     ) extends Exams
 
 object examquery {
@@ -92,12 +97,14 @@ object ExamData {
 class MutableExam {
 
   val p_ID: SimpleIntegerProperty = new SimpleIntegerProperty()
-  val p_name: SimpleStringProperty = new SimpleStringProperty()
+  val p_course: SimpleStringProperty = new SimpleStringProperty()
+  val p_attempt: SimpleIntegerProperty = new SimpleIntegerProperty()
   val p_date: SimpleStringProperty = new SimpleStringProperty()
 
 
   def setID(ID: Int) = p_ID.set(ID)
-  def setName(name: String) = p_name.set(name)
+  def setCourse(course: String) = p_course.set(course)
+  def setAttempt(attempt: Int) = p_attempt.set(attempt)
   def setDate(date: String) = p_date.set(date)
 
 
@@ -108,7 +115,8 @@ object MutableExam {
   def apply(l: Exam): MutableExam = {
     val ml = new MutableExam
     ml.setID(l.ID)
-    ml.setName(l.name)
+    ml.setCourse(l.course)
+    ml.setAttempt(l.attempt)
     ml.setDate(l.date)
     ml
   }

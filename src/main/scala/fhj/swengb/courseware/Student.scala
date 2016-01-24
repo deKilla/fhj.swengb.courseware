@@ -1,7 +1,9 @@
 package fhj.swengb.courseware
 
+import java.awt.Desktop
 import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
+import java.util.Calendar
 import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
 
 import fhj.swengb.GitHub
@@ -50,6 +52,7 @@ object Student extends DB.DBEntity[Student] {
     )
     lb.toList
   }
+
 }
 
 sealed trait Students {
@@ -125,8 +128,52 @@ object StudentData {
     } else { Map.empty }
     data
   }
-}
 
+  def createReport(students:Set[Student]): Unit = {
+    import java.io._
+    val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
+    val timestamp: String = (System.currentTimeMillis / 1000).toString
+    val file:String = path + "studentreport_" + timestamp + ".html"
+    val report = new File(file)
+    val pw = new PrintWriter(report)
+
+    val htmltop:String = ("" +
+      "<html>" +
+      "<head>" +
+      "<title>Studentreport " + timestamp + "</title>" +
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"reportres/stylesheet.css\" />" +
+      "<head>" +
+      "<body>" +
+      "<h1>Studentreport</h1>" +
+      "<table>" +
+      "<tr>" +
+      "<th>ID</th><th>firstname</th><th>lastname</th><th>email</th><th>birthday</th><th>telnr</th><th>githubUsername</th><th>group</th>" +
+      "</tr>")
+
+    val htmlbottom:String = ("</table></body></html>")
+
+    pw.write(htmltop)
+
+    for (student <- students){
+      pw.append("<tr>")
+      pw.append("<td>" + student.ID + "</td>")
+      pw.append("<td>" + student.firstname + "</td>")
+      pw.append("<td>" + student.lastname + "</td>")
+      pw.append("<td>" + student.email + "</td>")
+      pw.append("<td>" + student.birthday + "</td>")
+      pw.append("<td>" + student.telnr + "</td>")
+      pw.append("<td>" + student.githubUsername + "</td>")
+      pw.append("<td>" + student.group + "</td>")
+      pw.append("</tr>")
+    }
+
+    pw.append(htmlbottom)
+    pw.close
+
+    Desktop.getDesktop.open(report)
+  }
+
+}
 
 class MutableStudent {
 
