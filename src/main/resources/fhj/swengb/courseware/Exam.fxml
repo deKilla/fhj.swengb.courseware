@@ -5,21 +5,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CoursewareAppController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWExamController">
    <children>
       <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <center>
             <TableView fx:id="tableView" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="C2" prefWidth="164.0" text="firstname" />
-                <TableColumn fx:id="C3" prefWidth="213.0" text="lastname" />
-                  <TableColumn fx:id="C31" prefWidth="164.0" text="email" />
-                  <TableColumn fx:id="C32" minWidth="0.0" prefWidth="129.0" text="birthday" />
-                  <TableColumn fx:id="C321" minWidth="0.0" prefWidth="143.0" text="phone" />
-                <!--<TableColumn fx:id="C4" prefWidth="55.0" text="Grade" />
-                <TableColumn fx:id="C5" prefWidth="96.0" text="Class" />
-                <TableColumn fx:id="C6" prefWidth="92.0" text="Room" />-->
+                <TableColumn fx:id="C2" prefWidth="164.0" text="course" />
+                <TableColumn fx:id="C3" prefWidth="164.0" text="attempt" />
+                <TableColumn fx:id="C4" prefWidth="164.0" text="date" />
               </columns>
             </TableView>
          </center>
@@ -29,7 +24,7 @@
                 <Button fx:id="newButton" mnemonicParsing="false" text="New" />
                   <Button fx:id="editButton" mnemonicParsing="false" text="Edit" />
                   <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Main Menu" wrapText="true">
+                  <Button fx:id="mainMenu" cancelButton="true" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Main Menu" wrapText="true" onAction="#menu">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
