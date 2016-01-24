@@ -206,11 +206,13 @@ class CWStudentController extends Initializable {
   )
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
-  def add(): Unit = {for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}}
+  def add(): Unit = {inputarea.setVisible(true)}
   def menu(): Unit = {}
 
-  def open(): Unit = inputarea.setDisable(false)
-  def close(): Unit = inputarea.setDisable(true)
+  def ok(): Unit = {
+    for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}
+    inputarea.setVisible(false)}
+  def close(): Unit = inputarea.setVisible(false)
 
 }
 
@@ -305,6 +307,7 @@ class CWExamController extends Initializable {
   @FXML var C1: ExamTC[Int] = _
   @FXML var C2: ExamTC[String] = _
   @FXML var C3: ExamTC[String] = _
+  @FXML var C4: ExamTC[String] = _
 
   def initTableViewColumn[T]: (TableColumn[MutableExam, T], (MutableExam) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableExam, T]
@@ -315,8 +318,9 @@ class CWExamController extends Initializable {
     tableView.setItems(mutableExams)
 
     initTableViewColumn[Int](C1, _.p_ID)
-    initTableViewColumn[String](C2, _.p_name)
-    initTableViewColumn[String](C3, _.p_date)
+    initTableViewColumn[String](C2, _.p_course)
+    initTableViewColumn[String](C3, _.p_attempt)
+    initTableViewColumn[String](C4, _.p_date)
   }
 
 }
