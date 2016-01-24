@@ -16,21 +16,21 @@
             </Text>
             <VBox layoutX="138.0" layoutY="133.0" prefHeight="496.0" prefWidth="303.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Students" textAlignment="CENTER" onAction="#showStudents"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Students" textAlignment="CENTER" onAction="#showStudents"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Groups" textAlignment="CENTER" onAction="#showGroups"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Groups" textAlignment="CENTER" onAction="#showGroups"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Courses" textAlignment="CENTER" onAction="#showCourses"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Courses" textAlignment="CENTER" onAction="#showCourses"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Lecturers" textAlignment="CENTER" onAction="#showLecturers"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Lecturers" textAlignment="CENTER" onAction="#showLecturers"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Homeworks" textAlignment="CENTER" onAction="#showHomeworks"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Homeworks" textAlignment="CENTER" onAction="#showHomeworks"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Group Assignments" textAlignment="CENTER" onAction="#showAssignments"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Group Assignments" textAlignment="CENTER" onAction="#showAssignments"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Projects" textAlignment="CENTER" onAction="#showProjects"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Projects" textAlignment="CENTER" onAction="#showProjects"/>
                   <Pane prefHeight="32.0" prefWidth="303.0" />
-                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" stylesheets="@Courseware.css" text="Exams" textAlignment="CENTER" onAction="#showExams"/>
+                  <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="303.0" styleClass="record-sales" text="Exams" textAlignment="CENTER" onAction="#showExams"/>
                </children>
             </VBox>
          </children>

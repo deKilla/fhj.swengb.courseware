@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
     <children>
         <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
             <center>
@@ -24,7 +24,7 @@
                 </TableView>
             </center>
             <top>
-                <ToolBar BorderPane.alignment="CENTER">
+                <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
                     <items>
                         <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
                         <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
@@ -35,7 +35,7 @@
             <bottom>
                 <ToolBar prefHeight="43.0" prefWidth="867.0">
                     <items>
-                        <Button fx:id="generateReport1" mnemonicParsing="false" onAction="#report" text="Generate Report" />
+                        <Button fx:id="generateReport1" mnemonicParsing="false" text="Generate Report" />
                     </items>
                     <padding>
                         <Insets left="700.0" />

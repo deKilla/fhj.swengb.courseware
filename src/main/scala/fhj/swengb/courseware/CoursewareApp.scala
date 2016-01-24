@@ -169,7 +169,6 @@ class CWStudentController extends Initializable {
 
   type StudentTC[T] = TableColumn[MutableStudent, T]
 
-  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableStudent] = _
   @FXML var C1: StudentTC[Int] = _
   @FXML var C2: StudentTC[String] = _
@@ -188,7 +187,7 @@ class CWStudentController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableStudents = mkObservableList(for (student <- StudentData.asMap()) yield MutableStudent(student._2))
+    val mutableStudents = mkObservableList(for (student <- StudentData.asMap) yield MutableStudent(student._2))
     tableView.setItems(mutableStudents)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -208,12 +207,12 @@ class CWStudentController extends Initializable {
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
   def add(): Unit = {inputarea.setVisible(true)}
-  def menu(): Unit = root.getScene.getWindow.hide()
+  def menu(): Unit = {}
 
-  def ok(): Unit =  inputarea.setVisible(false)
+  def ok(): Unit = {
+    for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}
+    inputarea.setVisible(false)}
   def close(): Unit = inputarea.setVisible(false)
-
-  def report(): Unit = StudentData.createReport(students)
 
 }
 
@@ -234,7 +233,7 @@ class CWLecturerController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap()) yield MutableLecturer(lecturer._2))
+    val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap) yield MutableLecturer(lecturer._2))
     tableView.setItems(mutableLecturers)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -262,7 +261,7 @@ class CWCourseController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableCourses = mkObservableList(for (course <- CourseData.asMap()) yield MutableCourse(course._2))
+    val mutableCourses = mkObservableList(for (course <- CourseData.asMap) yield MutableCourse(course._2))
     tableView.setItems(mutableCourses)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -288,7 +287,7 @@ class CWGroupController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableGroups = mkObservableList(for (group <- GroupData.asMap()) yield MutableGroup(group._2))
+    val mutableGroups = mkObservableList(for (group <- GroupData.asMap) yield MutableGroup(group._2))
     tableView.setItems(mutableGroups)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -315,7 +314,7 @@ class CWExamController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableExams = mkObservableList(for (exam <- ExamData.asMap()) yield MutableExam(exam._2))
+    val mutableExams = mkObservableList(for (exam <- ExamData.asMap) yield MutableExam(exam._2))
     tableView.setItems(mutableExams)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -343,7 +342,7 @@ class CWProjectController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableProjects = mkObservableList(for (project <- ProjectData.asMap()) yield MutableProject(project._2))
+    val mutableProjects = mkObservableList(for (project <- ProjectData.asMap) yield MutableProject(project._2))
     tableView.setItems(mutableProjects)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -370,7 +369,7 @@ class CWAssignmentController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap()) yield MutableAssignment(assignment._2))
+    val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap) yield MutableAssignment(assignment._2))
     tableView.setItems(mutableAssignments)
 
     initTableViewColumn[Int](C1, _.p_ID)
