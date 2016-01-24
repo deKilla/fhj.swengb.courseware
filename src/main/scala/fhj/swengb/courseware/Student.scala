@@ -1,13 +1,9 @@
 package fhj.swengb.courseware
 
-import java.awt.Desktop
 import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
-import java.util.Calendar
 import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
-
 import fhj.swengb.GitHub
-
 import scala.collection.mutable.ListBuffer
 
 
@@ -113,17 +109,14 @@ case class Student(ID: Int,
 
 object studentquery {
   val selectall = "select * from Students"
-  def query():String = {
-    selectall
-  }
 }
 
 object StudentData {
-  def asMap(): Map[_, Student] = {
+  def asMap(query:String = studentquery.selectall): Map[_, Student] = {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
-      Student.fromDB(Student.query(c)(studentquery.query())
+      Student.fromDB(Student.query(c)(query)
       ).map(s => (s.ID,s)).toMap
     } else { Map.empty }
     data
@@ -131,11 +124,13 @@ object StudentData {
 
   def createReport(students:Set[Student]): Unit = {
     import java.io._
+    import java.awt.Desktop
+
     val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
     val timestamp: String = (System.currentTimeMillis / 1000).toString
-    val file:String = path + "studentreport_" + timestamp + ".html"
-    val report = new File(file)
-    val pw = new PrintWriter(report)
+    val filename:String = path + "studentreport_" + timestamp + ".html"
+    val file = new File(filename)
+    val report = new PrintWriter(file)
 
     val htmltop:String = ("" +
       "<html>" +
@@ -152,25 +147,25 @@ object StudentData {
 
     val htmlbottom:String = ("</table></body></html>")
 
-    pw.write(htmltop)
+    report.write(htmltop)
 
     for (student <- students){
-      pw.append("<tr>")
-      pw.append("<td>" + student.ID + "</td>")
-      pw.append("<td>" + student.firstname + "</td>")
-      pw.append("<td>" + student.lastname + "</td>")
-      pw.append("<td>" + student.email + "</td>")
-      pw.append("<td>" + student.birthday + "</td>")
-      pw.append("<td>" + student.telnr + "</td>")
-      pw.append("<td>" + student.githubUsername + "</td>")
-      pw.append("<td>" + student.group + "</td>")
-      pw.append("</tr>")
+      report.append("<tr>")
+      report.append("<td>" + student.ID + "</td>")
+      report.append("<td>" + student.firstname + "</td>")
+      report.append("<td>" + student.lastname + "</td>")
+      report.append("<td>" + student.email + "</td>")
+      report.append("<td>" + student.birthday + "</td>")
+      report.append("<td>" + student.telnr + "</td>")
+      report.append("<td>" + student.githubUsername + "</td>")
+      report.append("<td>" + student.group + "</td>")
+      report.append("</tr>")
     }
 
-    pw.append(htmlbottom)
-    pw.close
+    report.append(htmlbottom)
+    report.close
 
-    Desktop.getDesktop.open(report)
+    Desktop.getDesktop.open(file)
   }
 
 }
