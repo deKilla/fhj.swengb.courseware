@@ -4,7 +4,7 @@ package fhj.swengb.courseware
 import java.awt.Button
 import java.net.URL
 import java.util.ResourceBundle
-import javafx.application.{Platform, Application}
+import javafx.application.Application
 import javafx.beans.property.{SimpleDoubleProperty, SimpleIntegerProperty, SimpleStringProperty}
 import javafx.beans.value.ObservableValue
 import javafx.collections.{FXCollections, ObservableList}
@@ -108,7 +108,7 @@ class CoursewareAppController extends Initializable {
     val groupLoader = new FXMLLoader(getClass.getResource("Group.fxml"))
     val groupStage = new Stage()
 
-    groupStage.setTitle("Courseware | Groups")
+    groupStage.setTitle("Courseware | Courses")
     groupLoader.load[Parent]()
     groupStage.setScene(new Scene(groupLoader.getRoot[Parent]))
 
@@ -123,7 +123,7 @@ class CoursewareAppController extends Initializable {
     examLoader.load[Parent]()
     examStage.setScene(new Scene(examLoader.getRoot[Parent]))
 
-    val showStage = examStage.show()
+    examStage.show()
   }
 
   def showProjects(): Unit = {
@@ -152,7 +152,7 @@ class CoursewareAppController extends Initializable {
     val homeworkLoader = new FXMLLoader(getClass.getResource("Homework.fxml"))
     val homeworkStage = new Stage()
 
-    homeworkStage.setTitle("Courseware | Homeworks")
+    homeworkStage.setTitle("Courseware | Homework")
     homeworkLoader.load[Parent]()
     homeworkStage.setScene(new Scene(homeworkLoader.getRoot[Parent]))
 
@@ -169,6 +169,7 @@ class CWStudentController extends Initializable {
 
   type StudentTC[T] = TableColumn[MutableStudent, T]
 
+  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableStudent] = _
   @FXML var C1: StudentTC[Int] = _
   @FXML var C2: StudentTC[String] = _
@@ -180,7 +181,6 @@ class CWStudentController extends Initializable {
   @FXML var C8: StudentTC[Int] = _
 
   @FXML var inputarea: Pane = _
-  @FXML var root : AnchorPane = _
 
 
   def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
@@ -188,7 +188,7 @@ class CWStudentController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableStudents = mkObservableList(for (student <- StudentData.asMap) yield MutableStudent(student._2))
+    val mutableStudents = mkObservableList(for (student <- StudentData.asMap()) yield MutableStudent(student._2))
     tableView.setItems(mutableStudents)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -207,15 +207,13 @@ class CWStudentController extends Initializable {
   )
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
-  def add(): Unit = {for (c <- DB.maybeConnection){students.map(Student.toDB(c)(_))}}
-  def menu() : Unit = root.getScene.getWindow.hide()
+  def add(): Unit = {inputarea.setVisible(true)}
+  def menu(): Unit = root.getScene.getWindow.hide()
 
-  def open(): Unit = inputarea.setDisable(false)
-  def close(): Unit = inputarea.setDisable(true)
+  def ok(): Unit =  inputarea.setVisible(false)
+  def close(): Unit = inputarea.setVisible(false)
 
   def report(): Unit = StudentData.createReport(students)
-
-
 
 }
 
@@ -236,7 +234,7 @@ class CWLecturerController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap) yield MutableLecturer(lecturer._2))
+    val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap()) yield MutableLecturer(lecturer._2))
     tableView.setItems(mutableLecturers)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -264,7 +262,7 @@ class CWCourseController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableCourses = mkObservableList(for (course <- CourseData.asMap) yield MutableCourse(course._2))
+    val mutableCourses = mkObservableList(for (course <- CourseData.asMap()) yield MutableCourse(course._2))
     tableView.setItems(mutableCourses)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -290,7 +288,7 @@ class CWGroupController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableGroups = mkObservableList(for (group <- GroupData.asMap) yield MutableGroup(group._2))
+    val mutableGroups = mkObservableList(for (group <- GroupData.asMap()) yield MutableGroup(group._2))
     tableView.setItems(mutableGroups)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -309,25 +307,22 @@ class CWExamController extends Initializable {
   @FXML var tableView: TableView[MutableExam] = _
   @FXML var C1: ExamTC[Int] = _
   @FXML var C2: ExamTC[String] = _
-  @FXML var C3: ExamTC[Int] = _
+  @FXML var C3: ExamTC[String] = _
   @FXML var C4: ExamTC[String] = _
-  @FXML var root : AnchorPane = _
 
   def initTableViewColumn[T]: (TableColumn[MutableExam, T], (MutableExam) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableExam, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableExams = mkObservableList(for (exam <- ExamData.asMap) yield MutableExam(exam._2))
+    val mutableExams = mkObservableList(for (exam <- ExamData.asMap()) yield MutableExam(exam._2))
     tableView.setItems(mutableExams)
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_course)
-    initTableViewColumn[Int](C3, _.p_attempt)
+    initTableViewColumn[String](C3, _.p_attempt)
     initTableViewColumn[String](C4, _.p_date)
   }
-
-  def menu() : Unit = root.getScene.getWindow.hide()
 
 }
 
@@ -348,7 +343,7 @@ class CWProjectController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableProjects = mkObservableList(for (project <- ProjectData.asMap) yield MutableProject(project._2))
+    val mutableProjects = mkObservableList(for (project <- ProjectData.asMap()) yield MutableProject(project._2))
     tableView.setItems(mutableProjects)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -375,7 +370,7 @@ class CWAssignmentController extends Initializable {
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap) yield MutableAssignment(assignment._2))
+    val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap()) yield MutableAssignment(assignment._2))
     tableView.setItems(mutableAssignments)
 
     initTableViewColumn[Int](C1, _.p_ID)
@@ -383,4 +378,7 @@ class CWAssignmentController extends Initializable {
     initTableViewColumn[String](C3, _.p_description)
 
   }
+
 }
+
+
