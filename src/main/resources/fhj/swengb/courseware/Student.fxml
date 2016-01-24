@@ -1,52 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
-   <children>
-      <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
-         <center>
-            <TableView fx:id="tableView" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="C2" prefWidth="164.0" text="firstname" />
-                <TableColumn fx:id="C3" prefWidth="213.0" text="lastname" />
-                <TableColumn fx:id="C4" prefWidth="164.0" text="email" />
-                <TableColumn fx:id="C5" minWidth="0.0" prefWidth="129.0" text="birthday" />
-                <TableColumn fx:id="C6" minWidth="0.0" prefWidth="143.0" text="telnr" />
-                <TableColumn fx:id="C7" minWidth="0.0" prefWidth="143.0" text="githubUsername" />
-                <TableColumn fx:id="C8" minWidth="0.0" prefWidth="143.0" text="group" />
-              </columns>
-            </TableView>
-         </center>
-         <top>
-            <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
-              <items>
-                  <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
-                  <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
-                  <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" />
-                  <Button mnemonicParsing="false" onAction="#open" text="open" />
-              </items>
-            </ToolBar>
-         </top>
-         <bottom>
-            <ToolBar prefHeight="43.0" prefWidth="867.0">
-              <items>
-                  <Button fx:id="generateReport1" mnemonicParsing="false" onAction="#report" text="Generate Report" />
-              </items>
-               <padding>
-                  <Insets left="700.0" />
-               </padding>
-            </ToolBar>
-         </bottom>
-      </BorderPane>
-      <Pane fx:id="inputarea" disable="true" prefHeight="265.0" prefWidth="347.0" styleClass="inputarea" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="100.0">
-         <children>
-            <Button fx:id="close" layoutX="121.0" layoutY="46.0" mnemonicParsing="false" onAction="#close" text="close" />
-         </children>
-      </Pane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWStudentController">
+    <children>
+        <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
+            <center>
+                <TableView fx:id="tableView" BorderPane.alignment="CENTER">
+                    <columns>
+                        <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
+                        <TableColumn fx:id="C2" prefWidth="164.0" text="firstname" />
+                        <TableColumn fx:id="C3" prefWidth="213.0" text="lastname" />
+                        <TableColumn fx:id="C4" prefWidth="164.0" text="email" />
+                        <TableColumn fx:id="C5" minWidth="0.0" prefWidth="129.0" text="birthday" />
+                        <TableColumn fx:id="C6" minWidth="0.0" prefWidth="143.0" text="telnr" />
+                        <TableColumn fx:id="C7" minWidth="0.0" prefWidth="143.0" text="githubUsername" />
+                        <TableColumn fx:id="C8" minWidth="0.0" prefWidth="143.0" text="group" />
+                    </columns>
+                </TableView>
+            </center>
+            <top>
+                <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
+                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
+                        <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="600.0" />
+                    </items>
+                </ToolBar>
+            </top>
+            <bottom>
+                <ToolBar prefHeight="43.0" prefWidth="867.0">
+                    <items>
+                        <Button fx:id="generateReport1" mnemonicParsing="false" text="Generate Report" />
+                    </items>
+                    <padding>
+                        <Insets left="700.0" />
+                    </padding>
+                </ToolBar>
+            </bottom>
+        </BorderPane>
+        <Pane fx:id="inputarea" layoutY="22.0" prefHeight="343.0" prefWidth="347.0" style="-fx-background-color: white;" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="22.0">
+            <children>
+                <Button fx:id="close" layoutX="260.0" layoutY="298.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="79.0" text="Cancel" />
+                <Button fx:id="accept" layoutX="167.0" layoutY="299.0" mnemonicParsing="false" onAction="#ok" prefHeight="25.0" prefWidth="79.0" text="OK" />
+                <GridPane layoutX="22.0" layoutY="42.0" prefHeight="223.0" prefWidth="305.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="209.0" minWidth="10.0" prefWidth="98.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="10.0" prefWidth="212.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <TextField fx:id="firstName" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="lastName" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="email" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="birthday" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="gitHubUser" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="group" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="telnr" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="First Name" GridPane.rowIndex="1" />
+                        <Label text="Last Name" GridPane.rowIndex="2" />
+                        <Label text="e-mail" GridPane.rowIndex="3" />
+                        <Label text="Birthday" GridPane.rowIndex="4" />
+                        <Label text="Telnr" GridPane.rowIndex="5" />
+                        <Label text="GitHub User" GridPane.rowIndex="6" />
+                        <Label text="Group" GridPane.rowIndex="7" />
+                    </children>
+                </GridPane>
+                <Label layoutX="97.0" layoutY="18.0" text="Edit Student">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+    </children>
 </AnchorPane>
