@@ -109,6 +109,7 @@ case class Student(ID: Int,
 
 object studentquery {
   val selectall = "select * from Students"
+  val onlyasdf2 = "select * from Students where firstname = \"asdf2\""
 }
 
 object StudentData {
@@ -122,7 +123,7 @@ object StudentData {
     data
   }
 
-  def createReport(students:Set[Student]): Unit = {
+  def createReport(students:Map[_, Student] = this.asMap()): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -149,7 +150,7 @@ object StudentData {
 
     report.write(htmltop)
 
-    for (student <- students){
+    for (student <- students.values){
       report.append("<tr>")
       report.append("<td>" + student.ID + "</td>")
       report.append("<td>" + student.firstname + "</td>")

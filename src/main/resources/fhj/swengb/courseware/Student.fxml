@@ -43,7 +43,7 @@
                 </ToolBar>
             </bottom>
         </BorderPane>
-        <Pane fx:id="inputarea" layoutY="22.0" prefHeight="343.0" prefWidth="347.0" style="-fx-background-color: white;" visible="false" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="22.0">
+        <Pane fx:id="inputarea" disable="true" layoutY="22.0" prefHeight="343.0" prefWidth="347.0" styleClass="inputarea" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="22.0">
             <children>
                 <Button fx:id="close" layoutX="260.0" layoutY="298.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="79.0" text="Cancel" />
                 <Button fx:id="accept" layoutX="167.0" layoutY="299.0" mnemonicParsing="false" onAction="#ok" prefHeight="25.0" prefWidth="79.0" text="OK" />
@@ -63,13 +63,14 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <TextField fx:id="firstName" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="lastName" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="firstname" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="lastname" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="email" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="birthday" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="gitHubUser" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField fx:id="group" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <TextField fx:id="telnr" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="githubUsername" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="group" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
                         <Label text="First Name" GridPane.rowIndex="1" />
                         <Label text="Last Name" GridPane.rowIndex="2" />
                         <Label text="e-mail" GridPane.rowIndex="3" />
@@ -79,7 +80,7 @@
                         <Label text="Group" GridPane.rowIndex="7" />
                     </children>
                 </GridPane>
-                <Label layoutX="97.0" layoutY="18.0" text="Edit Student">
+                <Label layoutX="20.0" layoutY="20.0" text="Add Student" styleClass="inputheadline">
                     <font>
                         <Font size="24.0" />
                     </font>

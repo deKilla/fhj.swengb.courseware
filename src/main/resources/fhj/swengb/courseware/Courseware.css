@@ -68,11 +68,16 @@
 }
 
 .inputarea {
-    -fx-background-color:#5a4;
+    -fx-background-color: #fff;
     visibility: visible;
-}
+    -fx-effect: dropshadow(three-pass-box, #25a, 10, 0, 0, 0);
+    }
 
 .inputarea:disabled {
-    -fx-opacity:1;
     visibility: hidden;
     }
+
+.inputheadline {
+    -fx-font-weight:bold;
+    -fx-font-size:20px;
+}
