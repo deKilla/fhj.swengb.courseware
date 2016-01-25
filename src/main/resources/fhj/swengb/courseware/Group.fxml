@@ -20,7 +20,7 @@
              <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
                  <items>
                      <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
-                     <!--<Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />-->
+                     <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
                      <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="600.0" />
                  </items>
              </ToolBar>

@@ -241,6 +241,12 @@ class CWLecturerController extends Initializable {
   @FXML var C3: LecturerTC[String] = _
   @FXML var C4: LecturerTC[String] = _
 
+  @FXML var inputarea: Pane = _
+
+  @FXML var firstname: TextField = _
+  @FXML var lastname: TextField = _
+  @FXML var title: TextField = _
+
   def repopulate(): Unit = {
     val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap()) yield MutableLecturer(lecturer._2))
     tableView.setItems(mutableLecturers)
@@ -260,8 +266,20 @@ class CWLecturerController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Lecturer.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
+
+  def ok(): Unit =  {
+
+    val ID:Int = LecturerData.asMap().size+1
+    val newlecturer:Lecturer = new Lecturer(ID,firstname.getText,lastname.getText,title.getText)
+    for (c <- DB.maybeConnection) {Lecturer.toDB(c)(newlecturer)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  //def report(): Unit = LecturerData.createReport()
 
 
 }
@@ -278,6 +296,12 @@ class CWCourseController extends Initializable {
   @FXML var C2: CourseTC[String] = _
   @FXML var C3: CourseTC[String] = _
   @FXML var C4: CourseTC[Int] = _
+
+  @FXML var inputarea: Pane = _
+
+  @FXML var name: TextField = _
+  @FXML var branch: TextField = _
+  @FXML var year: TextField = _
 
   def repopulate(): Unit = {
     val mutableCourses = mkObservableList(for (course <- CourseData.asMap()) yield MutableCourse(course._2))
@@ -298,8 +322,20 @@ class CWCourseController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Course.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
+
+  def ok(): Unit =  {
+
+    val ID:Int = CourseData.asMap().size+1
+    val newcourse:Course = new Course(ID,name.getText,branch.getText,year.getText.toInt)
+    for (c <- DB.maybeConnection) {Course.toDB(c)(newcourse)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  //def report(): Unit = CourseData.createReport()
 }
 
 class CWGroupController extends Initializable {
@@ -312,6 +348,11 @@ class CWGroupController extends Initializable {
   @FXML var tableView: TableView[MutableGroup] = _
   @FXML var C1: GroupTC[Int] = _
   @FXML var C2: GroupTC[String] = _
+
+  @FXML var inputarea: Pane = _
+
+  @FXML var name: TextField = _
+
 
   def repopulate(): Unit = {
     val mutableGroups = mkObservableList(for (group <- GroupData.asMap()) yield MutableGroup(group._2))
@@ -330,8 +371,20 @@ class CWGroupController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Group.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
+
+  def ok(): Unit =  {
+
+    val ID:Int = GroupData.asMap().size+1
+    val newgroup:Group = new Group(ID,name.getText)
+    for (c <- DB.maybeConnection) {Group.toDB(c)(newgroup)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  //def report(): Unit = GroupData.createReport()
 }
 
 
@@ -347,6 +400,12 @@ class CWExamController extends Initializable {
   @FXML var C2: ExamTC[String] = _
   @FXML var C3: ExamTC[String] = _
   @FXML var C4: ExamTC[String] = _
+
+  @FXML var inputarea: Pane = _
+
+  @FXML var course: TextField = _
+  @FXML var attempt: TextField = _
+  @FXML var date: TextField = _
 
   def repopulate(): Unit = {
     val mutableExams = mkObservableList(for (exam <- ExamData.asMap()) yield MutableExam(exam._2))
@@ -366,8 +425,20 @@ class CWExamController extends Initializable {
     initTableViewColumn[String](C4, _.p_date)
   }
   def recreate(): Unit = {for (c <- DB.maybeConnection){Exam.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
+
+  def ok(): Unit =  {
+
+    val ID:Int = ExamData.asMap().size+1
+    val newexam:Exam = new Exam(ID,course.getText,attempt.getText.toInt,date.getText)
+    for (c <- DB.maybeConnection) {Exam.toDB(c)(newexam)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  //def report(): Unit = ExamData.createReport()
 
 }
 
@@ -383,6 +454,12 @@ class CWProjectController extends Initializable {
   @FXML var C2: ProjectTC[String] = _
   @FXML var C3: ProjectTC[String] = _
   @FXML var C4: ProjectTC[String] = _
+
+  @FXML var inputarea: Pane = _
+
+  @FXML var name: TextField = _
+  @FXML var begindate: TextField = _
+  @FXML var deadline: TextField = _
 
   def repopulate(): Unit = {
     val mutableProjects = mkObservableList(for (project <- ProjectData.asMap()) yield MutableProject(project._2))
@@ -403,8 +480,20 @@ class CWProjectController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Project.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
+
+  def ok(): Unit =  {
+
+    val ID:Int = ProjectData.asMap().size+1
+    val newproject:Project = new Project(ID,name.getText,begindate.getText,deadline.getText)
+    for (c <- DB.maybeConnection) {Project.toDB(c)(newproject)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  //def report(): Unit = ProjectData.createReport()
 
 }
 
@@ -419,6 +508,11 @@ class CWAssignmentController extends Initializable {
   @FXML var C1: AssignmentTC[Int] = _
   @FXML var C2: AssignmentTC[String] = _
   @FXML var C3: AssignmentTC[String] = _
+
+  @FXML var inputarea: Pane = _
+
+  @FXML var name: TextField = _
+  @FXML var description: TextField = _
 
   def repopulate(): Unit = {
     val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap()) yield MutableAssignment(assignment._2))
@@ -438,8 +532,20 @@ class CWAssignmentController extends Initializable {
 
   }
   def recreate(): Unit = {for (c <- DB.maybeConnection){Assignment.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
+
+  def ok(): Unit =  {
+
+    val ID:Int = AssignmentData.asMap().size+1
+    val newassignment:Assignment = new Assignment(ID,name.getText,description.getText)
+    for (c <- DB.maybeConnection) {Assignment.toDB(c)(newassignment)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  //def report(): Unit = AssignmentData.createReport()
 
 }
 
