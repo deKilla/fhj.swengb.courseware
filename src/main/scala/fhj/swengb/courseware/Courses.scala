@@ -10,12 +10,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Course extends DB.DBEntity[Course] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists Courses"
-  val createTableSql = "create table Courses (ID int, name string, branch String, year int)"
-  val insertSql = "insert into Courses (ID, name, branch, year) VALUES (?, ?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"Courses\"  (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL,\n\t`branch`\tTEXT NOT NULL,\n\t`title`\tINTEGER\n)"
+  val insertSql = "insert into \"Courses\" VALUES (?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -81,7 +79,7 @@ object coursequery {
 }
 
 object CourseData {
-  def asMap(): Map[_, Course] = {
+  def asMap(query:String = coursequery.selectall): Map[_, Course] = {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
@@ -89,6 +87,49 @@ object CourseData {
       ).map(l => (l.ID,l)).toMap
     } else { Map.empty }
     data
+  }
+  def createReport(query:String = coursequery.selectall): Unit = {
+    import java.io._
+    import java.awt.Desktop
+
+    val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
+    val timestamp: String = (System.currentTimeMillis / 1000).toString
+    val filename:String = path + "coursereport_" + timestamp + ".html"
+    val file = new File(filename)
+    val report = new PrintWriter(file)
+
+    val courses:Map[_, Course] = this.asMap(query)
+
+    val htmltop:String = ("" +
+      "<html>" +
+      "<head>" +
+      "<title>Coursereport " + timestamp + "</title>" +
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"reportres/stylesheet.css\" />" +
+      "<head>" +
+      "<body>" +
+      "<h1>Coursereport</h1>" +
+      "<table>" +
+      "<tr>" +
+      "<th>ID</th><th>name</th><th>branch</th><th>year</th>" +
+      "</tr>")
+
+    val htmlbottom:String = ("</table></body></html>")
+
+    report.write(htmltop)
+
+    for (course <- courses.values){
+      report.append("<tr>")
+      report.append("<td>" + course.ID + "</td>")
+      report.append("<td>" + course.name + "</td>")
+      report.append("<td>" + course.branch + "</td>")
+      report.append("<td>" + course.year + "</td>")
+      report.append("</tr>")
+    }
+
+    report.append(htmlbottom)
+    report.close
+
+    Desktop.getDesktop.open(file)
   }
 }
 

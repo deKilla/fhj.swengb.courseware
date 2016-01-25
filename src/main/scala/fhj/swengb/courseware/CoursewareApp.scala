@@ -279,7 +279,7 @@ class CWLecturerController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = LecturerData.createReport()
+  def report(): Unit = LecturerData.createReport()
 
 
 }
@@ -335,7 +335,7 @@ class CWCourseController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = CourseData.createReport()
+  def report(): Unit = CourseData.createReport()
 }
 
 class CWGroupController extends Initializable {
@@ -438,7 +438,7 @@ class CWExamController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = ExamData.createReport()
+  def report(): Unit = ExamData.createReport()
 
 }
 

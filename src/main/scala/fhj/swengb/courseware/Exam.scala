@@ -5,12 +5,10 @@ import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
 import scala.collection.mutable.ListBuffer
 
 object Exam extends DB.DBEntity[Exam] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists Exams"
-  val createTableSql = "create table Exams (ID int, course string, attempt int, date String)"
-  val insertSql = "insert into Exams (ID, course, attempt, date) VALUES (?, ?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"Exams\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`course`\tTEXT NOT NULL,\n\t`attempt`\tINTEGER NOT NULL,\n\t`date`\tTEXT\n)"
+  val insertSql = "insert into \"Exams\" VALUES (?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -84,7 +82,7 @@ object ExamData {
     data
   }
 
-  def createReport(exams:Set[Exam]): Unit = {
+  def createReport(query:String = examquery.selectall): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -93,6 +91,8 @@ object ExamData {
     val filename:String = path + "examreport_" + timestamp + ".html"
     val file = new File(filename)
     val report = new PrintWriter(file)
+
+    val exams:Map[_, Exam] = this.asMap(query)
 
     val htmltop:String = ("" +
       "<html>" +
@@ -111,7 +111,7 @@ object ExamData {
 
     report.write(htmltop)
 
-    for (exam <- exams){
+    for (exam <- exams.values){
       report.append("<tr>")
       report.append("<td>" + exam.ID + "</td>")
       report.append("<td>" + exam.course + "</td>")
