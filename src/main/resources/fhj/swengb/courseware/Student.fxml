@@ -35,7 +35,7 @@
             <bottom>
                 <ToolBar prefHeight="43.0" prefWidth="867.0">
                     <items>
-                        <!--><Button fx:id="generateReport" mnemonicParsing="false" onAction="#report" text="Generate Report"/>-->
+                        <Button fx:id="generateReport" mnemonicParsing="false" onAction="#report" text="Generate Report"/>
                     </items>
                     <padding>
                         <Insets left="700.0" />
