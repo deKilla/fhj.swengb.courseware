@@ -6,12 +6,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Homework extends DB.DBEntity[Homework] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists Homeworks"
-  val createTableSql = "create table Homeworks (ID int, name string, description String)"
-  val insertSql = "insert into Homeworks (ID, name, description) VALUES (?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"Homeworks\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL,\n\t`description`\tTEXT\n)"
+  val insertSql = "insert into \"Homeworks\" VALUES (?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {

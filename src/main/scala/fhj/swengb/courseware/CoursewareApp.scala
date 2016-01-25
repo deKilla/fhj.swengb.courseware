@@ -211,12 +211,12 @@ class CWStudentController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
-  //def add():Unit = {
-  //  val delteid = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
-  //  for (c <- DB.maybeConnection){Student.deletefromDB(c)(delteid)};repopulate()
-  //}
-  def add(): Unit = { 
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+  def delete():Unit = {
+    val delteid = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Student.deletefromDB(c)(delteid)};repopulate()
+  }
+  def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
 
