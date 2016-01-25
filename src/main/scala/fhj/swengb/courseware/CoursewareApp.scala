@@ -211,14 +211,38 @@ class CWStudentController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  //def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+  //def add():Unit = {
+  //  val delteid = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+  //  for (c <- DB.maybeConnection){Student.deletefromDB(c)(delteid)};repopulate()
+  //}
+  def add(): Unit = { 
+    inputarea.setDisable(false)
+    inputarea.setId("edit")
+
+    firstname.setText(tableView.getSelectionModel.getSelectedItem.p_firstname.getValue)
+    lastname.setText(tableView.getSelectionModel.getSelectedItem.p_lastname.getValue)
+    email.setText(tableView.getSelectionModel.getSelectedItem.p_email.getValue)
+    birthday.setText(tableView.getSelectionModel.getSelectedItem.p_birthday.getValue)
+    telnr.setText(tableView.getSelectionModel.getSelectedItem.p_telnr.getValue)
+    githubUsername.setText(tableView.getSelectionModel.getSelectedItem.p_githubUsername.getValue)
+    group.setText(tableView.getSelectionModel.getSelectedItem.p_group.getValue.toString)
+  }
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
 
-    val ID:Int = StudentData.asMap().size+1
-    val newstudent:Student = new Student(ID,firstname.getText,lastname.getText,email.getText,birthday.getText,telnr.getText,githubUsername.getText,group.getText.toInt)
-    for (c <- DB.maybeConnection) {Student.toDB(c)(newstudent)}
+    if (inputarea.getId == "edit") {
+      val editedstudent: Student = new Student(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, email.getText, birthday.getText, telnr.getText, githubUsername.getText, group.getText.toInt)
+      for (c <- DB.maybeConnection){Student.editDB(c)(editedstudent)}
+
+    } else if (inputarea.getId == "add") {
+
+      val ID: Int = StudentData.asMap().size + 1
+      val newstudent: Student = new Student(ID, firstname.getText, lastname.getText, email.getText, birthday.getText, telnr.getText, githubUsername.getText, group.getText.toInt)
+      for (c <- DB.maybeConnection) {Student.toDB(c)(newstudent)}
+    }
+    inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
   }
