@@ -6,12 +6,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Project extends DB.DBEntity[Project] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists Projects"
-  val createTableSql = "create table Projects (ID int, name string, begindate String, deadline String)"
-  val insertSql = "insert into Projects (ID, name, begindate, deadline) VALUES (?, ?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"Projects\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL,\n\t`begindate`\tTEXT NOT NULL,\n\t`deadline`\tTEXT\n)"
+  val insertSql = "insert into \"Projects\" VALUES (?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -85,7 +83,7 @@ object ProjectData {
     data
   }
 
-  def createReport(projects:Set[Project]): Unit = {
+  def createReport(query:String = projectquery.selectall): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -94,6 +92,8 @@ object ProjectData {
     val filename:String = path + "projectreport_" + timestamp + ".html"
     val file = new File(filename)
     val report = new PrintWriter(file)
+
+    val projects:Map[_, Project] = this.asMap(query)
 
     val htmltop:String = ("" +
       "<html>" +
@@ -112,7 +112,7 @@ object ProjectData {
 
     report.write(htmltop)
 
-    for (project <- projects){
+    for (project <- projects.values){
       report.append("<tr>")
       report.append("<td>" + project.ID + "</td>")
       report.append("<td>" + project.name + "</td>")

@@ -6,12 +6,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Homework extends DB.DBEntity[Homework] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists Homeworks"
-  val createTableSql = "create table Homeworks (ID int, name string, description String)"
-  val insertSql = "insert into Homeworks (ID, name, description) VALUES (?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"Homeworks\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL,\n\t`description`\tTEXT\n)"
+  val insertSql = "insert into \"Homeworks\" VALUES (?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -66,6 +64,7 @@ case class Homework(ID: Int,
 
 object homeworkquery {
   val selectall = "select * from Homeworks"
+  val selectwhatever = "select * from Homeworks where name=\"uuu\""
 }
 
 object HomeworkData {
@@ -79,7 +78,7 @@ object HomeworkData {
     data
   }
 
-  def createReport(homeworks:Set[Homework]): Unit = {
+  def createReport(query:String = homeworkquery.selectall): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -88,6 +87,8 @@ object HomeworkData {
     val filename:String = path + "homeworkreport_" + timestamp + ".html"
     val file = new File(filename)
     val report = new PrintWriter(file)
+
+    val homeworks:Map[_, Homework] = this.asMap(query)
 
     val htmltop:String = ("" +
       "<html>" +
@@ -106,7 +107,7 @@ object HomeworkData {
 
     report.write(htmltop)
 
-    for (homework <- homeworks){
+    for (homework <- homeworks.values){
       report.append("<tr>")
       report.append("<td>" + homework.ID + "</td>")
       report.append("<td>" + homework.name + "</td>")

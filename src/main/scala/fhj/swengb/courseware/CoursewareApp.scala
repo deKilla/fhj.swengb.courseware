@@ -211,12 +211,12 @@ class CWStudentController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
-  //def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
-  //def add():Unit = {
-  //  val delteid = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
-  //  for (c <- DB.maybeConnection){Student.deletefromDB(c)(delteid)};repopulate()
-  //}
-  def add(): Unit = { 
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+  def delete():Unit = {
+    val delteid = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Student.deletefromDB(c)(delteid)};repopulate()
+  }
+  def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
 
@@ -517,7 +517,7 @@ class CWProjectController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = ProjectData.createReport()
+  def report(): Unit = ProjectData.createReport()
 
 }
 
@@ -592,6 +592,7 @@ class CWHomeworkController extends Initializable {
 
   def repopulate(): Unit = {
     val mutableHomeworks = mkObservableList(for (homework <- HomeworkData.asMap()) yield MutableHomework(homework._2))
+    //val mutableHomeworks = mkObservableList(for (homework <- HomeworkData.asMap(homeworkquery.selectwhatever)) yield MutableHomework(homework._2))
     tableView.setItems(mutableHomeworks)
   }
 
@@ -622,6 +623,7 @@ class CWHomeworkController extends Initializable {
 
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = HomeworkData.createReport()
+  //def report(): Unit = HomeworkData.createReport(homeworkquery.selectwhatever)
 
 }
 
