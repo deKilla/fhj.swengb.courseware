@@ -16,4 +16,4 @@ project/plugins/project/
 .scala_dependencies
 .worksheet
 
-src\main\resources\fhj\swengb\courseware\swengb.sqlite
+src/main/resources/fhj/swengb/courseware/swengb.sqlite
