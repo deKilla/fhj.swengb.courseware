@@ -7,7 +7,7 @@
 
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWAssignmentController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWHomeworkController">
    <children>
       <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <center>

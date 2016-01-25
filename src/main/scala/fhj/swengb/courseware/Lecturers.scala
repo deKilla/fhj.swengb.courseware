@@ -6,12 +6,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Lecturer extends DB.DBEntity[Lecturer] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists Lecturers"
-  val createTableSql = "create table Lecturers (ID int, firstname string, lastname String, title String)"
-  val insertSql = "insert into Lecturers (ID, firstname, lastname, title) VALUES (?, ?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"Lecturers\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`firstname`\tTEXT NOT NULL,\n\t`lastname`\tTEXT NOT NULL,\n\t`title`\tTEXT\n)"
+  val insertSql = "insert into \"Lecturers\" VALUES (?, ?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -84,7 +82,7 @@ object LecturerData {
     data
   }
 
-  def createReport(lecturers:Set[Lecturer]): Unit = {
+  def createReport(query:String = lecturerquery.selectall): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -93,6 +91,8 @@ object LecturerData {
     val filename:String = path + "lecturerreport_" + timestamp + ".html"
     val file = new File(filename)
     val report = new PrintWriter(file)
+
+    val lecturers:Map[_, Lecturer] = this.asMap(query)
 
     val htmltop:String = ("" +
       "<html>" +
@@ -111,7 +111,7 @@ object LecturerData {
 
     report.write(htmltop)
 
-    for (lecturer <- lecturers){
+    for (lecturer <- lecturers.values){
       report.append("<tr>")
       report.append("<td>" + lecturer.ID + "</td>")
       report.append("<td>" + lecturer.firstname + "</td>")

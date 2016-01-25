@@ -303,7 +303,7 @@ class CWLecturerController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = LecturerData.createReport()
+  def report(): Unit = LecturerData.createReport()
 
 
 }
@@ -359,7 +359,7 @@ class CWCourseController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = CourseData.createReport()
+  def report(): Unit = CourseData.createReport()
 }
 
 class CWGroupController extends Initializable {
@@ -462,7 +462,7 @@ class CWExamController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = ExamData.createReport()
+  def report(): Unit = ExamData.createReport()
 
 }
 
@@ -570,6 +570,58 @@ class CWAssignmentController extends Initializable {
 
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = AssignmentData.createReport()
+
+}
+
+class CWHomeworkController extends Initializable {
+
+  import JfxUtils._
+
+  type HomeworkTC[T] = TableColumn[MutableHomework, T]
+
+  @FXML var root: AnchorPane = _
+  @FXML var tableView: TableView[MutableHomework] = _
+  @FXML var C1: HomeworkTC[Int] = _
+  @FXML var C2: HomeworkTC[String] = _
+  @FXML var C3: HomeworkTC[String] = _
+
+  @FXML var inputarea: Pane = _
+
+  @FXML var name: TextField = _
+  @FXML var description: TextField = _
+
+  def repopulate(): Unit = {
+    val mutableHomeworks = mkObservableList(for (homework <- HomeworkData.asMap()) yield MutableHomework(homework._2))
+    tableView.setItems(mutableHomeworks)
+  }
+
+  def initTableViewColumn[T]: (TableColumn[MutableHomework, T], (MutableHomework) => Any) => Unit =
+    initTableViewColumnCellValueFactory[MutableHomework, T]
+
+  override def initialize(location: URL, resources: ResourceBundle): Unit = {
+
+    repopulate()
+
+    initTableViewColumn[Int](C1, _.p_ID)
+    initTableViewColumn[String](C2, _.p_name)
+    initTableViewColumn[String](C3, _.p_description)
+
+  }
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Homework.reTable(c.createStatement())};repopulate()}
+  def add(): Unit = {inputarea.setDisable(false)}
+  def menu(): Unit = root.getScene.getWindow.hide()
+
+  def ok(): Unit =  {
+
+    val ID:Int = HomeworkData.asMap().size+1
+    val newhomework:Homework = new Homework(ID,name.getText,description.getText)
+    for (c <- DB.maybeConnection) {Homework.toDB(c)(newhomework)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  def report(): Unit = HomeworkData.createReport()
 
 }
 
