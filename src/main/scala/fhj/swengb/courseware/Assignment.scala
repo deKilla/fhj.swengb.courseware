@@ -10,12 +10,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Assignment extends DB.DBEntity[Assignment] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists GroupAssignments"
-  val createTableSql = "create table GroupAssignments (ID int, name string, description String)"
-  val insertSql = "insert into GroupAssignments (ID, name, description) VALUES (?, ?, ?)"
+  val createTableSql = "CREATE TABLE \"GroupAssignments\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL,\n\t`description`\tTEXT\n)"
+  val insertSql = "insert into \"GroupAssignments\" VALUES (?, ?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -76,7 +74,7 @@ object assignmentquery {
 }
 
 object AssignmentData {
-  def asMap(): Map[_, Assignment] = {
+  def asMap(query:String = assignmentquery.selectall): Map[_, Assignment] = {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
@@ -84,6 +82,50 @@ object AssignmentData {
       ).map(l => (l.ID,l)).toMap
     } else { Map.empty }
     data
+  }
+
+  def createReport(query:String = assignmentquery.selectall): Unit = {
+    import java.io._
+    import java.awt.Desktop
+
+    val path = "fhj.swengb.courseware/src/main/resources/fhj/swengb/courseware/reports/"
+    val timestamp: String = (System.currentTimeMillis / 1000).toString
+    val filename:String = path + "assignmentreport_" + timestamp + ".html"
+    val file = new File(filename)
+    val report = new PrintWriter(file)
+
+    val assignments:Map[_, Assignment] = this.asMap(query)
+
+    val htmltop:String = ("" +
+      "<html>" +
+      "<head>" +
+      "<meta charset=\"utf-8\">" +
+      "<title>Assignmentreport " + timestamp + "</title>" +
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"reportres/stylesheet.css\" />" +
+      "<head>" +
+      "<body>" +
+      "<h1>Assignmentreport</h1>" +
+      "<table>" +
+      "<tr>" +
+      "<th>ID</th><th>name</th><th>description</th>" +
+      "</tr>")
+
+    val htmlbottom:String = ("</table></body></html>")
+
+    report.write(htmltop)
+
+    for (assignment <- assignments.values){
+      report.append("<tr>")
+      report.append("<td>" + assignment.ID + "</td>")
+      report.append("<td>" + assignment.name + "</td>")
+      report.append("<td>" + assignment.description + "</td>")
+      report.append("</tr>")
+    }
+
+    report.append(htmlbottom)
+    report.close
+
+    Desktop.getDesktop.open(file)
   }
 }
 
