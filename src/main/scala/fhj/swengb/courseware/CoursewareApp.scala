@@ -592,6 +592,7 @@ class CWHomeworkController extends Initializable {
 
   def repopulate(): Unit = {
     val mutableHomeworks = mkObservableList(for (homework <- HomeworkData.asMap()) yield MutableHomework(homework._2))
+    //val mutableHomeworks = mkObservableList(for (homework <- HomeworkData.asMap(homeworkquery.selectwhatever)) yield MutableHomework(homework._2))
     tableView.setItems(mutableHomeworks)
   }
 
@@ -622,6 +623,7 @@ class CWHomeworkController extends Initializable {
 
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = HomeworkData.createReport()
+  //def report(): Unit = HomeworkData.createReport(homeworkquery.selectwhatever)
 
 }
 

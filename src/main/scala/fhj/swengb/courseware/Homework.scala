@@ -64,6 +64,7 @@ case class Homework(ID: Int,
 
 object homeworkquery {
   val selectall = "select * from Homeworks"
+  val selectwhatever = "select * from Homeworks where name=\"uuu\""
 }
 
 object HomeworkData {
@@ -77,7 +78,7 @@ object HomeworkData {
     data
   }
 
-  def createReport(homeworks:Set[Homework]): Unit = {
+  def createReport(query:String = homeworkquery.selectall): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -86,6 +87,8 @@ object HomeworkData {
     val filename:String = path + "homeworkreport_" + timestamp + ".html"
     val file = new File(filename)
     val report = new PrintWriter(file)
+
+    val homeworks:Map[_, Homework] = this.asMap(query)
 
     val htmltop:String = ("" +
       "<html>" +
@@ -104,7 +107,7 @@ object HomeworkData {
 
     report.write(htmltop)
 
-    for (homework <- homeworks){
+    for (homework <- homeworks.values){
       report.append("<tr>")
       report.append("<td>" + homework.ID + "</td>")
       report.append("<td>" + homework.name + "</td>")
