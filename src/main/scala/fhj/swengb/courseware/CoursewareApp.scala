@@ -517,7 +517,7 @@ class CWProjectController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = ProjectData.createReport()
+  def report(): Unit = ProjectData.createReport()
 
 }
 
