@@ -368,13 +368,33 @@ class CWCourseController extends Initializable {
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Course.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false)}
+  def edit(): Unit = {
+    inputarea.setDisable(false)
+    inputarea.setId("edit")
+
+    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+    branch.setText(tableView.getSelectionModel.getSelectedItem.p_branch.getValue)
+    year.setText(tableView.getSelectionModel.getSelectedItem.p_year.getValue.toString)
+  }
+  def delete():Unit = {
+    val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Course.deletefromDB(c)(deleted)};repopulate()
+  }
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
 
-    val ID:Int = CourseData.asMap().size+1
-    val newcourse:Course = new Course(ID,name.getText,branch.getText,year.getText.toInt)
-    for (c <- DB.maybeConnection) {Course.toDB(c)(newcourse)}
+    if (inputarea.getId == "edit") {
+      val editedcourse: Course = new Course(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, branch.getText, year.getText.toInt)
+      for (c <- DB.maybeConnection){Course.editDB(c)(editedcourse)}
+
+    } else if (inputarea.getId == "add") {
+
+      val ID: Int = CourseData.asMap().size + 1
+      val newcourse: Course = new Course(ID, name.getText, branch.getText, year.getText.toInt)
+      for (c <- DB.maybeConnection) {Course.toDB(c)(newcourse)}
+    }
+    inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
   }
