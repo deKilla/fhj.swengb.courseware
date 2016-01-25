@@ -7,7 +7,7 @@ import javafx.beans.property.{SimpleDoubleProperty, SimpleIntegerProperty, Simpl
 import javafx.beans.value.ObservableValue
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml._
-import javafx.scene.control.{TableColumn, TableView, TextField, Button}
+import javafx.scene.control.{TableColumn, TableView, TextField, Button, ChoiceBox}
 import javafx.scene.layout.{Pane, AnchorPane}
 import javafx.scene.{Parent, Scene}
 import javafx.stage.Stage
@@ -180,6 +180,8 @@ class CWStudentController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var firstname: TextField = _
   @FXML var lastname: TextField = _
   @FXML var email: TextField = _
@@ -187,6 +189,8 @@ class CWStudentController extends Initializable {
   @FXML var telnr: TextField = _
   @FXML var githubUsername: TextField = _
   @FXML var group: TextField = _
+
+
 
   def repopulate(): Unit = {
     val mutableStudents = mkObservableList(for (student <- StudentData.asMap()) yield MutableStudent(student._2))
@@ -208,6 +212,8 @@ class CWStudentController extends Initializable {
     initTableViewColumn[String](C6, _.p_telnr)
     initTableViewColumn[String](C7, _.p_githubUsername)
     initTableViewColumn[Int](C8, _.p_group)
+
+    choiceBox.getItems().addAll("First", "Second", "Third")
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
