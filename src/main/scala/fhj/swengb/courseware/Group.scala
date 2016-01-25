@@ -6,12 +6,10 @@ import scala.collection.mutable.ListBuffer
 
 
 object Group extends DB.DBEntity[Group] {
-  def fromDB(stringToSet: (String) => ResultSet) = ???
-
 
   val dropTableSql = "drop table if exists Groups"
-  val createTableSql = "create table Groups (ID int, name string)"
-  val insertSql = "insert into Groups (ID, name) VALUES (?, ?)"
+  val createTableSql = "CREATE TABLE \"Groups\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL\n)"
+  val insertSql = "insert into \"Groups\" VALUES (?, ?)"
 
 
   def reTable(stmt: Statement): Int = {
@@ -74,7 +72,7 @@ object GroupData {
     data
   }
 
-  def createReport(groups:Set[Group]): Unit = {
+  def createReport(query:String = groupquery.selectall): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -83,6 +81,8 @@ object GroupData {
     val filename:String = path + "groupreport_" + timestamp + ".html"
     val file = new File(filename)
     val report = new PrintWriter(file)
+
+    val groups:Map[_, Group] = this.asMap(query)
 
     val htmltop:String = ("" +
       "<html>" +
@@ -101,7 +101,7 @@ object GroupData {
 
     report.write(htmltop)
 
-    for (group <- groups){
+    for (group <- groups.values){
       report.append("<tr>")
       report.append("<td>" + group.ID + "</td>")
       report.append("<td>" + group.name + "</td>")
