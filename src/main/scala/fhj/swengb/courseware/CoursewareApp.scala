@@ -408,7 +408,7 @@ class CWGroupController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = GroupData.createReport()
+  def report(): Unit = GroupData.createReport()
 }
 
 
@@ -569,7 +569,7 @@ class CWAssignmentController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  //def report(): Unit = AssignmentData.createReport()
+  def report(): Unit = AssignmentData.createReport()
 
 }
 
