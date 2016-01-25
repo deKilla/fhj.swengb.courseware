@@ -241,13 +241,17 @@ class CWLecturerController extends Initializable {
   @FXML var C3: LecturerTC[String] = _
   @FXML var C4: LecturerTC[String] = _
 
+  def repopulate(): Unit = {
+    val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap()) yield MutableLecturer(lecturer._2))
+    tableView.setItems(mutableLecturers)
+  }
+
   def initTableViewColumn[T]: (TableColumn[MutableLecturer, T], (MutableLecturer) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableLecturer, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap()) yield MutableLecturer(lecturer._2))
-    tableView.setItems(mutableLecturers)
+    repopulate()
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_firstname)
@@ -255,7 +259,7 @@ class CWLecturerController extends Initializable {
     initTableViewColumn[String](C4, _.p_title)
   }
 
-  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Lecturer.reTable(c.createStatement())};repopulate()}
   //def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
 
@@ -275,13 +279,17 @@ class CWCourseController extends Initializable {
   @FXML var C3: CourseTC[String] = _
   @FXML var C4: CourseTC[Int] = _
 
+  def repopulate(): Unit = {
+    val mutableCourses = mkObservableList(for (course <- CourseData.asMap()) yield MutableCourse(course._2))
+    tableView.setItems(mutableCourses)
+  }
+
   def initTableViewColumn[T]: (TableColumn[MutableCourse, T], (MutableCourse) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableCourse, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableCourses = mkObservableList(for (course <- CourseData.asMap()) yield MutableCourse(course._2))
-    tableView.setItems(mutableCourses)
+    repopulate()
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
@@ -289,7 +297,7 @@ class CWCourseController extends Initializable {
     initTableViewColumn[Int](C4, _.p_year)
   }
 
-  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Course.reTable(c.createStatement())};repopulate()}
   //def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
 }
@@ -305,19 +313,23 @@ class CWGroupController extends Initializable {
   @FXML var C1: GroupTC[Int] = _
   @FXML var C2: GroupTC[String] = _
 
+  def repopulate(): Unit = {
+    val mutableGroups = mkObservableList(for (group <- GroupData.asMap()) yield MutableGroup(group._2))
+    tableView.setItems(mutableGroups)
+  }
+
   def initTableViewColumn[T]: (TableColumn[MutableGroup, T], (MutableGroup) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableGroup, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableGroups = mkObservableList(for (group <- GroupData.asMap()) yield MutableGroup(group._2))
-    tableView.setItems(mutableGroups)
+    repopulate()
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
   }
 
-  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Group.reTable(c.createStatement())};repopulate()}
   //def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
 }
@@ -336,20 +348,24 @@ class CWExamController extends Initializable {
   @FXML var C3: ExamTC[String] = _
   @FXML var C4: ExamTC[String] = _
 
+  def repopulate(): Unit = {
+    val mutableExams = mkObservableList(for (exam <- ExamData.asMap()) yield MutableExam(exam._2))
+    tableView.setItems(mutableExams)
+  }
+
   def initTableViewColumn[T]: (TableColumn[MutableExam, T], (MutableExam) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableExam, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableExams = mkObservableList(for (exam <- ExamData.asMap()) yield MutableExam(exam._2))
-    tableView.setItems(mutableExams)
+    repopulate()
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_course)
     initTableViewColumn[String](C3, _.p_attempt)
     initTableViewColumn[String](C4, _.p_date)
   }
-  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Exam.reTable(c.createStatement())};repopulate()}
   //def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
 
@@ -368,13 +384,17 @@ class CWProjectController extends Initializable {
   @FXML var C3: ProjectTC[String] = _
   @FXML var C4: ProjectTC[String] = _
 
+  def repopulate(): Unit = {
+    val mutableProjects = mkObservableList(for (project <- ProjectData.asMap()) yield MutableProject(project._2))
+    tableView.setItems(mutableProjects)
+  }
+
   def initTableViewColumn[T]: (TableColumn[MutableProject, T], (MutableProject) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableProject, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableProjects = mkObservableList(for (project <- ProjectData.asMap()) yield MutableProject(project._2))
-    tableView.setItems(mutableProjects)
+    repopulate()
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
@@ -382,7 +402,7 @@ class CWProjectController extends Initializable {
     initTableViewColumn[String](C4, _.p_deadline)
   }
 
-  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Project.reTable(c.createStatement())};repopulate()}
   //def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
 
@@ -400,20 +420,24 @@ class CWAssignmentController extends Initializable {
   @FXML var C2: AssignmentTC[String] = _
   @FXML var C3: AssignmentTC[String] = _
 
+  def repopulate(): Unit = {
+    val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap()) yield MutableAssignment(assignment._2))
+    tableView.setItems(mutableAssignments)
+  }
+
   def initTableViewColumn[T]: (TableColumn[MutableAssignment, T], (MutableAssignment) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableAssignment, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap()) yield MutableAssignment(assignment._2))
-    tableView.setItems(mutableAssignments)
+    repopulate()
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_description)
 
   }
-  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Assignment.reTable(c.createStatement())};repopulate()}
   //def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
 
