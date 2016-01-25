@@ -212,10 +212,6 @@ class CWStudentController extends Initializable {
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
-  def delete():Unit = {
-    val delteid = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
-    for (c <- DB.maybeConnection){Student.deletefromDB(c)(delteid)};repopulate()
-  }
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -228,6 +224,11 @@ class CWStudentController extends Initializable {
     githubUsername.setText(tableView.getSelectionModel.getSelectedItem.p_githubUsername.getValue)
     group.setText(tableView.getSelectionModel.getSelectedItem.p_group.getValue.toString)
   }
+  def delete():Unit = {
+    val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Student.deletefromDB(c)(deleted)};repopulate()
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
@@ -291,13 +292,33 @@ class CWLecturerController extends Initializable {
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Lecturer.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false)}
+  def edit(): Unit = {
+    inputarea.setDisable(false)
+    inputarea.setId("edit")
+
+    firstname.setText(tableView.getSelectionModel.getSelectedItem.p_firstname.getValue)
+    lastname.setText(tableView.getSelectionModel.getSelectedItem.p_lastname.getValue)
+    title.setText(tableView.getSelectionModel.getSelectedItem.p_title.getValue)
+  }
+  def delete():Unit = {
+    val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Lecturer.deletefromDB(c)(deleted)};repopulate()
+  }
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
 
-    val ID:Int = LecturerData.asMap().size+1
-    val newlecturer:Lecturer = new Lecturer(ID,firstname.getText,lastname.getText,title.getText)
-    for (c <- DB.maybeConnection) {Lecturer.toDB(c)(newlecturer)}
+    if (inputarea.getId == "edit") {
+      val editedlecturer: Lecturer = new Lecturer(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, title.getText)
+      for (c <- DB.maybeConnection){Lecturer.editDB(c)(editedlecturer)}
+
+    } else if (inputarea.getId == "add") {
+
+      val ID: Int = LecturerData.asMap().size + 1
+      val newlecturer: Lecturer = new Lecturer(ID, firstname.getText, lastname.getText, title.getText)
+      for (c <- DB.maybeConnection) {Lecturer.toDB(c)(newlecturer)}
+    }
+    inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
   }
