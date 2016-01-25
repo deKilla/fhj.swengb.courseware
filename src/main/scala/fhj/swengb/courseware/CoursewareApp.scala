@@ -1,7 +1,5 @@
 package fhj.swengb.courseware
 
-
-import java.awt.Button
 import java.net.URL
 import java.util.ResourceBundle
 import javafx.application.Application
@@ -9,7 +7,7 @@ import javafx.beans.property.{SimpleDoubleProperty, SimpleIntegerProperty, Simpl
 import javafx.beans.value.ObservableValue
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml._
-import javafx.scene.control.{TableColumn, TableView}
+import javafx.scene.control.{TableColumn, TableView, TextField, Button}
 import javafx.scene.layout.{Pane, AnchorPane}
 import javafx.scene.{Parent, Scene}
 import javafx.stage.Stage
@@ -182,14 +180,25 @@ class CWStudentController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var firstname: TextField = _
+  @FXML var lastname: TextField = _
+  @FXML var email: TextField = _
+  @FXML var birthday: TextField = _
+  @FXML var telnr: TextField = _
+  @FXML var githubUsername: TextField = _
+  @FXML var group: TextField = _
+
+  def repopulate(): Unit = {
+    val mutableStudents = mkObservableList(for (student <- StudentData.asMap()) yield MutableStudent(student._2))
+    tableView.setItems(mutableStudents)
+  }
 
   def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableStudent, T]
 
   override def initialize(location: URL, resources: ResourceBundle): Unit = {
 
-    val mutableStudents = mkObservableList(for (student <- StudentData.asMap()) yield MutableStudent(student._2))
-    tableView.setItems(mutableStudents)
+    repopulate()
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_firstname)
@@ -201,19 +210,21 @@ class CWStudentController extends Initializable {
     initTableViewColumn[Int](C8, _.p_group)
   }
 
-  val students: Set[Student] = Set(
-    Student(1,"Michael","Fuchs","michael.fuchs@edu.fh-joanneum.at","25.10.1987","06642282330","deKilla",1)
-   ,Student(2,"Carina","Herzog","carina.herzog@edu.fh-joanneum.at","14.10.1993","asdf","carinaher",1)
-  )
-
-  def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())}}
-  def add(): Unit = {inputarea.setVisible(true)}
+  def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  def add(): Unit = {inputarea.setDisable(false)}
   def menu(): Unit = root.getScene.getWindow.hide()
 
-  def ok(): Unit =  inputarea.setVisible(false)
-  def close(): Unit = inputarea.setVisible(false)
+  def ok(): Unit =  {
 
-  def report(): Unit = StudentData.createReport(students)
+    val ID:Int = StudentData.asMap().size+1
+    val newstudent:Student = new Student(ID,firstname.getText,lastname.getText,email.getText,birthday.getText,telnr.getText,githubUsername.getText,group.getText.toInt)
+    for (c <- DB.maybeConnection) {Student.toDB(c)(newstudent)}
+    inputarea.setDisable(true)
+    repopulate()
+  }
+
+  def close(): Unit = inputarea.setDisable(true)
+  def report(): Unit = StudentData.createReport()
 
 }
 
@@ -223,6 +234,7 @@ class CWLecturerController extends Initializable {
 
   type LecturerTC[T] = TableColumn[MutableLecturer, T]
 
+  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableLecturer] = _
   @FXML var C1: LecturerTC[Int] = _
   @FXML var C2: LecturerTC[String] = _
@@ -243,6 +255,11 @@ class CWLecturerController extends Initializable {
     initTableViewColumn[String](C4, _.p_title)
   }
 
+  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  //def add(): Unit = {inputarea.setDisable(false)}
+  def menu(): Unit = root.getScene.getWindow.hide()
+
+
 }
 
 class CWCourseController extends Initializable {
@@ -251,6 +268,7 @@ class CWCourseController extends Initializable {
 
   type CourseTC[T] = TableColumn[MutableCourse, T]
 
+  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableCourse] = _
   @FXML var C1: CourseTC[Int] = _
   @FXML var C2: CourseTC[String] = _
@@ -271,6 +289,9 @@ class CWCourseController extends Initializable {
     initTableViewColumn[Int](C4, _.p_year)
   }
 
+  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  //def add(): Unit = {inputarea.setDisable(false)}
+  def menu(): Unit = root.getScene.getWindow.hide()
 }
 
 class CWGroupController extends Initializable {
@@ -279,6 +300,7 @@ class CWGroupController extends Initializable {
 
   type GroupTC[T] = TableColumn[MutableGroup, T]
 
+  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableGroup] = _
   @FXML var C1: GroupTC[Int] = _
   @FXML var C2: GroupTC[String] = _
@@ -295,6 +317,9 @@ class CWGroupController extends Initializable {
     initTableViewColumn[String](C2, _.p_name)
   }
 
+  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  //def add(): Unit = {inputarea.setDisable(false)}
+  def menu(): Unit = root.getScene.getWindow.hide()
 }
 
 
@@ -304,6 +329,7 @@ class CWExamController extends Initializable {
 
   type ExamTC[T] = TableColumn[MutableExam, T]
 
+  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableExam] = _
   @FXML var C1: ExamTC[Int] = _
   @FXML var C2: ExamTC[String] = _
@@ -323,6 +349,9 @@ class CWExamController extends Initializable {
     initTableViewColumn[String](C3, _.p_attempt)
     initTableViewColumn[String](C4, _.p_date)
   }
+  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  //def add(): Unit = {inputarea.setDisable(false)}
+  def menu(): Unit = root.getScene.getWindow.hide()
 
 }
 
@@ -332,6 +361,7 @@ class CWProjectController extends Initializable {
 
   type ProjectTC[T] = TableColumn[MutableProject, T]
 
+  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableProject] = _
   @FXML var C1: ProjectTC[Int] = _
   @FXML var C2: ProjectTC[String] = _
@@ -352,6 +382,10 @@ class CWProjectController extends Initializable {
     initTableViewColumn[String](C4, _.p_deadline)
   }
 
+  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  //def add(): Unit = {inputarea.setDisable(false)}
+  def menu(): Unit = root.getScene.getWindow.hide()
+
 }
 
 class CWAssignmentController extends Initializable {
@@ -360,6 +394,7 @@ class CWAssignmentController extends Initializable {
 
   type AssignmentTC[T] = TableColumn[MutableAssignment, T]
 
+  @FXML var root: AnchorPane = _
   @FXML var tableView: TableView[MutableAssignment] = _
   @FXML var C1: AssignmentTC[Int] = _
   @FXML var C2: AssignmentTC[String] = _
@@ -378,6 +413,9 @@ class CWAssignmentController extends Initializable {
     initTableViewColumn[String](C3, _.p_description)
 
   }
+  //def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
+  //def add(): Unit = {inputarea.setDisable(false)}
+  def menu(): Unit = root.getScene.getWindow.hide()
 
 }
 

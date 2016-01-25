@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWAssignmentController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWAssignmentController">
    <children>
       <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <center>
@@ -18,18 +18,13 @@
             </TableView>
          </center>
          <top>
-            <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
-              <items>
-                <Button fx:id="newButton" mnemonicParsing="false" text="New" />
-                  <Button fx:id="editButton" mnemonicParsing="false" text="Edit" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" text="Delete" />
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Main Menu" wrapText="true">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Button>
-              </items>
-            </ToolBar>
+             <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+                 <items>
+                     <!--<Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
+                     <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />-->
+                     <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="600.0" />
+                 </items>
+             </ToolBar>
          </top>
          <bottom>
             <ToolBar prefHeight="43.0" prefWidth="867.0">
