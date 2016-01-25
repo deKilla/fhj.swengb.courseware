@@ -5,7 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWExamController">
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWExamController">
    <children>
       <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
          <center>
@@ -30,7 +32,7 @@
          <bottom>
             <ToolBar prefHeight="43.0" prefWidth="867.0">
               <items>
-                  <Button fx:id="generateReport1" mnemonicParsing="false" text="Generate Report" />
+                  <!--><Button fx:id="generateReport" mnemonicParsing="false" onAction="#report" text="Generate Report"/>-->
               </items>
                <padding>
                   <Insets left="700.0" />
@@ -52,30 +54,18 @@
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                    </rowConstraints>
                    <children>
-                       <TextField fx:id="firstname" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                       <TextField fx:id="lastname" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                       <TextField fx:id="email" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                       <TextField fx:id="birthday" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                       <TextField fx:id="telnr" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                       <TextField fx:id="githubUsername" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                       <TextField fx:id="group" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                       <TextField fx:id="course" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                       <TextField fx:id="attempt" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                       <TextField fx:id="date" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                       <Label text="First Name" GridPane.rowIndex="1" />
-                       <Label text="Last Name" GridPane.rowIndex="2" />
-                       <Label text="e-mail" GridPane.rowIndex="3" />
-                       <Label text="Birthday" GridPane.rowIndex="4" />
-                       <Label text="Telnr" GridPane.rowIndex="5" />
-                       <Label text="GitHub User" GridPane.rowIndex="6" />
-                       <Label text="Group" GridPane.rowIndex="7" />
+                       <Label text="Course" GridPane.rowIndex="1" />
+                       <Label text="Attempt" GridPane.rowIndex="2" />
+                       <Label text="Date" GridPane.rowIndex="3" />
                    </children>
                </GridPane>
-               <Label layoutX="20.0" layoutY="20.0" text="Add Student" styleClass="inputheadline">
+               <Label layoutX="20.0" layoutY="20.0" text="Add Exam" styleClass="inputheadline">
                    <font>
                        <Font size="24.0" />
                    </font>
