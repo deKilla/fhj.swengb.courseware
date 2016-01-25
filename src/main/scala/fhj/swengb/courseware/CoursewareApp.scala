@@ -224,7 +224,7 @@ class CWStudentController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  def report(): Unit = StudentData.createReport(StudentData.asMap(studentquery.onlyasdf2))
+  def report(): Unit = StudentData.createReport()
 
 }
 

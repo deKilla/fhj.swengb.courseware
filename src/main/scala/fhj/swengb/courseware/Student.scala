@@ -123,7 +123,7 @@ object StudentData {
     data
   }
 
-  def createReport(students:Map[_, Student] = this.asMap()): Unit = {
+  def createReport(query:String = studentquery.selectall): Unit = {
     import java.io._
     import java.awt.Desktop
 
@@ -133,9 +133,12 @@ object StudentData {
     val file = new File(filename)
     val report = new PrintWriter(file)
 
+    val students:Map[_, Student] = this.asMap(query)
+
     val htmltop:String = ("" +
       "<html>" +
       "<head>" +
+      "<meta charset=\"utf-8\">" +
       "<title>Studentreport " + timestamp + "</title>" +
       "<link rel=\"stylesheet\" type=\"text/css\" href=\"reportres/stylesheet.css\" />" +
       "<head>" +
