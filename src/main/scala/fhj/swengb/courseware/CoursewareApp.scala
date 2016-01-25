@@ -216,7 +216,7 @@ class CWStudentController extends Initializable {
   //  val delteid = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
   //  for (c <- DB.maybeConnection){Student.deletefromDB(c)(delteid)};repopulate()
   //}
-  def add(): Unit = {
+  def add(): Unit = { 
     inputarea.setDisable(false)
     inputarea.setId("edit")
 
