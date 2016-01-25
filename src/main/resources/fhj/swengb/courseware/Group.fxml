@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWGroupController">
+   <children>
+      <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
+         <center>
+            <TableView fx:id="tableView" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="C2" prefWidth="164.0" text="name" />
+              </columns>
+            </TableView>
+         </center>
+         <top>
+             <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+                 <items>
+                     <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
+                     <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
+                     <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="600.0" />
+                 </items>
+             </ToolBar>
+         </top>
+         <bottom>
+            <ToolBar prefHeight="43.0" prefWidth="867.0">
+              <items>
+                  <Button fx:id="generateReport1" mnemonicParsing="false" text="Generate Report" />
+              </items>
+               <padding>
+                  <Insets left="700.0" />
+               </padding>
+            </ToolBar>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
