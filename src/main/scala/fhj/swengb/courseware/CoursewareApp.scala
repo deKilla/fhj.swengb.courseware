@@ -733,16 +733,36 @@ class CWHomeworkController extends Initializable {
   }
   def recreate(): Unit = {for (c <- DB.maybeConnection){Homework.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false)}
+  def edit(): Unit = {
+    inputarea.setDisable(false)
+    inputarea.setId("edit")
+
+    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+    description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
+  }
+  def delete():Unit = {
+    val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Homework.deletefromDB(c)(deleted)};repopulate()
+  }
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
 
-    val ID:Int = HomeworkData.asMap().size+1
-    val newhomework:Homework = new Homework(ID,name.getText,description.getText)
-    for (c <- DB.maybeConnection) {Homework.toDB(c)(newhomework)}
+    if (inputarea.getId == "edit") {
+      val editedhomework: Homework = new Homework(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, description.getText)
+      for (c <- DB.maybeConnection){Homework.editDB(c)(editedhomework)}
+
+    } else if (inputarea.getId == "add") {
+
+      val ID: Int = CourseData.asMap().size + 1
+      val newhomework: Homework = new Homework(ID, name.getText, description.getText)
+      for (c <- DB.maybeConnection) {Homework.toDB(c)(newhomework)}
+    }
+    inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
   }
+
 
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = HomeworkData.createReport()
