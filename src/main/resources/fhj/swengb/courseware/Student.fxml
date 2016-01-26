@@ -26,16 +26,20 @@
             <top>
                 <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
                     <items>
-                        <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
-                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
-                        <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="600.0" />
+                        <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" prefHeight="25.0" prefWidth="85.0" text="Recreate" />
+                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="85.0" text="Add" />
+                        <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="85.0" text="Edit" />
+                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="85.0" text="Delete" />
+                        <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
+                        <Button fx:id="btnRun" mnemonicParsing="false" text="Run" />
+                        <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="150.0" />
                     </items>
                 </ToolBar>
             </top>
             <bottom>
                 <ToolBar prefHeight="43.0" prefWidth="867.0">
                     <items>
-                        <Button fx:id="generateReport" mnemonicParsing="false" onAction="#report" text="Generate Report"/>
+                        <Button fx:id="generateReport" mnemonicParsing="false" onAction="#report" text="Generate Report" />
                     </items>
                     <padding>
                         <Insets left="700.0" />
@@ -63,7 +67,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <TextField fx:id="firstname" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="firstname" prefHeight="25.0" prefWidth="156.0" promptText=" " text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="lastname" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="email" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="birthday" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -80,7 +84,7 @@
                         <Label text="Group" GridPane.rowIndex="7" />
                     </children>
                 </GridPane>
-                <Label layoutX="20.0" layoutY="20.0" text="Add Student" styleClass="inputheadline">
+                <Label layoutX="20.0" layoutY="20.0" styleClass="inputheadline" text="Add Student">
                     <font>
                         <Font size="24.0" />
                     </font>
