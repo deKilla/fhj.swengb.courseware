@@ -65,8 +65,6 @@ class CoursewareApp extends javafx.application.Application {
 
 class CoursewareAppController extends Initializable {
 
-  @FXML var btnShowStudents: Button = _
-
   override def initialize(location: URL, resources: ResourceBundle): Unit = {}
 
   def showStudents(): Unit = {
@@ -156,11 +154,9 @@ class CoursewareAppController extends Initializable {
 
     homeworkStage.show()
   }
-
-
 }
 
-
+/************************************************************** STUDENT - Controller ***********************************************************************/
 class CWStudentController extends Initializable {
 
   import JfxUtils._
@@ -179,7 +175,6 @@ class CWStudentController extends Initializable {
   @FXML var C8: StudentTC[Int] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var firstname: TextField = _
@@ -191,12 +186,10 @@ class CWStudentController extends Initializable {
   @FXML var group: TextField = _
 
 
-
   def repopulate(): Unit = {
     val mutableStudents = mkObservableList(for (student <- StudentData.asMap()) yield MutableStudent(student._2))
     tableView.setItems(mutableStudents)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableStudent, T], (MutableStudent) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableStudent, T]
 
@@ -213,11 +206,12 @@ class CWStudentController extends Initializable {
     initTableViewColumn[String](C7, _.p_githubUsername)
     initTableViewColumn[Int](C8, _.p_group)
 
-    choiceBox.getItems().addAll("selectAll", "selectGroup1", "ThirdQuery")
+    choiceBox.setItems(mkObservableList(List("selectAll", "selectGroup1")))
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -230,6 +224,7 @@ class CWStudentController extends Initializable {
     githubUsername.setText(tableView.getSelectionModel.getSelectedItem.p_githubUsername.getValue)
     group.setText(tableView.getSelectionModel.getSelectedItem.p_group.getValue.toString)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Student.deletefromDB(c)(deleted)};repopulate()
@@ -248,7 +243,6 @@ class CWStudentController extends Initializable {
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedstudent: Student = new Student(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, email.getText, birthday.getText, telnr.getText, githubUsername.getText, group.getText.toInt)
       for (c <- DB.maybeConnection){Student.editDB(c)(editedstudent)}
@@ -265,6 +259,7 @@ class CWStudentController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
+
   def report(): Unit = {
     if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
       StudentData.createReport()
@@ -272,10 +267,10 @@ class CWStudentController extends Initializable {
     if (choiceBox.getSelectionModel.getSelectedItem == "selectGroup1") {
       StudentData.createReport(studentquery.selectGroup1)
     }
-
   }
 }
 
+/************************************************************** LECTURER - Controller ***********************************************************************/
 class CWLecturerController extends Initializable {
 
   import JfxUtils._
@@ -290,7 +285,6 @@ class CWLecturerController extends Initializable {
   @FXML var C4: LecturerTC[String] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var firstname: TextField = _
@@ -301,7 +295,6 @@ class CWLecturerController extends Initializable {
     val mutableLecturers = mkObservableList(for (lecturer <- LecturerData.asMap()) yield MutableLecturer(lecturer._2))
     tableView.setItems(mutableLecturers)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableLecturer, T], (MutableLecturer) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableLecturer, T]
 
@@ -314,11 +307,12 @@ class CWLecturerController extends Initializable {
     initTableViewColumn[String](C3, _.p_lastname)
     initTableViewColumn[String](C4, _.p_title)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
+    choiceBox.setItems(mkObservableList(List("selectAll")))
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Lecturer.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -327,14 +321,21 @@ class CWLecturerController extends Initializable {
     lastname.setText(tableView.getSelectionModel.getSelectedItem.p_lastname.getValue)
     title.setText(tableView.getSelectionModel.getSelectedItem.p_title.getValue)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Lecturer.deletefromDB(c)(deleted)};repopulate()
   }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      repopulate()
+    }
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedlecturer: Lecturer = new Lecturer(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, title.getText)
       for (c <- DB.maybeConnection){Lecturer.editDB(c)(editedlecturer)}
@@ -352,10 +353,9 @@ class CWLecturerController extends Initializable {
 
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = LecturerData.createReport()
-
-
 }
 
+/************************************************************** COURSE - Controller ***********************************************************************/
 class CWCourseController extends Initializable {
 
   import JfxUtils._
@@ -370,7 +370,6 @@ class CWCourseController extends Initializable {
   @FXML var C4: CourseTC[Int] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var name: TextField = _
@@ -381,7 +380,6 @@ class CWCourseController extends Initializable {
     val mutableCourses = mkObservableList(for (course <- CourseData.asMap()) yield MutableCourse(course._2))
     tableView.setItems(mutableCourses)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableCourse, T], (MutableCourse) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableCourse, T]
 
@@ -394,11 +392,12 @@ class CWCourseController extends Initializable {
     initTableViewColumn[String](C3, _.p_branch)
     initTableViewColumn[Int](C4, _.p_year)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
+    choiceBox.setItems(mkObservableList(List("selectAll")))
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Course.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -407,14 +406,21 @@ class CWCourseController extends Initializable {
     branch.setText(tableView.getSelectionModel.getSelectedItem.p_branch.getValue)
     year.setText(tableView.getSelectionModel.getSelectedItem.p_year.getValue.toString)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Course.deletefromDB(c)(deleted)};repopulate()
   }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      repopulate()
+    }
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedcourse: Course = new Course(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, branch.getText, year.getText.toInt)
       for (c <- DB.maybeConnection){Course.editDB(c)(editedcourse)}
@@ -434,6 +440,7 @@ class CWCourseController extends Initializable {
   def report(): Unit = CourseData.createReport()
 }
 
+/************************************************************** GROUP - Controller ***********************************************************************/
 class CWGroupController extends Initializable {
 
   import JfxUtils._
@@ -446,17 +453,14 @@ class CWGroupController extends Initializable {
   @FXML var C2: GroupTC[String] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var name: TextField = _
-
 
   def repopulate(): Unit = {
     val mutableGroups = mkObservableList(for (group <- GroupData.asMap()) yield MutableGroup(group._2))
     tableView.setItems(mutableGroups)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableGroup, T], (MutableGroup) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableGroup, T]
 
@@ -467,25 +471,33 @@ class CWGroupController extends Initializable {
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
+    choiceBox.setItems(mkObservableList(List("selectAll")))
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Group.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
 
     name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Group.deletefromDB(c)(deleted)};repopulate()
   }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      repopulate()
+    }
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedgroup: Group = new Group(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText)
       for (c <- DB.maybeConnection){Group.editDB(c)(editedgroup)}
@@ -505,7 +517,7 @@ class CWGroupController extends Initializable {
   def report(): Unit = GroupData.createReport()
 }
 
-
+/************************************************************** EXAM - Controller ***********************************************************************/
 class CWExamController extends Initializable {
 
   import JfxUtils._
@@ -520,7 +532,6 @@ class CWExamController extends Initializable {
   @FXML var C4: ExamTC[String] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var course: TextField = _
@@ -531,7 +542,6 @@ class CWExamController extends Initializable {
     val mutableExams = mkObservableList(for (exam <- ExamData.asMap()) yield MutableExam(exam._2))
     tableView.setItems(mutableExams)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableExam, T], (MutableExam) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableExam, T]
 
@@ -544,10 +554,12 @@ class CWExamController extends Initializable {
     initTableViewColumn[String](C3, _.p_attempt)
     initTableViewColumn[String](C4, _.p_date)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
+    choiceBox.setItems(mkObservableList(List("selectAll")))
   }
+
   def recreate(): Unit = {for (c <- DB.maybeConnection){Exam.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -556,14 +568,21 @@ class CWExamController extends Initializable {
     attempt.setText(tableView.getSelectionModel.getSelectedItem.p_attempt.getValue.toString)
     date.setText(tableView.getSelectionModel.getSelectedItem.p_date.getValue)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Exam.deletefromDB(c)(deleted)};repopulate()
   }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      repopulate()
+    }
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedexam: Exam = new Exam(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, course.getText, attempt.getText.toInt, date.getText)
       for (c <- DB.maybeConnection){Exam.editDB(c)(editedexam)}
@@ -581,9 +600,9 @@ class CWExamController extends Initializable {
 
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = ExamData.createReport()
-
 }
 
+/************************************************************** PROJECT - Controller ***********************************************************************/
 class CWProjectController extends Initializable {
 
   import JfxUtils._
@@ -598,7 +617,6 @@ class CWProjectController extends Initializable {
   @FXML var C4: ProjectTC[String] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var name: TextField = _
@@ -609,7 +627,6 @@ class CWProjectController extends Initializable {
     val mutableProjects = mkObservableList(for (project <- ProjectData.asMap()) yield MutableProject(project._2))
     tableView.setItems(mutableProjects)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableProject, T], (MutableProject) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableProject, T]
 
@@ -622,11 +639,12 @@ class CWProjectController extends Initializable {
     initTableViewColumn[String](C3, _.p_begindate)
     initTableViewColumn[String](C4, _.p_deadline)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
+    choiceBox.setItems(mkObservableList(List("selectAll")))
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Project.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -635,14 +653,21 @@ class CWProjectController extends Initializable {
     begindate.setText(tableView.getSelectionModel.getSelectedItem.p_begindate.getValue)
     deadline.setText(tableView.getSelectionModel.getSelectedItem.p_deadline.getValue)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Project.deletefromDB(c)(deleted)};repopulate()
   }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      repopulate()
+    }
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedproject: Project = new Project(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, begindate.getText, deadline.getText)
       for (c <- DB.maybeConnection){Project.editDB(c)(editedproject)}
@@ -657,12 +682,12 @@ class CWProjectController extends Initializable {
     inputarea.setDisable(true)
     repopulate()
   }
+
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = ProjectData.createReport()
-
-
 }
 
+/************************************************************** ASSIGNMENT - Controller ***********************************************************************/
 class CWAssignmentController extends Initializable {
 
   import JfxUtils._
@@ -676,7 +701,6 @@ class CWAssignmentController extends Initializable {
   @FXML var C3: AssignmentTC[String] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var name: TextField = _
@@ -686,7 +710,6 @@ class CWAssignmentController extends Initializable {
     val mutableAssignments = mkObservableList(for (assignment <- AssignmentData.asMap()) yield MutableAssignment(assignment._2))
     tableView.setItems(mutableAssignments)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableAssignment, T], (MutableAssignment) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableAssignment, T]
 
@@ -698,11 +721,12 @@ class CWAssignmentController extends Initializable {
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_description)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
-
+    choiceBox.setItems(mkObservableList(List("selectAll")))
   }
+
   def recreate(): Unit = {for (c <- DB.maybeConnection){Assignment.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -710,14 +734,21 @@ class CWAssignmentController extends Initializable {
     name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
     description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Assignment.deletefromDB(c)(deleted)};repopulate()
   }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      repopulate()
+    }
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedassignment: Assignment = new Assignment(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, description.getText)
       for (c <- DB.maybeConnection){Assignment.editDB(c)(editedassignment)}
@@ -735,9 +766,9 @@ class CWAssignmentController extends Initializable {
 
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = AssignmentData.createReport()
-
 }
 
+/************************************************************** HOMEWORK - Controller ***********************************************************************/
 class CWHomeworkController extends Initializable {
 
   import JfxUtils._
@@ -751,7 +782,6 @@ class CWHomeworkController extends Initializable {
   @FXML var C3: HomeworkTC[String] = _
 
   @FXML var inputarea: Pane = _
-
   @FXML var choiceBox: ChoiceBox[String] = _
 
   @FXML var name: TextField = _
@@ -759,10 +789,8 @@ class CWHomeworkController extends Initializable {
 
   def repopulate(): Unit = {
     val mutableHomeworks = mkObservableList(for (homework <- HomeworkData.asMap()) yield MutableHomework(homework._2))
-    //val mutableHomeworks = mkObservableList(for (homework <- HomeworkData.asMap(homeworkquery.selectwhatever)) yield MutableHomework(homework._2))
     tableView.setItems(mutableHomeworks)
   }
-
   def initTableViewColumn[T]: (TableColumn[MutableHomework, T], (MutableHomework) => Any) => Unit =
     initTableViewColumnCellValueFactory[MutableHomework, T]
 
@@ -774,11 +802,12 @@ class CWHomeworkController extends Initializable {
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_description)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
-
+    choiceBox.setItems(mkObservableList(List("selectAll")))
   }
+
   def recreate(): Unit = {for (c <- DB.maybeConnection){Homework.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
+
   def edit(): Unit = {
     inputarea.setDisable(false)
     inputarea.setId("edit")
@@ -786,14 +815,21 @@ class CWHomeworkController extends Initializable {
     name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
     description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
   }
+
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Homework.deletefromDB(c)(deleted)};repopulate()
   }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      repopulate()
+    }
+  }
+
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-
     if (inputarea.getId == "edit") {
       val editedhomework: Homework = new Homework(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, description.getText)
       for (c <- DB.maybeConnection){Homework.editDB(c)(editedhomework)}
@@ -809,11 +845,6 @@ class CWHomeworkController extends Initializable {
     repopulate()
   }
 
-
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = HomeworkData.createReport()
-  //def report(): Unit = HomeworkData.createReport(homeworkquery.selectwhatever)
-
 }
-
-
