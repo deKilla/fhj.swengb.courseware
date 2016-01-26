@@ -131,7 +131,7 @@ case class Student(ID: Int,
 
 object studentquery {
   val selectall = "select * from Students"
-  val onlyasdf2 = "select * from Students where firstname = \"asdf2\""
+  val selectGroup1 = "select * from Students where \"group\" = 1"
 }
 
 object StudentData {
