@@ -608,7 +608,7 @@ class CWProjectController extends Initializable {
 
     if (inputarea.getId == "edit") {
       val editedproject: Project = new Project(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, begindate.getText, deadline.getText)
-      for (c <- DB.maybeConnection){Project.editDB(c)(editedproject}
+      for (c <- DB.maybeConnection){Project.editDB(c)(editedproject)}
 
     } else if (inputarea.getId == "add") {
 
