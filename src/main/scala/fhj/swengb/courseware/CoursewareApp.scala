@@ -443,13 +443,31 @@ class CWGroupController extends Initializable {
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Group.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false)}
+  def edit(): Unit = {
+    inputarea.setDisable(false)
+    inputarea.setId("edit")
+
+    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+  }
+  def delete():Unit = {
+    val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Group.deletefromDB(c)(deleted)};repopulate()
+  }
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
 
-    val ID:Int = GroupData.asMap().size+1
-    val newgroup:Group = new Group(ID,name.getText)
-    for (c <- DB.maybeConnection) {Group.toDB(c)(newgroup)}
+    if (inputarea.getId == "edit") {
+      val editedgroup: Group = new Group(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText)
+      for (c <- DB.maybeConnection){Group.editDB(c)(editedgroup)}
+
+    } else if (inputarea.getId == "add") {
+
+      val ID: Int = GroupData.asMap().size + 1
+      val newgroup: Group = new Group(ID, name.getText)
+      for (c <- DB.maybeConnection) {Group.toDB(c)(newgroup)}
+    }
+    inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
   }
