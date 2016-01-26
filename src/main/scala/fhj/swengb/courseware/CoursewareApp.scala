@@ -590,17 +590,36 @@ class CWProjectController extends Initializable {
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Project.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false)}
+  def edit(): Unit = {
+    inputarea.setDisable(false)
+    inputarea.setId("edit")
+
+    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+    begindate.setText(tableView.getSelectionModel.getSelectedItem.p_begindate.getValue)
+    deadline.setText(tableView.getSelectionModel.getSelectedItem.p_deadline.getValue)
+  }
+  def delete():Unit = {
+    val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Project.deletefromDB(c)(deleted)};repopulate()
+  }
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
 
-    val ID:Int = ProjectData.asMap().size+1
-    val newproject:Project = new Project(ID,name.getText,begindate.getText,deadline.getText)
-    for (c <- DB.maybeConnection) {Project.toDB(c)(newproject)}
+    if (inputarea.getId == "edit") {
+      val editedproject: Project = new Project(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, begindate.getText, deadline.getText)
+      for (c <- DB.maybeConnection){Project.editDB(c)(editedproject}
+
+    } else if (inputarea.getId == "add") {
+
+      val ID: Int = CourseData.asMap().size + 1
+      val newproject: Project = new Project(ID, name.getText, begindate.getText, deadline.getText)
+      for (c <- DB.maybeConnection) {Project.toDB(c)(newproject)}
+    }
+    inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
   }
-
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = ProjectData.createReport()
 
