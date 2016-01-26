@@ -661,13 +661,32 @@ class CWAssignmentController extends Initializable {
   }
   def recreate(): Unit = {for (c <- DB.maybeConnection){Assignment.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false)}
+  def edit(): Unit = {
+    inputarea.setDisable(false)
+    inputarea.setId("edit")
+
+    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+    description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
+  }
+  def delete():Unit = {
+    val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
+    for (c <- DB.maybeConnection){Assignment.deletefromDB(c)(deleted)};repopulate()
+  }
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
 
-    val ID:Int = AssignmentData.asMap().size+1
-    val newassignment:Assignment = new Assignment(ID,name.getText,description.getText)
-    for (c <- DB.maybeConnection) {Assignment.toDB(c)(newassignment)}
+    if (inputarea.getId == "edit") {
+      val editedassignment: Assignment = new Assignment(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, name.getText, description.getText)
+      for (c <- DB.maybeConnection){Assignment.editDB(c)(editedassignment)}
+
+    } else if (inputarea.getId == "add") {
+
+      val ID: Int = CourseData.asMap().size + 1
+      val newassignment: Assignment = new Assignment(ID, name.getText, description.getText)
+      for (c <- DB.maybeConnection) {Assignment.toDB(c)(newassignment)}
+    }
+    inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
   }
