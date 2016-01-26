@@ -213,7 +213,7 @@ class CWStudentController extends Initializable {
     initTableViewColumn[String](C7, _.p_githubUsername)
     initTableViewColumn[Int](C8, _.p_group)
 
-    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
+    choiceBox.getItems().addAll("selectAll", "selectGroup1", "ThirdQuery")
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
@@ -233,6 +233,16 @@ class CWStudentController extends Initializable {
   def delete():Unit = {
     val deleted = tableView.getSelectionModel.getSelectedItem.p_ID.getValue
     for (c <- DB.maybeConnection){Student.deletefromDB(c)(deleted)};repopulate()
+  }
+
+  def execute(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+    repopulate()
+    }
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectGroup1") {
+      val selectedStudents = mkObservableList(for (student <- StudentData.asMap(studentquery.selectGroup1)) yield MutableStudent(student._2))
+      tableView.setItems(selectedStudents)
+    }
   }
 
   def menu(): Unit = root.getScene.getWindow.hide()
@@ -255,8 +265,15 @@ class CWStudentController extends Initializable {
   }
 
   def close(): Unit = inputarea.setDisable(true)
-  def report(): Unit = StudentData.createReport()
+  def report(): Unit = {
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+      StudentData.createReport()
+    }
+    if (choiceBox.getSelectionModel.getSelectedItem == "selectGroup1") {
+      StudentData.createReport(studentquery.selectGroup1)
+    }
 
+  }
 }
 
 class CWLecturerController extends Initializable {
@@ -642,6 +659,7 @@ class CWProjectController extends Initializable {
   }
   def close(): Unit = inputarea.setDisable(true)
   def report(): Unit = ProjectData.createReport()
+
 
 }
 
