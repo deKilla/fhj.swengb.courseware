@@ -22,16 +22,3 @@ object DB {
   lazy val maybeConnection: Try[Connection] = Try(DriverManager.getConnection("jdbc:sqlite:" + db))
 
 }
-
-/*object DbTest {
-
-  def main(args: Array[String]) {
-    for {con <- DB.maybeConnection
-         _ = Person.reTable(con.createStatement())
-         _ = Students.sortedStudents.map(toDb(con)(_))
-         s <- Person.fromDb(queryAll(con))} {
-      println(s)
-    }
-  }
-
-}*/
