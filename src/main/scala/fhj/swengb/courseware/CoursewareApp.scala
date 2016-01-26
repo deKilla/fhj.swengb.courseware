@@ -213,7 +213,7 @@ class CWStudentController extends Initializable {
     initTableViewColumn[String](C7, _.p_githubUsername)
     initTableViewColumn[Int](C8, _.p_group)
 
-    choiceBox.getItems().addAll("First", "Second", "Third")
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
@@ -273,6 +273,8 @@ class CWLecturerController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var firstname: TextField = _
   @FXML var lastname: TextField = _
   @FXML var title: TextField = _
@@ -293,6 +295,8 @@ class CWLecturerController extends Initializable {
     initTableViewColumn[String](C2, _.p_firstname)
     initTableViewColumn[String](C3, _.p_lastname)
     initTableViewColumn[String](C4, _.p_title)
+
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Lecturer.reTable(c.createStatement())};repopulate()}
@@ -329,6 +333,8 @@ class CWCourseController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var name: TextField = _
   @FXML var branch: TextField = _
   @FXML var year: TextField = _
@@ -349,6 +355,8 @@ class CWCourseController extends Initializable {
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_branch)
     initTableViewColumn[Int](C4, _.p_year)
+
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Course.reTable(c.createStatement())};repopulate()}
@@ -381,6 +389,8 @@ class CWGroupController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var name: TextField = _
 
 
@@ -398,6 +408,8 @@ class CWGroupController extends Initializable {
 
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
+
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Group.reTable(c.createStatement())};repopulate()}
@@ -433,6 +445,8 @@ class CWExamController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var course: TextField = _
   @FXML var attempt: TextField = _
   @FXML var date: TextField = _
@@ -453,6 +467,8 @@ class CWExamController extends Initializable {
     initTableViewColumn[String](C2, _.p_course)
     initTableViewColumn[String](C3, _.p_attempt)
     initTableViewColumn[String](C4, _.p_date)
+
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
   }
   def recreate(): Unit = {for (c <- DB.maybeConnection){Exam.reTable(c.createStatement())};repopulate()}
   def add(): Unit = {inputarea.setDisable(false)}
@@ -487,6 +503,8 @@ class CWProjectController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var name: TextField = _
   @FXML var begindate: TextField = _
   @FXML var deadline: TextField = _
@@ -507,6 +525,8 @@ class CWProjectController extends Initializable {
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_begindate)
     initTableViewColumn[String](C4, _.p_deadline)
+
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Project.reTable(c.createStatement())};repopulate()}
@@ -541,6 +561,8 @@ class CWAssignmentController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var name: TextField = _
   @FXML var description: TextField = _
 
@@ -559,6 +581,8 @@ class CWAssignmentController extends Initializable {
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_description)
+
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
 
   }
   def recreate(): Unit = {for (c <- DB.maybeConnection){Assignment.reTable(c.createStatement())};repopulate()}
@@ -593,6 +617,8 @@ class CWHomeworkController extends Initializable {
 
   @FXML var inputarea: Pane = _
 
+  @FXML var choiceBox: ChoiceBox[String] = _
+
   @FXML var name: TextField = _
   @FXML var description: TextField = _
 
@@ -612,6 +638,8 @@ class CWHomeworkController extends Initializable {
     initTableViewColumn[Int](C1, _.p_ID)
     initTableViewColumn[String](C2, _.p_name)
     initTableViewColumn[String](C3, _.p_description)
+
+    choiceBox.getItems().addAll("FirstQuery", "SecondQuery", "ThirdQuery")
 
   }
   def recreate(): Unit = {for (c <- DB.maybeConnection){Homework.reTable(c.createStatement())};repopulate()}
