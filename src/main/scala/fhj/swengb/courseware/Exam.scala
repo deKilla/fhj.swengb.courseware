@@ -9,6 +9,8 @@ object Exam extends DB.DBEntity[Exam] {
   val dropTableSql = "drop table if exists Exams"
   val createTableSql = "CREATE TABLE \"Exams\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`course`\tTEXT NOT NULL,\n\t`attempt`\tINTEGER NOT NULL,\n\t`date`\tTEXT\n)"
   val insertSql = "insert into \"Exams\" VALUES (?, ?, ?, ?)"
+  val editSql = "update \"Exams\" set course=?, attempt=?, date=? where ID=?"
+  val deleteSql = "delete from \"Exams\" where ID=?"
 
 
   def reTable(stmt: Statement): Int = {
@@ -36,6 +38,21 @@ object Exam extends DB.DBEntity[Exam] {
         )
     )
     lb.toList
+  }
+
+  def editDB(c: Connection)(e: Exam): Int = {
+    val pstmt = c.prepareStatement(editSql)
+    pstmt.setString(1, e.course)
+    pstmt.setInt(2, e.attempt)
+    pstmt.setString(3, e.date)
+    pstmt.setInt(4, e.ID)
+    pstmt.executeUpdate()
+  }
+
+  def deletefromDB(c: Connection)(ID: Int): Int = {
+    val pstmt = c.prepareStatement(deleteSql)
+    pstmt.setInt(1, ID)
+    pstmt.executeUpdate()
   }
 }
 

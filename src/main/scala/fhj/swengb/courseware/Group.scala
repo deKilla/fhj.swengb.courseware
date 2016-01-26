@@ -10,7 +10,8 @@ object Group extends DB.DBEntity[Group] {
   val dropTableSql = "drop table if exists Groups"
   val createTableSql = "CREATE TABLE \"Groups\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL\n)"
   val insertSql = "insert into \"Groups\" VALUES (?, ?)"
-
+  val editSql = "update \"Groups\" set name=? where ID=?"
+  val deleteSql = "delete from \"Groups\" where ID=?"
 
   def reTable(stmt: Statement): Int = {
     stmt.executeUpdate(Group.dropTableSql)
@@ -34,6 +35,20 @@ object Group extends DB.DBEntity[Group] {
     )
     lb.toList
   }
+
+  def editDB(c: Connection)(g: Group): Int = {
+    val pstmt = c.prepareStatement(editSql)
+    pstmt.setString(1, g.name)
+    pstmt.setInt(2, g.ID)
+    pstmt.executeUpdate()
+  }
+
+  def deletefromDB(c: Connection)(ID: Int): Int = {
+    val pstmt = c.prepareStatement(deleteSql)
+    pstmt.setInt(1, ID)
+    pstmt.executeUpdate()
+  }
+
 }
 
 sealed trait Groups {

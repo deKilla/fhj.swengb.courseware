@@ -14,7 +14,8 @@ object Assignment extends DB.DBEntity[Assignment] {
   val dropTableSql = "drop table if exists GroupAssignments"
   val createTableSql = "CREATE TABLE \"GroupAssignments\" (\n\t`ID`\tINTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,\n\t`name`\tTEXT NOT NULL,\n\t`description`\tTEXT\n)"
   val insertSql = "insert into \"GroupAssignments\" VALUES (?, ?, ?)"
-
+  val editSql = "update \"GroupAssignments\" set name=?, description=? where ID=?"
+  val deleteSql = "delete from \"GroupAssignments\" where ID=?"
 
   def reTable(stmt: Statement): Int = {
     stmt.executeUpdate(Assignment.dropTableSql)
@@ -39,6 +40,20 @@ object Assignment extends DB.DBEntity[Assignment] {
         )
     )
     lb.toList
+  }
+
+  def editDB(c: Connection)(a: Assignment): Int = {
+    val pstmt = c.prepareStatement(editSql)
+    pstmt.setString(1, a.name)
+    pstmt.setString(2, a.description)
+    pstmt.setInt(3, a.ID)
+    pstmt.executeUpdate()
+  }
+
+  def deletefromDB(c: Connection)(ID: Int): Int = {
+    val pstmt = c.prepareStatement(deleteSql)
+    pstmt.setInt(1, ID)
+    pstmt.executeUpdate()
   }
 }
 
