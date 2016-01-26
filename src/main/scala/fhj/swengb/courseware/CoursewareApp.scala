@@ -311,7 +311,7 @@ class CWLecturerController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Lecturer.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
     inputarea.setDisable(false)
@@ -396,7 +396,7 @@ class CWCourseController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Course.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
     inputarea.setDisable(false)
@@ -475,7 +475,7 @@ class CWGroupController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Group.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
     inputarea.setDisable(false)
@@ -558,7 +558,7 @@ class CWExamController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Exam.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
     inputarea.setDisable(false)
@@ -643,7 +643,7 @@ class CWProjectController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Project.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
     inputarea.setDisable(false)
@@ -725,7 +725,7 @@ class CWAssignmentController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Assignment.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
     inputarea.setDisable(false)
@@ -806,7 +806,7 @@ class CWHomeworkController extends Initializable {
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Homework.reTable(c.createStatement())};repopulate()}
-  def add(): Unit = {inputarea.setDisable(false)}
+  def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
     inputarea.setDisable(false)
