@@ -33,13 +33,14 @@
     -fx-padding: 0;
 }
 
-.btn-right {
+.btn-toolbar {
+ -fx-padding:5px 20px
+ }
+
+.btn-report {
     -fx-alignment: center-right
 }
 
-.tableview {
-    -fx-padding:0;
-}
 
 .inputarea {
     -fx-background-color: #fff;
@@ -56,3 +57,29 @@
     -fx-font-size:20px;
 }
 
+* { -fx-focus-color: #76B82A; }
+
+.table-view {
+    -fx-table-cell-border-color: transparent;
+    }
+
+.table-row-cell {
+    -fx-background-color: #fff;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #D6E9C1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #A8C785;
+    -fx-background: -fx-accent;
+    -fx-text-fill: #000;
+    -fx-table-cell-border-color: transparent;
+
+}
+
+.btn-grey:hover {
+    -fx-effect: innershadow( gaussian , #76B82A , 15,0,0,0 );
+    -fx-text-fill: #222;
+}
