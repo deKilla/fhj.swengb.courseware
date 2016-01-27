@@ -86,7 +86,7 @@ class CoursewareAppController extends Initializable {
     lecturerStage.setTitle("Courseware | Lecturers")
     lecturerLoader.load[Parent]()
     lecturerStage.setScene(new Scene(lecturerLoader.getRoot[Parent]))
-
+    lecturerStage.setResizable(false)
     lecturerStage.show()
   }
 
