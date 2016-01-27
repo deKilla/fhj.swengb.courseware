@@ -213,16 +213,18 @@ class CWStudentController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    firstname.setText(tableView.getSelectionModel.getSelectedItem.p_firstname.getValue)
-    lastname.setText(tableView.getSelectionModel.getSelectedItem.p_lastname.getValue)
-    email.setText(tableView.getSelectionModel.getSelectedItem.p_email.getValue)
-    birthday.setText(tableView.getSelectionModel.getSelectedItem.p_birthday.getValue)
-    telnr.setText(tableView.getSelectionModel.getSelectedItem.p_telnr.getValue)
-    githubUsername.setText(tableView.getSelectionModel.getSelectedItem.p_githubUsername.getValue)
-    group.setText(tableView.getSelectionModel.getSelectedItem.p_group.getValue.toString)
+      firstname.setText(tableView.getSelectionModel.getSelectedItem.p_firstname.getValue)
+      lastname.setText(tableView.getSelectionModel.getSelectedItem.p_lastname.getValue)
+      email.setText(tableView.getSelectionModel.getSelectedItem.p_email.getValue)
+      birthday.setText(tableView.getSelectionModel.getSelectedItem.p_birthday.getValue)
+      telnr.setText(tableView.getSelectionModel.getSelectedItem.p_telnr.getValue)
+      githubUsername.setText(tableView.getSelectionModel.getSelectedItem.p_githubUsername.getValue)
+      group.setText(tableView.getSelectionModel.getSelectedItem.p_group.getValue.toString)
+    }
   }
 
   def delete():Unit = {
@@ -261,7 +263,7 @@ class CWStudentController extends Initializable {
   def close(): Unit = inputarea.setDisable(true)
 
   def report(): Unit = {
-    if (choiceBox.getSelectionModel.getSelectedItem == "selectAll") {
+    if ((choiceBox.getSelectionModel.getSelectedItem == "selectAll") || (choiceBox.getSelectionModel.isEmpty)) {
       StudentData.createReport()
     }
     if (choiceBox.getSelectionModel.getSelectedItem == "selectGroup1") {
@@ -314,12 +316,14 @@ class CWLecturerController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    firstname.setText(tableView.getSelectionModel.getSelectedItem.p_firstname.getValue)
-    lastname.setText(tableView.getSelectionModel.getSelectedItem.p_lastname.getValue)
-    title.setText(tableView.getSelectionModel.getSelectedItem.p_title.getValue)
+      firstname.setText(tableView.getSelectionModel.getSelectedItem.p_firstname.getValue)
+      lastname.setText(tableView.getSelectionModel.getSelectedItem.p_lastname.getValue)
+      title.setText(tableView.getSelectionModel.getSelectedItem.p_title.getValue)
+    }
   }
 
   def delete():Unit = {
@@ -399,12 +403,14 @@ class CWCourseController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
-    branch.setText(tableView.getSelectionModel.getSelectedItem.p_branch.getValue)
-    year.setText(tableView.getSelectionModel.getSelectedItem.p_year.getValue.toString)
+      name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+      branch.setText(tableView.getSelectionModel.getSelectedItem.p_branch.getValue)
+      year.setText(tableView.getSelectionModel.getSelectedItem.p_year.getValue.toString)
+    }
   }
 
   def delete():Unit = {
@@ -478,10 +484,12 @@ class CWGroupController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+      name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+    }
   }
 
   def delete():Unit = {
@@ -561,12 +569,14 @@ class CWExamController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    course.setText(tableView.getSelectionModel.getSelectedItem.p_course.getValue)
-    attempt.setText(tableView.getSelectionModel.getSelectedItem.p_attempt.getValue.toString)
-    date.setText(tableView.getSelectionModel.getSelectedItem.p_date.getValue)
+      course.setText(tableView.getSelectionModel.getSelectedItem.p_course.getValue)
+      attempt.setText(tableView.getSelectionModel.getSelectedItem.p_attempt.getValue.toString)
+      date.setText(tableView.getSelectionModel.getSelectedItem.p_date.getValue)
+    }
   }
 
   def delete():Unit = {
@@ -646,12 +656,14 @@ class CWProjectController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
-    begindate.setText(tableView.getSelectionModel.getSelectedItem.p_begindate.getValue)
-    deadline.setText(tableView.getSelectionModel.getSelectedItem.p_deadline.getValue)
+      name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+      begindate.setText(tableView.getSelectionModel.getSelectedItem.p_begindate.getValue)
+      deadline.setText(tableView.getSelectionModel.getSelectedItem.p_deadline.getValue)
+    }
   }
 
   def delete():Unit = {
@@ -728,11 +740,13 @@ class CWAssignmentController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
-    description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
+      name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+      description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
+    }
   }
 
   def delete():Unit = {
@@ -809,11 +823,13 @@ class CWHomeworkController extends Initializable {
   def add(): Unit = {inputarea.setDisable(false);inputarea.setId("add")}
 
   def edit(): Unit = {
-    inputarea.setDisable(false)
-    inputarea.setId("edit")
+    if(!tableView.getSelectionModel().isEmpty) {
+      inputarea.setDisable(false)
+      inputarea.setId("edit")
 
-    name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
-    description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
+      name.setText(tableView.getSelectionModel.getSelectedItem.p_name.getValue)
+      description.setText(tableView.getSelectionModel.getSelectedItem.p_description.getValue)
+    }
   }
 
   def delete():Unit = {
