@@ -121,7 +121,7 @@ object ExamData {
       "<h1>Examreport</h1>" +
       "<table>" +
       "<tr>" +
-      "<th>ID</th><th>course</th><th>attemp</th><th>date</th>" +
+      "<th>ID</th><th>course</th><th>attempt</th><th>date</th>" +
       "</tr>")
 
     val htmlbottom:String = ("</table></body></html>")
