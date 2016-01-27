@@ -99,7 +99,7 @@ class CoursewareAppController extends Initializable {
     courseStage.setTitle("Courseware | Courses")
     courseLoader.load[Parent]()
     courseStage.setScene(new Scene(courseLoader.getRoot[Parent]))
-
+    courseStage.setResizable(false)
     courseStage.show()
   }
 
@@ -110,7 +110,7 @@ class CoursewareAppController extends Initializable {
     groupStage.setTitle("Courseware | Courses")
     groupLoader.load[Parent]()
     groupStage.setScene(new Scene(groupLoader.getRoot[Parent]))
-
+    groupStage.setResizable(false)
     groupStage.show()
   }
 
@@ -121,7 +121,7 @@ class CoursewareAppController extends Initializable {
     examStage.setTitle("Courseware | Exams")
     examLoader.load[Parent]()
     examStage.setScene(new Scene(examLoader.getRoot[Parent]))
-
+    examStage.setResizable(false)
     examStage.show()
   }
 
@@ -132,7 +132,7 @@ class CoursewareAppController extends Initializable {
     projectStage.setTitle("Courseware | Projects")
     projectLoader.load[Parent]()
     projectStage.setScene(new Scene(projectLoader.getRoot[Parent]))
-
+    projectStage.setResizable(false)
     projectStage.show()
   }
 
@@ -143,7 +143,7 @@ class CoursewareAppController extends Initializable {
     assignmentStage.setTitle("Courseware | Assignments")
     assignmentLoader.load[Parent]()
     assignmentStage.setScene(new Scene(assignmentLoader.getRoot[Parent]))
-
+    assignmentStage.setResizable(false)
     assignmentStage.show()
   }
 
@@ -154,7 +154,7 @@ class CoursewareAppController extends Initializable {
     homeworkStage.setTitle("Courseware | Homework")
     homeworkLoader.load[Parent]()
     homeworkStage.setScene(new Scene(homeworkLoader.getRoot[Parent]))
-
+    homeworkStage.setResizable(false)
     homeworkStage.show()
   }
 }
@@ -273,6 +273,7 @@ class CWStudentController extends Initializable {
     var errorMessage = ""
     if(firstname.getText == null || firstname.getText.length == 0){errorMessage+="No valid first name!\n"}
     else if(lastname.getText == null || lastname.getText.length == 0){errorMessage+="No valid last name!\n"}
+    else if(isint(group.getText) == false){errorMessage+="Group has to be a number!\n"}
     if(errorMessage.length == 0){true}
     else{
       System.out.print(errorMessage)
@@ -284,8 +285,9 @@ class CWStudentController extends Initializable {
       alert.showAndWait()
       false
     }
-
   }
+
+  def isint(possibleint:String):Boolean = {try{possibleint.toInt;true}catch{case noint:NumberFormatException=>false}}
 
   def close(): Unit = inputarea.setDisable(true)
 
@@ -366,20 +368,37 @@ class CWLecturerController extends Initializable {
 
   def menu(): Unit = root.getScene.getWindow.hide()
 
-  def ok(): Unit =  {
-    if (inputarea.getId == "edit") {
-      val editedlecturer: Lecturer = new Lecturer(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, title.getText)
-      for (c <- DB.maybeConnection){Lecturer.editDB(c)(editedlecturer)}
+  def ok(): Unit = {
+    if (isInputValid()) {
+      if (inputarea.getId == "edit") {
+        val editedlecturer: Lecturer = new Lecturer(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, title.getText)
+        for (c <- DB.maybeConnection) {
+          Lecturer.editDB(c)(editedlecturer)
+        }
 
-    } else if (inputarea.getId == "add") {
+      } else if (inputarea.getId == "add") {
 
-      val ID: Int = LecturerData.asMap().size + 1
-      val newlecturer: Lecturer = new Lecturer(ID, firstname.getText, lastname.getText, title.getText)
-      for (c <- DB.maybeConnection) {Lecturer.toDB(c)(newlecturer)}
+        val ID: Int = LecturerData.asMap().size + 1
+        val newlecturer: Lecturer = new Lecturer(ID, firstname.getText, lastname.getText, title.getText)
+        for (c <- DB.maybeConnection) {
+          Lecturer.toDB(c)(newlecturer)
+        }
+      }
+      inputarea.setId("")
+      inputarea.setDisable(true)
+      repopulate()
     }
-    inputarea.setId("")
-    inputarea.setDisable(true)
-    repopulate()
+  }
+
+  def isInputValid(): Boolean = {
+    var errorMessage = ""
+    if(firstname.getText == null || firstname.getText.length == 0){errorMessage+="No valid first name!\n"}
+    else if(lastname.getText == null || lastname.getText.length == 0){errorMessage+="No valid last name!\n"}
+    if(errorMessage.length == 0){true}
+    else{
+      System.out.print(errorMessage)
+      false
+    }
   }
 
   def close(): Unit = inputarea.setDisable(true)
