@@ -4,6 +4,7 @@ import java.net.URL
 import java.sql.{Connection, ResultSet, Statement}
 import javafx.beans.property.{SimpleStringProperty, SimpleIntegerProperty}
 import fhj.swengb.GitHub
+import scala.collection.immutable.ListMap
 import scala.collection.mutable.ListBuffer
 
 
@@ -135,14 +136,15 @@ object studentquery {
 }
 
 object StudentData {
-  def asMap(query:String = studentquery.selectall): Map[_, Student] = {
+  def asMap(query:String = studentquery.selectall): Map[_,Student] = {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
       Student.fromDB(Student.query(c)(query)
       ).map(s => (s.ID,s)).toMap
     } else { Map.empty }
-    data
+    val sorteddata = ListMap(data.toSeq.sortBy(_._2.ID):_*)
+    sorteddata
   }
 
   def createReport(query:String = studentquery.selectall): Unit = {

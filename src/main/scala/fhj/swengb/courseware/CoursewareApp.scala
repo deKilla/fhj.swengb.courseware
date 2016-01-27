@@ -273,6 +273,7 @@ class CWStudentController extends Initializable {
     var errorMessage = ""
     if(firstname.getText == null || firstname.getText.length == 0){errorMessage+="No valid first name!\n"}
     else if(lastname.getText == null || lastname.getText.length == 0){errorMessage+="No valid last name!\n"}
+    else if(isint(group.getText) == false){errorMessage+="Group has to be a number!\n"}
     if(errorMessage.length == 0){true}
     else{
       System.out.print(errorMessage)
@@ -284,8 +285,9 @@ class CWStudentController extends Initializable {
       alert.showAndWait()
       false
     }
-
   }
+
+  def isint(possibleint:String):Boolean = {try{possibleint.toInt;true}catch{case noint:NumberFormatException=>false}}
 
   def close(): Unit = inputarea.setDisable(true)
 
@@ -366,20 +368,37 @@ class CWLecturerController extends Initializable {
 
   def menu(): Unit = root.getScene.getWindow.hide()
 
-  def ok(): Unit =  {
-    if (inputarea.getId == "edit") {
-      val editedlecturer: Lecturer = new Lecturer(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, title.getText)
-      for (c <- DB.maybeConnection){Lecturer.editDB(c)(editedlecturer)}
+  def ok(): Unit = {
+    if (isInputValid()) {
+      if (inputarea.getId == "edit") {
+        val editedlecturer: Lecturer = new Lecturer(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, title.getText)
+        for (c <- DB.maybeConnection) {
+          Lecturer.editDB(c)(editedlecturer)
+        }
 
-    } else if (inputarea.getId == "add") {
+      } else if (inputarea.getId == "add") {
 
-      val ID: Int = LecturerData.asMap().size + 1
-      val newlecturer: Lecturer = new Lecturer(ID, firstname.getText, lastname.getText, title.getText)
-      for (c <- DB.maybeConnection) {Lecturer.toDB(c)(newlecturer)}
+        val ID: Int = LecturerData.asMap().size + 1
+        val newlecturer: Lecturer = new Lecturer(ID, firstname.getText, lastname.getText, title.getText)
+        for (c <- DB.maybeConnection) {
+          Lecturer.toDB(c)(newlecturer)
+        }
+      }
+      inputarea.setId("")
+      inputarea.setDisable(true)
+      repopulate()
     }
-    inputarea.setId("")
-    inputarea.setDisable(true)
-    repopulate()
+  }
+
+  def isInputValid(): Boolean = {
+    var errorMessage = ""
+    if(firstname.getText == null || firstname.getText.length == 0){errorMessage+="No valid first name!\n"}
+    else if(lastname.getText == null || lastname.getText.length == 0){errorMessage+="No valid last name!\n"}
+    if(errorMessage.length == 0){true}
+    else{
+      System.out.print(errorMessage)
+      false
+    }
   }
 
   def close(): Unit = inputarea.setDisable(true)
