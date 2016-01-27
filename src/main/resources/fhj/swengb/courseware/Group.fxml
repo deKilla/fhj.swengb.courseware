@@ -7,38 +7,35 @@
 
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="880.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWGroupController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CWGroupController">
    <children>
-      <BorderPane layoutX="7.0" layoutY="14.0" prefHeight="377.0" prefWidth="867.0">
+      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="390.0" prefWidth="890.0">
          <center>
-            <TableView fx:id="tableView" BorderPane.alignment="CENTER">
+            <TableView fx:id="tableView">
               <columns>
-                <TableColumn fx:id="C1" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="C2" prefWidth="164.0" text="name" />
+                <TableColumn fx:id="C1" text="ID" />
+                <TableColumn fx:id="C2" text="name" />
               </columns>
             </TableView>
          </center>
          <top>
-             <ToolBar prefHeight="40.0" prefWidth="867.0" BorderPane.alignment="CENTER">
+             <ToolBar prefHeight="40.0" prefWidth="867.0">
                  <items>
-                     <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" text="Recreate" />
-                     <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" text="Add" />
-                     <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="85.0" text="Edit" />
-                     <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="85.0" text="Delete" />
+                     <Button fx:id="btnRecreate" mnemonicParsing="false" onAction="#recreate" styleClass="btn-toolbar" text="Recreate" />
+                     <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#add" styleClass="btn-toolbar" text="Add" />
+                     <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#edit" styleClass="btn-toolbar" text="Edit" />
+                     <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" styleClass="btn-toolbar" text="Delete" />
                      <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
-                     <Button fx:id="btnExecute" mnemonicParsing="false" onAction="#execute" text="Execute" />
-                     <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="150.0" />
+                     <Button fx:id="btnExecute" mnemonicParsing="false" onAction="#execute" styleClass="btn-toolbar" text="Execute" />
+                     <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="260.0" />
                  </items>
              </ToolBar>
          </top>
          <bottom>
-            <ToolBar prefHeight="43.0" prefWidth="867.0">
+            <ToolBar styleClass="btn-report">
               <items>
                   <Button fx:id="generateReport" mnemonicParsing="false" onAction="#report" text="Generate Report"/>
               </items>
-               <padding>
-                  <Insets left="700.0" />
-               </padding>
             </ToolBar>
          </bottom>
       </BorderPane>
