@@ -29,7 +29,8 @@
                      <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" styleClass="btn-toolbar" text="Delete" />
                      <ChoiceBox fx:id="choiceBox" prefWidth="150.0" />
                      <Button fx:id="btnExecute" mnemonicParsing="false" onAction="#execute" styleClass="btn-toolbar" text="Execute" />
-                     <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" translateX="200.0" />
+                     <Pane HBox.hgrow="ALWAYS" />
+                     <Button fx:id="btnMenu" mnemonicParsing="false" onAction="#menu" text="Main Menu" />
                  </items>
              </ToolBar>
          </top>
