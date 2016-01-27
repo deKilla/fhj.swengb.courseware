@@ -16,28 +16,32 @@ either be seen inside the GUI or via a markdown report.
 
 ## Screenshots
 
+### Student Table
 ![Student Table Example](src/main/resources/img/studentTable.png)
+
+### Student Table
+![Student Table example](src/main/resources/img/addstudent.png)
+
+### Alert Window
 ![Alert Window Example](src/main/resources/img/alertWindow.png)
-![Student Table example](src/main/resources/img/studentTable.png)
 
-
-## Usage
-TODO: Write usage instructions
-## Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
 
 ## Built With
 
-*Scala
-*JavaFx
-*Maven
+* Scala
+* JavaFx
+* Maven
 
 ## Credits
 
 * _**[Michael Furch &raquo;](https://github.com/deKilla)**_ 
 * _**[Carina Herzog &raquo;](https://github.com/carinaher)**_ 
 * _**[Hector Vidal &raquo;](https://github.com/MikVidal)**_ 
+
+
+## Contributing
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
