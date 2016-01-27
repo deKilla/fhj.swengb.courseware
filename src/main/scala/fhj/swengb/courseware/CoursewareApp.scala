@@ -88,7 +88,7 @@ class CoursewareAppController extends Initializable {
     lecturerStage.setTitle("Courseware | Lecturers")
     lecturerLoader.load[Parent]()
     lecturerStage.setScene(new Scene(lecturerLoader.getRoot[Parent]))
-
+    lecturerStage.setResizable(false)
     lecturerStage.show()
   }
 
@@ -273,16 +273,16 @@ class CWStudentController extends Initializable {
     var errorMessage = ""
     if(firstname.getText == null || firstname.getText.length == 0){errorMessage+="No valid first name!\n"}
     else if(lastname.getText == null || lastname.getText.length == 0){errorMessage+="No valid last name!\n"}
-    if(errorMessage.length == 0){return true}
+    if(errorMessage.length == 0){true}
     else{
       System.out.print(errorMessage)
-      alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Invalid Fields");
-      alert.setHeaderText("Please correct invalid fields");
-      alert.setContentText(errorMessage);
+      alert = new Alert(AlertType.ERROR)
+      alert.setTitle("Invalid Fields")
+      alert.setHeaderText("Please correct invalid fields")
+      alert.setContentText(errorMessage)
 
-      alert.showAndWait();
-      return false
+      alert.showAndWait()
+      false
     }
 
   }
@@ -290,7 +290,7 @@ class CWStudentController extends Initializable {
   def close(): Unit = inputarea.setDisable(true)
 
   def report(): Unit = {
-    if ((choiceBox.getSelectionModel.getSelectedItem == "selectAll") || (choiceBox.getSelectionModel.isEmpty)) {
+    if ((choiceBox.getSelectionModel.getSelectedItem == "selectAll") || choiceBox.getSelectionModel.isEmpty) {
       StudentData.createReport()
     }
     if (choiceBox.getSelectionModel.getSelectedItem == "selectGroup1") {
