@@ -1,5 +1,5 @@
 # fhj.swengb.courseware
-![Main menu example](src/main/resources/img/mainmenu.png)
+->![Main menu example](src/main/resources/img/mainmenu.png)<-
 
 We would like to provide a software that is able to provide the user with different kinds of information revolving around our SWENGB-Course. 
 The user should be able to have insight into the students, the different assignments that were given and so on.
