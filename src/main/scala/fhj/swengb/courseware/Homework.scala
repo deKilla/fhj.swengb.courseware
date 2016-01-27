@@ -19,11 +19,11 @@ object Homework extends DB.DBEntity[Homework] {
     stmt.executeUpdate(Homework.createTableSql)
   }
 
-  def toDB(c: Connection)(s: Homework): Int = {
+  def toDB(c: Connection)(h: Homework): Int = {
     val pstmt = c.prepareStatement(insertSql)
-    pstmt.setInt(1, s.ID)
-    pstmt.setString(2, s.name)
-    pstmt.setString(3, s.description)
+    pstmt.setInt(1, h.ID)
+    pstmt.setString(2, h.name)
+    pstmt.setString(3, h.description)
     pstmt.executeUpdate()
   }
 
@@ -154,12 +154,12 @@ class MutableHomework {
 
 object MutableHomework {
 
-  def apply(l: Homework): MutableHomework = {
-    val ml = new MutableHomework
-    ml.setID(l.ID)
-    ml.setName(l.name)
-    ml.setDescription(l.description)
-    ml
+  def apply(h: Homework): MutableHomework = {
+    val mh = new MutableHomework
+    mh.setID(h.ID)
+    mh.setName(h.name)
+    mh.setDescription(h.description)
+    mh
   }
 
 }
