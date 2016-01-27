@@ -56,6 +56,7 @@ class CoursewareApp extends javafx.application.Application {
       stage.setTitle("Courseware | Übersicht")
       loader.load[Parent]()
       stage.setScene(new Scene(loader.getRoot[Parent]))
+      stage.setResizable(false)
       stage.show()
     } catch {
       case NonFatal(e) => e.printStackTrace()
@@ -74,7 +75,7 @@ class CoursewareAppController extends Initializable {
     studentStage.setTitle("Courseware | Students")
     studentLoader.load[Parent]()
     studentStage.setScene(new Scene(studentLoader.getRoot[Parent]))
-
+    studentStage.setResizable(false)
     studentStage.show()
   }
 

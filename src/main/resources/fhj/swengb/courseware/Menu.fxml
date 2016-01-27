@@ -35,6 +35,6 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="fhLogo" prefHeight="80.0" prefWidth="548.0" styleClass="fh-logo" />
+      <AnchorPane fx:id="fhLogo" prefHeight="80.0" prefWidth="560.0" styleClass="fh-logo" />
    </children>
 </AnchorPane>
