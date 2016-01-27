@@ -133,6 +133,7 @@ case class Student(ID: Int,
 object studentquery {
   val selectall = "select * from Students"
   val selectGroup1 = "select * from Students where \"group\" = 1"
+  val startsWithS = "select * from Students where \"lastname\" LIKE \"S%\""
 }
 
 object StudentData {
