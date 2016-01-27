@@ -8,6 +8,8 @@ import javafx.beans.value.ObservableValue
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.fxml._
 import javafx.scene.control.{TableColumn, TableView, TextField, Button, ChoiceBox}
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.{Pane, AnchorPane}
 import javafx.scene.{Parent, Scene}
 import javafx.stage.Stage
@@ -185,6 +187,8 @@ class CWStudentController extends Initializable {
   @FXML var githubUsername: TextField = _
   @FXML var group: TextField = _
 
+  @FXML var alert: Alert = _
+
 
   def repopulate(): Unit = {
     val mutableStudents = mkObservableList(for (student <- StudentData.asMap()) yield MutableStudent(student._2))
@@ -243,19 +247,41 @@ class CWStudentController extends Initializable {
   def menu(): Unit = root.getScene.getWindow.hide()
 
   def ok(): Unit =  {
-    if (inputarea.getId == "edit") {
-      val editedstudent: Student = new Student(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, email.getText, birthday.getText, telnr.getText, githubUsername.getText, group.getText.toInt)
-      for (c <- DB.maybeConnection){Student.editDB(c)(editedstudent)}
+    if (isInputValid()){
+      if (inputarea.getId == "edit") {
+        val editedstudent: Student = new Student(tableView.getSelectionModel.getSelectedItem.p_ID.getValue, firstname.getText, lastname.getText, email.getText, birthday.getText, telnr.getText, githubUsername.getText, group.getText.toInt)
+        for (c <- DB.maybeConnection){Student.editDB(c)(editedstudent)}
 
-    } else if (inputarea.getId == "add") {
-
-      val ID: Int = StudentData.asMap().size + 1
-      val newstudent: Student = new Student(ID, firstname.getText, lastname.getText, email.getText, birthday.getText, telnr.getText, githubUsername.getText, group.getText.toInt)
-      for (c <- DB.maybeConnection) {Student.toDB(c)(newstudent)}
+      }
+      else if (inputarea.getId == "add") {
+        val ID: Int = StudentData.asMap().size + 1
+        val newstudent: Student = new Student(ID, firstname.getText, lastname.getText, email.getText, birthday.getText, telnr.getText, githubUsername.getText, group.getText.toInt)
+        for (c <- DB.maybeConnection) {
+          Student.toDB(c)(newstudent)
+        }
+      }
     }
     inputarea.setId("")
     inputarea.setDisable(true)
     repopulate()
+  }
+
+  def isInputValid(): Boolean = {
+    var errorMessage = ""
+    if(firstname.getText == null || firstname.getText.length == 0){errorMessage+="No valid first name!\n"}
+    else if(lastname.getText == null || lastname.getText.length == 0){errorMessage+="No valid last name!\n"}
+    if(errorMessage.length == 0){return true}
+    else{
+      System.out.print(errorMessage)
+      alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Invalid Fields");
+      alert.setHeaderText("Please correct invalid fields");
+      alert.setContentText(errorMessage);
+
+      alert.showAndWait();
+      return false
+    }
+
   }
 
   def close(): Unit = inputarea.setDisable(true)
