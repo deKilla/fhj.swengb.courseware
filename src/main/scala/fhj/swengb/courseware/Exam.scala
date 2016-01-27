@@ -23,7 +23,7 @@ object Exam extends DB.DBEntity[Exam] {
     pstmt.setInt(1, s.ID)
     pstmt.setString(2, s.course)
     pstmt.setInt(3, s.attempt)
-    pstmt.setString(3, s.date)
+    pstmt.setString(4, s.date)
     pstmt.executeUpdate()
   }
 
@@ -121,7 +121,7 @@ object ExamData {
       "<h1>Examreport</h1>" +
       "<table>" +
       "<tr>" +
-      "<th>ID</th><th>course</th><th>attemp</th><th>date</th>" +
+      "<th>ID</th><th>course</th><th>attempt</th><th>date</th>" +
       "</tr>")
 
     val htmlbottom:String = ("</table></body></html>")
