@@ -34,7 +34,7 @@ either be seen inside the GUI or via a markdown report.
 
 ## Credits
 
-* _**[Michael Furch &raquo;](https://github.com/deKilla)**_ 
+* _**[Michael Fuchs &raquo;](https://github.com/deKilla)**_ 
 * _**[Carina Herzog &raquo;](https://github.com/carinaher)**_ 
 * _**[Hector Vidal &raquo;](https://github.com/MikVidal)**_ 
 
