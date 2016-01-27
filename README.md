@@ -19,8 +19,8 @@ either be seen inside the GUI or via a markdown report.
 ### Student Table
 ![Student Table Example](src/main/resources/img/studentTable.png)
 
-### Student Table
-![Student Table example](src/main/resources/img/addstudent.png)
+### Add Student Example
+![Add Student example](src/main/resources/img/addStudent.png)
 
 ### Alert Window
 ![Alert Window Example](src/main/resources/img/alertWindow.png)
