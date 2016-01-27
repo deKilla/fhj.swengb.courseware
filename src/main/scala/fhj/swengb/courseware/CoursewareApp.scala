@@ -211,7 +211,7 @@ class CWStudentController extends Initializable {
     initTableViewColumn[String](C7, _.p_githubUsername)
     initTableViewColumn[Int](C8, _.p_group)
 
-    choiceBox.setItems(mkObservableList(List("selectAll", "selectGroup1")))
+    choiceBox.setItems(mkObservableList(List("selectAll", "selectGroup1", "startsWithS")))
   }
 
   def recreate(): Unit = {for (c <- DB.maybeConnection){Student.reTable(c.createStatement())};repopulate()}
@@ -243,6 +243,10 @@ class CWStudentController extends Initializable {
     }
     if (choiceBox.getSelectionModel.getSelectedItem == "selectGroup1") {
       val selectedStudents = mkObservableList(for (student <- StudentData.asMap(studentquery.selectGroup1)) yield MutableStudent(student._2))
+      tableView.setItems(selectedStudents)
+    }
+    if (choiceBox.getSelectionModel.getSelectedItem == "startsWithS") {
+      val selectedStudents = mkObservableList(for (student <- StudentData.asMap(studentquery.startsWithS)) yield MutableStudent(student._2))
       tableView.setItems(selectedStudents)
     }
   }
@@ -297,6 +301,9 @@ class CWStudentController extends Initializable {
     }
     if (choiceBox.getSelectionModel.getSelectedItem == "selectGroup1") {
       StudentData.createReport(studentquery.selectGroup1)
+    }
+    if (choiceBox.getSelectionModel.getSelectedItem == "startsWithS") {
+      StudentData.createReport(studentquery.startsWithS)
     }
   }
 }
