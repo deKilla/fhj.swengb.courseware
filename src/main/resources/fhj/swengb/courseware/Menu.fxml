@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="548.0" stylesheets="@Courseware.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.courseware.CoursewareAppController">
+   <children>
+      <AnchorPane layoutY="68.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="548.0" styleClass="green" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text layoutX="118.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SWENGB - Courseware" textAlignment="CENTER">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Text>
+            <VBox layoutX="123.0" layoutY="215.0" prefHeight="496.0" prefWidth="303.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#showStudents" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Students" textAlignment="CENTER" />
+                  <Pane prefHeight="32.0" prefWidth="303.0" />
+                  <Button mnemonicParsing="false" onAction="#showGroups" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Groups" textAlignment="CENTER" />
+                  <Pane prefHeight="32.0" prefWidth="303.0" />
+                  <Button mnemonicParsing="false" onAction="#showCourses" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Courses" textAlignment="CENTER" />
+                  <Pane prefHeight="32.0" prefWidth="303.0" />
+                  <Button mnemonicParsing="false" onAction="#showLecturers" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Lecturers" textAlignment="CENTER" />
+                  <Pane prefHeight="32.0" prefWidth="303.0" />
+                  <Button mnemonicParsing="false" onAction="#showHomeworks" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Homeworks" textAlignment="CENTER" />
+                  <Pane prefHeight="32.0" prefWidth="303.0" />
+                  <Button mnemonicParsing="false" onAction="#showAssignments" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Group Assignments" textAlignment="CENTER" />
+                  <Pane prefHeight="32.0" prefWidth="303.0" />
+                  <Button mnemonicParsing="false" onAction="#showProjects" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Projects" textAlignment="CENTER" />
+                  <Pane prefHeight="32.0" prefWidth="303.0" />
+                  <Button mnemonicParsing="false" onAction="#showExams" prefHeight="62.0" prefWidth="303.0" styleClass="btn-grey" text="Exams" textAlignment="CENTER" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="fhLogo" prefHeight="80.0" prefWidth="560.0" styleClass="fh-logo" />
+   </children>
+</AnchorPane>
