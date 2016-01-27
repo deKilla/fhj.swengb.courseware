@@ -99,7 +99,7 @@ class CoursewareAppController extends Initializable {
     courseStage.setTitle("Courseware | Courses")
     courseLoader.load[Parent]()
     courseStage.setScene(new Scene(courseLoader.getRoot[Parent]))
-
+    courseStage.setResizable(false)
     courseStage.show()
   }
 
@@ -110,7 +110,7 @@ class CoursewareAppController extends Initializable {
     groupStage.setTitle("Courseware | Courses")
     groupLoader.load[Parent]()
     groupStage.setScene(new Scene(groupLoader.getRoot[Parent]))
-
+    groupStage.setResizable(false)
     groupStage.show()
   }
 
@@ -121,7 +121,7 @@ class CoursewareAppController extends Initializable {
     examStage.setTitle("Courseware | Exams")
     examLoader.load[Parent]()
     examStage.setScene(new Scene(examLoader.getRoot[Parent]))
-
+    examStage.setResizable(false)
     examStage.show()
   }
 
@@ -132,7 +132,7 @@ class CoursewareAppController extends Initializable {
     projectStage.setTitle("Courseware | Projects")
     projectLoader.load[Parent]()
     projectStage.setScene(new Scene(projectLoader.getRoot[Parent]))
-
+    projectStage.setResizable(false)
     projectStage.show()
   }
 
@@ -143,7 +143,7 @@ class CoursewareAppController extends Initializable {
     assignmentStage.setTitle("Courseware | Assignments")
     assignmentLoader.load[Parent]()
     assignmentStage.setScene(new Scene(assignmentLoader.getRoot[Parent]))
-
+    assignmentStage.setResizable(false)
     assignmentStage.show()
   }
 
@@ -154,7 +154,7 @@ class CoursewareAppController extends Initializable {
     homeworkStage.setTitle("Courseware | Homework")
     homeworkLoader.load[Parent]()
     homeworkStage.setScene(new Scene(homeworkLoader.getRoot[Parent]))
-
+    homeworkStage.setResizable(false)
     homeworkStage.show()
   }
 }
