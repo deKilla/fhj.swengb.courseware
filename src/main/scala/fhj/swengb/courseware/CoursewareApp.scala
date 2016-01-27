@@ -652,7 +652,7 @@ class CWExamController extends Initializable {
 
     } else if (inputarea.getId == "add") {
 
-      val ID: Int = CourseData.asMap().size + 1
+      val ID: Int = ExamData.asMap().size + 1
       val newexam: Exam = new Exam(ID, course.getText, attempt.getText.toInt, date.getText)
       for (c <- DB.maybeConnection) {Exam.toDB(c)(newexam)}
     }
@@ -739,7 +739,7 @@ class CWProjectController extends Initializable {
 
     } else if (inputarea.getId == "add") {
 
-      val ID: Int = CourseData.asMap().size + 1
+      val ID: Int = ProjectData.asMap().size + 1
       val newproject: Project = new Project(ID, name.getText, begindate.getText, deadline.getText)
       for (c <- DB.maybeConnection) {Project.toDB(c)(newproject)}
     }
@@ -822,7 +822,7 @@ class CWAssignmentController extends Initializable {
 
     } else if (inputarea.getId == "add") {
 
-      val ID: Int = CourseData.asMap().size + 1
+      val ID: Int = AssignmentData.asMap().size + 1
       val newassignment: Assignment = new Assignment(ID, name.getText, description.getText)
       for (c <- DB.maybeConnection) {Assignment.toDB(c)(newassignment)}
     }
@@ -905,7 +905,7 @@ class CWHomeworkController extends Initializable {
 
     } else if (inputarea.getId == "add") {
 
-      val ID: Int = CourseData.asMap().size + 1
+      val ID: Int = HomeworkData.asMap().size + 1
       val newhomework: Homework = new Homework(ID, name.getText, description.getText)
       for (c <- DB.maybeConnection) {Homework.toDB(c)(newhomework)}
     }

@@ -23,7 +23,7 @@ object Exam extends DB.DBEntity[Exam] {
     pstmt.setInt(1, s.ID)
     pstmt.setString(2, s.course)
     pstmt.setInt(3, s.attempt)
-    pstmt.setString(3, s.date)
+    pstmt.setString(4, s.date)
     pstmt.executeUpdate()
   }
 

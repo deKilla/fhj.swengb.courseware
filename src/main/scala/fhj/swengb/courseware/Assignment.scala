@@ -83,9 +83,6 @@ case class Assignment(ID: Int,
 
 object assignmentquery {
   val selectall = "select * from GroupAssignments"
-  def query():String = {
-    selectall
-  }
 }
 
 object AssignmentData {
@@ -93,7 +90,7 @@ object AssignmentData {
     val connection = DB.maybeConnection
     val data = if (connection.isSuccess) {
       val c = connection.get
-      Assignment.fromDB(Assignment.query(c)(assignmentquery.query())
+      Assignment.fromDB(Assignment.query(c)(query)
       ).map(l => (l.ID,l)).toMap
     } else { Map.empty }
     data
